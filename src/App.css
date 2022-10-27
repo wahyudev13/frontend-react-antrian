@@ -1,0 +1,154 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+.header-top{
+  background-color:#0a458f!important;
+  color: #fff!important;
+  font-size: 20px;
+}
+.header-top2{
+  background-color: #e49503!important;
+  color: #fff!important;
+  font-size: 20px;
+}
+.header-top3{
+  background-color: #e40303!important;
+  color: #fff!important;
+  font-size: 20px;
+}
+.nama-dokter{
+  background-color:#0a458f!important;
+  color: #fff!important;
+  font-size: 20px;
+}
+.nama-dokter2{
+  background-color: #e49503!important;
+  color: #fff!important;
+  font-size: 20px;
+}
+.nama-dokter3{
+  background-color: #e40303!important;
+  color: #fff!important;
+  font-size: 20px;
+}
+.no-antrian{
+  font-size: 12rem!important;
+}
+.nama-pasien{
+  font-size: 2rem!important;
+}
+.title-app{
+  color: #fff;
+  font-size: 25px;
+}
+.navbar-app{
+  background-color: #198754!important;
+}
+.container-nav{
+  display: block!important;
+  text-align: center;
+  height: 70px;
+}
+.container-footer{
+  display: block!important;
+  text-align: center;
+}
+.footer{
+  bottom:0;
+  width:100%;
+  height:60px;
+}
+.card-nomor{
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+.credit-footer{
+    color: #fff!important;
+    font-size: 17px!important;
+}
+.header-antrian-b{
+  background-color: #e49503!important;
+  color: #fff!important;
+}
+.header-antrian-a{
+  background-color:#0a458f!important;
+  color: #fff!important;
+}
+.header-antrian-c{
+  background-color:#e40303!important;
+  color: #fff!important;
+}
+.icojam{
+  margin-left: 20px;
+}
+
+/* Display B */
+.displayb-header-top{
+  background-color:#7ba704!important;
+  color: #fff!important;
+  font-size: 20px;
+}
+.displayb-nama-dokter{
+  background-color:#7ba704!important;
+  color: #fff!important;
+  font-size: 20px;
+}
+
+.displayb-header-top2{
+  background-color:#a74d04!important;
+  color: #fff!important;
+  font-size: 20px;
+}
+.displayb-nama-dokter2{
+  background-color:#a74d04!important;
+  color: #fff!important;
+  font-size: 20px;
+}
+.displayb-header-top3{
+  background-color:#c42f3c!important;
+  color: #fff!important;
+  font-size: 20px;
+}
+.displayb-nama-dokter3{
+  background-color:#c42f3c!important;
+  color: #fff!important;
+  font-size: 20px;
+}
+.header-antrian-d{
+  background-color:#7ba704!important;
+  color: #fff!important;
+}
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
