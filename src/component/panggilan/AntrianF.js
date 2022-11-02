@@ -90,7 +90,7 @@ function AntrianF() {
 
     
     return(
-        <Container>
+        <Container fluid>
             <Row>
                 <Col>
                 <Card style={{ margin: '30px' }}>
@@ -120,7 +120,7 @@ function AntrianF() {
                         </Row>
                     </Card.Header>
                     <Card.Body>
-                    <Table striped bordered hover>
+                    <Table responsive striped bordered hover size="sm">
                         <thead>
                             <tr>
                                 <th>No Reg</th>
