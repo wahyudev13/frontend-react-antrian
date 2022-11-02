@@ -15,7 +15,7 @@ import React from 'react';
 
 import { useState , useEffect } from "react";
 
-function Antrian() {
+function AntrianE() {
 
     const [antrians, setAntrian] = useState([]);
     const [polis, setPoli] = useState([]);
@@ -42,12 +42,12 @@ function Antrian() {
         fectData();
     }, [kode]);
 
-    const setStorec = async (no_reg, kd_dokter, kd_poli, no_rawat, no_rkm_medis,nm_pasien, nm_poli, nm_dokter, tgl_registrasi, kelas) => {
+    const setStore = async (no_reg, kd_dokter, kd_poli, no_rawat, no_rkm_medis,nm_pasien, nm_poli, nm_dokter, tgl_registrasi,kelas) => {
         if (disable.length === 0) {
             setCount(count + 1)
             setDisable(kelas)
             try {
-                await axios.post('http://127.0.0.1:8000/api/antrian/storec',{
+                await axios.post('http://127.0.0.1:8000/api/antrian/storee',{
                     id : count,
                     kd_dokter : kd_dokter,
                     kd_poli : kd_poli,
@@ -63,6 +63,7 @@ function Antrian() {
                 console.log('success')
             } catch (e) {
                 console.log(e.message);
+               
             }
         }else{
             alert('STOP ANTRIAN DAHULU');
@@ -72,7 +73,7 @@ function Antrian() {
     const setUpdate = async (tgl_registrasi,no_rkm_medis,kd_dokter,kd_poli, nm_pasien,nm_poli,nm_dokter, no_reg) => {
         setDisable([])
         try {
-            await axios.post('http://127.0.0.1:8000/api/antrianc/update/'+tgl_registrasi+'/'+no_rkm_medis+'/'+kd_dokter+'/'+kd_poli+'/',{
+            await axios.post('http://127.0.0.1:8000/api/antriane/update/'+tgl_registrasi+'/'+no_rkm_medis+'/'+kd_dokter+'/'+kd_poli+'/',{
                 status : 2,
                 nm_pasien : nm_pasien,
                 nm_dokter : nm_dokter,
@@ -80,6 +81,7 @@ function Antrian() {
                 no_reg : no_reg
             });
             console.log('success stop')
+            // alert('ANTRIAN BERHASIL DI STOP')
         } catch (error) {
             // alert('PASIEN BELUM DIPANGGIL')
             console.log(error.message);
@@ -92,10 +94,10 @@ function Antrian() {
             <Row>
                 <Col>
                 <Card style={{ margin: '30px' }}>
-                    <Card.Header className="header-antrian-c">
+                    <Card.Header className="header-antrian-e">
                     <Row>
                             <Col>
-                                Panggil Antrian Poliklinik C
+                                Panggil Antrian Poliklinik E
                             </Col>
                             <Col  xs={3}>
                                
@@ -138,8 +140,8 @@ function Antrian() {
                                     <td>{antrian.nm_pasien}</td>
                                     <td>{antrian.nm_poli}</td>
                                     <td> 
-                                        <Button disabled={disable === 'play-'+antrian.no_rawat ? true : false } onClick={() => setStorec(antrian.no_reg, antrian.kd_dokter, antrian.kd_poli, antrian.no_rawat, antrian.no_rkm_medis,antrian.nm_pasien,antrian.nm_poli,antrian.nm_dokter, antrian.tgl_registrasi, 'play-'+antrian.no_rawat)} variant="primary" size="sm"><FontAwesomeIcon icon={faPlay} /> </Button>{' '}
-                                        <Button disabled={disable === 'play-'+antrian.no_rawat ? false : true} onClick={() => setUpdate(antrian.tgl_registrasi,antrian.no_rkm_medis,antrian.kd_dokter, antrian.kd_poli,antrian.nm_pasien,antrian.nm_dokter,antrian.nm_poli,antrian.no_reg)} variant="danger" size="sm"><FontAwesomeIcon icon={faStop} /> </Button>{' '}
+                                        <Button disabled={disable === 'play-'+antrian.no_rawat ? true : false } onClick={() => setStore(antrian.no_reg, antrian.kd_dokter, antrian.kd_poli, antrian.no_rawat, antrian.no_rkm_medis,antrian.nm_pasien,antrian.nm_poli,antrian.nm_dokter, antrian.tgl_registrasi, 'play-'+antrian.no_rawat)} variant="primary" size="sm"><FontAwesomeIcon icon={faPlay} /> </Button>{' '}
+                                        <Button  disabled={disable === 'play-'+antrian.no_rawat ? false : true} onClick={() => setUpdate(antrian.tgl_registrasi,antrian.no_rkm_medis,antrian.kd_dokter, antrian.kd_poli,antrian.nm_pasien,antrian.nm_dokter,antrian.nm_poli,antrian.no_reg)} variant="danger" size="sm"><FontAwesomeIcon icon={faStop} /> </Button>{' '}
                                     </td>
                                 </tr> 
                             )) : <tr><td colSpan={6}><center>TIDAK ADA PASIEN TERDAFTAR</center></td></tr> }
@@ -154,6 +156,6 @@ function Antrian() {
     );
 }
 
-export default Antrian;
+export default AntrianE;
 
 

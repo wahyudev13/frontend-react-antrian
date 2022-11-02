@@ -9,11 +9,12 @@ import Table from "react-bootstrap/Table";
 
 import Form from 'react-bootstrap/Form';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import { faPlay, faStop, faSpellCheck} from "@fortawesome/free-solid-svg-icons";
+import { faPlay, faStop} from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import React from 'react';
 
 import { useState , useEffect } from "react";
+import e from "cors";
 
 // $.DataTable = require('datatables.net');
 
@@ -23,6 +24,11 @@ function Antrian() {
     const [antrians, setAntrian] = useState([]);
     const [polis, setPoli] = useState([]);
     const [kode, setKode] = useState('');
+    const [count, setCount ] = useState(0);
+    // const [play, setPlay] = useState(false);
+    //const [stop, setStop] = useState(true);
+
+    const [disable, setDisable] = useState([]);
 
     const fectData = async () => {
         try {
@@ -42,42 +48,52 @@ function Antrian() {
     useEffect(() => {
         fectData();
     },[kode]);
+    
+   
 
-    const setStore = async (no_reg, kd_dokter, kd_poli, no_rawat, no_rkm_medis,nm_pasien, nm_poli, nm_dokter, tgl_registrasi) => {
-        //console.log(no_reg, kd_dokter)
-        try {
-            await axios.post('http://127.0.0.1:8000/api/antrian/store',{
-                kd_dokter : kd_dokter,
-                kd_poli : kd_poli,
-                status : '1',
-                no_rawat : no_rawat,
-                no_reg : no_reg,
-                no_rkm_medis : no_rkm_medis,
-                nm_pasien : nm_pasien,
-                nm_poli : nm_poli,
-                nm_dokter : nm_dokter,
-                tgl_registrasi : tgl_registrasi
-            });
-            console.log('success')
-        } catch (e) {
-            console.log(e.message);
-            alert('STOP ANTRIAN DULU')
+    const setStore = async (no_reg, kd_dokter, kd_poli, no_rawat, no_rkm_medis,nm_pasien, nm_poli, nm_dokter, tgl_registrasi, kelas) => {
+        if (disable.length === 0) {
+            setCount(count + 1)
+            setDisable(kelas)
+            try {
+                await axios.post('http://127.0.0.1:8000/api/antrian/store',{
+                    id : count,
+                    kd_dokter : kd_dokter,
+                    kd_poli : kd_poli,
+                    status : 1,
+                    no_rawat : no_rawat,
+                    no_reg : no_reg,
+                    no_rkm_medis : no_rkm_medis,
+                    nm_pasien : nm_pasien,
+                    nm_poli : nm_poli,
+                    nm_dokter : nm_dokter,
+                    tgl_registrasi : tgl_registrasi
+                });
+                console.log('success')
+            } catch (e) {
+                console.log(e.message);
+                // console.log('STOP ANTRIAN DULU');
+                // alert('STOP ANTRIAN DULU')
+            }
+        }else{
+            alert('STOP ANTRIAN DAHULU');
         }
     }
 
+
     const setUpdate = async (tgl_registrasi,no_rkm_medis,kd_dokter,kd_poli, nm_pasien,nm_poli,nm_dokter, no_reg) => {
+        setDisable([])
         try {
             await axios.post('http://127.0.0.1:8000/api/antrian/update/'+tgl_registrasi+'/'+no_rkm_medis+'/'+kd_dokter+'/'+kd_poli+'/',{
-                status : '2',
+                status : 2,
                 nm_pasien : nm_pasien,
                 nm_dokter : nm_dokter,
                 nm_poli : nm_poli,
                 no_reg : no_reg
             });
-            console.log('success updated')
-            alert('ANTRIAN BERHASIL DI STOP')
+            console.log('success stop')
         } catch (error) {
-            alert('PASIEN BELUM DIPANGGIL')
+            // alert('PASIEN BELUM DIPANGGIL')
             console.log(error.message);
         }
     }
@@ -118,7 +134,7 @@ function Antrian() {
                       
                     </Card.Header>
                     <Card.Body>
-                    <Table striped bordered hover>
+                    <Table striped bordered hover className="table-antrian">
                         <thead>
                             <tr>
                                 <th>No Reg</th>
@@ -130,7 +146,7 @@ function Antrian() {
                             </tr>
                         </thead>
                         <tbody>
-                            {antrians.map((antrian, index) => (
+                            {antrians.length !== 0 ? antrians.map((antrian, index) => (
                                <tr key={index}>
                                     <td>{antrian.no_reg}</td>
                                     <td>{antrian.no_rawat}</td>
@@ -138,11 +154,11 @@ function Antrian() {
                                     <td>{antrian.nm_pasien}</td>
                                     <td>{antrian.nm_poli}</td>
                                     <td> 
-                                        <Button onClick={() => setStore(antrian.no_reg, antrian.kd_dokter, antrian.kd_poli, antrian.no_rawat, antrian.no_rkm_medis,antrian.nm_pasien,antrian.nm_poli,antrian.nm_dokter, antrian.tgl_registrasi)} variant="primary" size="sm"><FontAwesomeIcon icon={faPlay} /> </Button>{' '}
-                                        <Button onClick={() => setUpdate(antrian.tgl_registrasi,antrian.no_rkm_medis,antrian.kd_dokter, antrian.kd_poli,antrian.nm_pasien,antrian.nm_dokter,antrian.nm_poli,antrian.no_reg)} variant="danger" size="sm"><FontAwesomeIcon icon={faStop} /> </Button>{' '}
+                                        <Button disabled={disable === 'play-'+antrian.no_rawat ? true : false } onClick={() => setStore(antrian.no_reg, antrian.kd_dokter, antrian.kd_poli, antrian.no_rawat, antrian.no_rkm_medis,antrian.nm_pasien,antrian.nm_poli,antrian.nm_dokter, antrian.tgl_registrasi, 'play-'+antrian.no_rawat)} variant="primary" size="sm"><FontAwesomeIcon icon={faPlay} /> </Button>{' '}
+                                        <Button  disabled={disable === 'play-'+antrian.no_rawat ? false : true} onClick={() => setUpdate(antrian.tgl_registrasi,antrian.no_rkm_medis,antrian.kd_dokter, antrian.kd_poli,antrian.nm_pasien,antrian.nm_dokter,antrian.nm_poli,antrian.no_reg)} variant="danger" size="sm"><FontAwesomeIcon icon={faStop} /> </Button>{' '}
                                     </td>
                                 </tr> 
-                            ))}
+                            )) : <tr><td colSpan={6}><center>TIDAK ADA PASIEN TERDAFTAR</center></td></tr> }
                         </tbody>
                         </Table>
 

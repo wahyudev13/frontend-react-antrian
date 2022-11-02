@@ -144,6 +144,14 @@
   background-color:#7ba704!important;
   color: #fff!important;
 }
+.header-antrian-e{
+  background-color:#a74d04!important;
+  color: #fff!important;
+}
+.header-antrian-f{
+  background-color:#c42f3c!important;
+  color: #fff!important;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

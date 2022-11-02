@@ -9,7 +9,7 @@ import Table from "react-bootstrap/Table";
 
 import Form from 'react-bootstrap/Form';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import { faPlay, faStop, faSpellCheck} from "@fortawesome/free-solid-svg-icons";
+import { faPlay, faStop} from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import React from 'react';
 
@@ -20,6 +20,8 @@ function AntrianD() {
     const [antrians, setAntrian] = useState([]);
     const [polis, setPoli] = useState([]);
     const [kode, setKode] = useState('');
+    const [count, setCount ] = useState(0);
+    const [disable, setDisable] = useState([]);
 
     const fectData = async () => {
         try {
@@ -40,44 +42,53 @@ function AntrianD() {
         fectData();
     }, [kode]);
 
-    const setStorec = async (no_reg, kd_dokter, kd_poli, no_rawat, no_rkm_medis,nm_pasien, nm_poli, nm_dokter, tgl_registrasi) => {
-        //console.log(no_reg, kd_dokter)
-        try {
-            await axios.post('http://127.0.0.1:8000/api/antrian/stored',{
-                kd_dokter : kd_dokter,
-                kd_poli : kd_poli,
-                status : '1',
-                no_rawat : no_rawat,
-                no_reg : no_reg,
-                no_rkm_medis : no_rkm_medis,
-                nm_pasien : nm_pasien,
-                nm_poli : nm_poli,
-                nm_dokter : nm_dokter,
-                tgl_registrasi : tgl_registrasi
-            });
-            console.log('success')
-        } catch (e) {
-            console.log(e.message);
-            alert('STOP ANTRIAN DULU')
+    const setStorec = async (no_reg, kd_dokter, kd_poli, no_rawat, no_rkm_medis,nm_pasien, nm_poli, nm_dokter, tgl_registrasi,kelas) => {
+        if (disable.length === 0) {
+            setCount(count + 1)
+            setDisable(kelas)
+            try {
+                await axios.post('http://127.0.0.1:8000/api/antrian/stored',{
+                    id : count,
+                    kd_dokter : kd_dokter,
+                    kd_poli : kd_poli,
+                    status : 1,
+                    no_rawat : no_rawat,
+                    no_reg : no_reg,
+                    no_rkm_medis : no_rkm_medis,
+                    nm_pasien : nm_pasien,
+                    nm_poli : nm_poli,
+                    nm_dokter : nm_dokter,
+                    tgl_registrasi : tgl_registrasi
+                });
+                console.log('success')
+            } catch (e) {
+                console.log(e.message);
+                
+            }
+        }else{
+            alert('STOP ANTRIAN DAHULU');
         }
     }
 
     const setUpdate = async (tgl_registrasi,no_rkm_medis,kd_dokter,kd_poli, nm_pasien,nm_poli,nm_dokter, no_reg) => {
+        setDisable([])
         try {
             await axios.post('http://127.0.0.1:8000/api/antriand/update/'+tgl_registrasi+'/'+no_rkm_medis+'/'+kd_dokter+'/'+kd_poli+'/',{
-                status : '2',
-                // nm_pasien : nm_pasien,
-                // nm_dokter : nm_dokter,
-                // nm_poli : nm_poli,
-                // no_reg : no_reg
+                status : 2,
+                nm_pasien : nm_pasien,
+                nm_dokter : nm_dokter,
+                nm_poli : nm_poli,
+                no_reg : no_reg
             });
-            console.log('success updated')
-            alert('ANTRIAN BERHASIL DI STOP')
+            console.log('success stop')
+            // alert('ANTRIAN BERHASIL DI STOP')
         } catch (error) {
-            alert('PASIEN BELUM DIPANGGIL')
+            // alert('PASIEN BELUM DIPANGGIL')
             console.log(error.message);
         }
     }
+
+    
 
     
     return(
@@ -86,12 +97,11 @@ function AntrianD() {
                 <Col>
                 <Card style={{ margin: '30px' }}>
                     <Card.Header className="header-antrian-d">
-                    <Row>
+                        <Row>
                             <Col>
                                 Panggil Antrian Poliklinik D
                             </Col>
                             <Col  xs={3}>
-                               
                                 <Form.Select aria-label="Floating label select example" onChange={(e) => setKode(e.target.value)}>
                                 <option value="">- Pilih Poliklinik -</option>
                                     {
@@ -102,12 +112,7 @@ function AntrianD() {
                                         ))
                                     }
                                 </Form.Select>
-                                {/* <Col sm="10">
-                                    <Button  type="submit" Button variant="outline-primary"><FontAwesomeIcon icon={faSpellCheck} /></Button>{' '}
-                                </Col> */}
-                                    
-                            </Col>
-                                
+                            </Col>    
                         </Row>
                     </Card.Header>
                     <Card.Body>
@@ -123,7 +128,7 @@ function AntrianD() {
                             </tr>
                         </thead>
                         <tbody>
-                            {antrians.map((antrian, index) => (
+                            {antrians.length !== 0 ? antrians.map((antrian, index) => (
                                <tr key={index}>
                                     <td>{antrian.no_reg}</td>
                                     <td>{antrian.no_rawat}</td>
@@ -131,11 +136,11 @@ function AntrianD() {
                                     <td>{antrian.nm_pasien}</td>
                                     <td>{antrian.nm_poli}</td>
                                     <td> 
-                                        <Button onClick={() => setStorec(antrian.no_reg, antrian.kd_dokter, antrian.kd_poli, antrian.no_rawat, antrian.no_rkm_medis,antrian.nm_pasien,antrian.nm_poli,antrian.nm_dokter, antrian.tgl_registrasi)} variant="primary" size="sm"><FontAwesomeIcon icon={faPlay} /> </Button>{' '}
-                                        <Button onClick={() => setUpdate(antrian.tgl_registrasi,antrian.no_rkm_medis,antrian.kd_dokter, antrian.kd_poli,antrian.nm_pasien,antrian.nm_dokter,antrian.nm_poli,antrian.no_reg)} variant="danger" size="sm"><FontAwesomeIcon icon={faStop} /> </Button>{' '}
+                                        <Button disabled={disable === 'play-'+antrian.no_rawat ? true : false } onClick={() => setStorec(antrian.no_reg, antrian.kd_dokter, antrian.kd_poli, antrian.no_rawat, antrian.no_rkm_medis,antrian.nm_pasien,antrian.nm_poli,antrian.nm_dokter, antrian.tgl_registrasi, 'play-'+antrian.no_rawat)} variant="primary" size="sm"><FontAwesomeIcon icon={faPlay} /> </Button>{' '}
+                                        <Button  disabled={disable === 'play-'+antrian.no_rawat ? false : true} onClick={() => setUpdate(antrian.tgl_registrasi,antrian.no_rkm_medis,antrian.kd_dokter, antrian.kd_poli,antrian.nm_pasien,antrian.nm_dokter,antrian.nm_poli,antrian.no_reg)} variant="danger" size="sm"><FontAwesomeIcon icon={faStop} /> </Button>{' '}
                                     </td>
                                 </tr> 
-                            ))}
+                            )) : <tr><td colSpan={6}><center>TIDAK ADA PASIEN TERDAFTAR</center></td></tr> }
                         </tbody>
                         </Table>
 

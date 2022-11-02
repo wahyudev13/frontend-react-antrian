@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/Col';
 import React from 'react';
 import {useState, useEffect} from "react";
 import Pusher from "pusher-js";
+import Echo from 'laravel-echo';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCalendarDays, faClockFour} from "@fortawesome/free-solid-svg-icons";
 import Nav from "react-bootstrap/Nav";
@@ -17,9 +18,10 @@ function DisplayB() {
     const [tanggal, setTanggal] = useState('');
     const [jam, setJam] = useState('');
     
-    //AntrianA
-    const [statusd, setStatusd] = useState('');
-    // const [rawat, setRawat] = useState('');
+    //AntrianD
+    const [idD, setIdD] = useState(0);
+    const [statusd, setStatusd] = useState(0);
+    const [rawatd, setRawatd] = useState('');
     const [nomord, setNomord] = useState('000');
     const [namad, setNamad] = useState('-');
     const [polid, setPolid] = useState('Poliklinik D');
@@ -27,25 +29,27 @@ function DisplayB() {
     const [textd, setTextd] = useState('');
     const [playd, setPlayd] = useState('false');
 
-    //AntrianB
-    const [statusb, setStatusb] = useState('');
-    const [rawatb, setRawatb] = useState('');
-    const [nomorb, setNomorb] = useState('000');
-    const [namab, setNamab] = useState('-');
-    const [polib, setPolib] = useState('Poliklinik E');
-    const [dokterb, setDokterb] = useState('Dokter E');
-    const [textb, setTextb] = useState('');
-    const [playb, setPlayb] = useState('false');
+    //AntrianE
+    const [idE, setIdE] = useState(0);
+    const [statuse, setStatuse] = useState(0);
+    const [rawate, setRawate] = useState('');
+    const [nomore, setNomore] = useState('000');
+    const [namae, setNamae] = useState('-');
+    const [polie, setPolie] = useState('Poliklinik E');
+    const [doktere, setDoktere] = useState('Dokter E');
+    const [texte, setTexte] = useState('');
+    const [playe, setPlaye] = useState('false');
 
-    //AntrianC
-    const [statusc, setStatusc] = useState('');
-    const [rawatc, setRawatc] = useState('');
-    const [nomorc, setNomorc] = useState('000');
-    const [namac, setNamac] = useState('-');
-    const [polic, setPolic] = useState('Poliklinik F');
-    const [dokterc, setDokterc] = useState('Dokter F');
-    const [textc, setTextc] = useState('');
-    const [playc, setPlayc] = useState('false');
+    //AntrianF
+    const [idF, setIdF] = useState(0);
+    const [statusf, setStatusf] = useState(0);
+    const [rawatf, setRawatf] = useState('');
+    const [nomorf, setNomorf] = useState('000');
+    const [namaf, setNamaf] = useState('-');
+    const [polif, setPolif] = useState('Poliklinik F');
+    const [dokterf, setDokterf] = useState('Dokter F');
+    const [textf, setTextf] = useState('');
+    const [playf, setPlayf] = useState('false');
 
     useEffect(() => {
         var tahun = date.getFullYear();
@@ -83,93 +87,110 @@ function DisplayB() {
   
     });
 
+    window.Pusher = Pusher;
+    const echo = new Echo({
+        broadcaster: 'pusher',
+        key: 'local',
+        wsHost : '127.0.0.1',
+        wsPort : 6001,
+        forceTLS: false,
+        disableStats: true,
+        encrypted: true,
+    });
+
+    //Antrian D
     useEffect(() => {
-        const pusher = new Pusher('21a139d8f76c9979bae5', {
-            cluster : "ap1",
-            });
-    
-        // Subscribe to the channel we specified in our Laravel Event
-        const channel = pusher.subscribe('polid');
-        channel.bind('polid-display', data => {
+        echo.channel('polid').listen('.polid-display', (data) => {
+            setIdD(data.message.id)
             setStatusd(data.message.status)
-            // setRawat(data.message.no_rawat)
+            setRawatd(data.message.no_rawat)
             setNomord(data.message.no_reg)
             setNamad(data.message.nm_pasien)
             setPolid(data.message.nm_poli)
             setDokterd(data.message.nm_dokter)
             setTextd('panggilan, '+data.message.nm_pasien+'nomor antrian, '+data.message.no_reg+',ke, '+data.message.nm_poli)
         
-            if (data.message.status === '1') {
+            if (data.message.status === 1) {
                 setPlayd('true');
             }else{
                 setPlayd('false');
-                window.responsiveVoice.cancel();
+                console.log('stop antrian D');
             }
         });
+
+       
         if (playd !== 'false') {
-            window.responsiveVoice.speak(textd,"Indonesian Male");
-        }
-    },[textd, namad,nomord,statusd]);
-
-    //Antrian B
-    useEffect(() => {
-        const pusher2 = new Pusher('21a139d8f76c9979bae5', {
-            cluster : "ap1",
-            });
-    
-        // Subscribe to the channel we specified in our Laravel Event
-        const channel2 = pusher2.subscribe('polib');
-        channel2.bind('polib-display', data => {
-            setStatusb(data.message.status)
-            setRawatb(data.message.no_rawat)
-            setNomorb(data.message.no_reg)
-            setNamab(data.message.nm_pasien)
-            setPolib(data.message.nm_poli)
-            setDokterb(data.message.nm_dokter)
-            setTextb('panggilan, '+data.message.nm_pasien+'nomor antrian, '+data.message.no_reg+',ke, '+data.message.nm_poli)
-        
-            if (data.message.status === '1') {
-                setPlayb('true');
+            if (playe === 'true' || playf === 'true') {
+                setTimeout(() => {
+                    window.responsiveVoice.speak(textd,"Indonesian Male")
+                }, 5000);
             }else{
-                setPlayb('false');
-                window.responsiveVoice.cancel();
+                window.responsiveVoice.speak(textd,"Indonesian Male")
+            }
+        }
+    },[textd,playd, namad,nomord,idD]);
+
+    //Antrian E
+    useEffect(() => {
+        echo.channel('polie').listen('.polie-display', (data) => {
+            setIdE(data.message.id)
+            setStatuse(data.message.status)
+            setRawate(data.message.no_rawat)
+            setNomore(data.message.no_reg)
+            setNamae(data.message.nm_pasien)
+            setPolie(data.message.nm_poli)
+            setDoktere(data.message.nm_dokter)
+            setTexte('panggilan, '+data.message.nm_pasien+'nomor antrian, '+data.message.no_reg+',ke, '+data.message.nm_poli)
+        
+            if (data.message.status === 1) {
+                setPlaye('true');
+            }else{
+                setPlaye('false');
+                console.log('stop antrian E');
             }
         });
 
-        if (playb !== 'false') {
-            window.responsiveVoice.speak(textb,"Indonesian Male");
-        }
-    },[rawatb,playb,textb]);
-
-    //Antrian C
-    useEffect(() => {
-        const pusher3 = new Pusher('21a139d8f76c9979bae5', {
-            cluster : "ap1",
-            });
-    
-        // Subscribe to the channel we specified in our Laravel Event
-        const channel3 = pusher3.subscribe('polic');
-        channel3.bind('polic-display', data => {
-            setStatusc(data.message.status)
-            setRawatc(data.message.no_rawat)
-            setNomorc(data.message.no_reg)
-            setNamac(data.message.nm_pasien)
-            setPolic(data.message.nm_poli)
-            setDokterc(data.message.nm_dokter)
-            setTextc('panggilan, '+data.message.nm_pasien+'nomor antrian, '+data.message.no_reg+',ke, '+data.message.nm_poli)
-        
-            if (data.message.status === '1') {
-                setPlayc('true');
+        if (playe !== 'false') {
+            if (playd === 'true' || playf === 'true') {
+                setTimeout(() => {
+                    window.responsiveVoice.speak(texte,"Indonesian Male")
+                }, 5000);
             }else{
-                setPlayc('false');
-                window.responsiveVoice.cancel();
+                window.responsiveVoice.speak(texte,"Indonesian Male")
+            }
+        }
+    },[rawate,playe,texte,nomore,idE]);
+
+    //Antrian F
+    useEffect(() => {
+        echo.channel('polif').listen('.polif-display', (data) => {
+            setIdF(data.message.id)
+            setStatusf(data.message.status)
+            setRawatf(data.message.no_rawat)
+            setNomorf(data.message.no_reg)
+            setNamaf(data.message.nm_pasien)
+            setPolif(data.message.nm_poli)
+            setDokterf(data.message.nm_dokter)
+            setTextf('panggilan, '+data.message.nm_pasien+'nomor antrian, '+data.message.no_reg+',ke, '+data.message.nm_poli)
+        
+            if (data.message.status === 1) {
+                setPlayf('true');
+            }else{
+                setPlayf('false');
+                console.log('stop antrian F');
             }
         });
 
-        if (playc !== 'false') {
-            window.responsiveVoice.speak(textc,"Indonesian Male");
+        if (playf !== 'false') {
+            if (playd === 'true' || playe === 'true') {
+                setTimeout(() => {
+                    window.responsiveVoice.speak(textf,"Indonesian Male")
+                }, 5000);
+            }else{
+                window.responsiveVoice.speak(textf,"Indonesian Male")
+            }
         }
-    },[rawatc,playc,textc]);
+    },[rawatf,playf,textf,nomorf,idF]);
 
     return(
         <div>
@@ -218,22 +239,22 @@ function DisplayB() {
                 </Col>
                 <Col>
                     <Card className="text-center card-nomor"> 
-                        <Card.Header className="displayb-header-top2">{polib}</Card.Header>
+                        <Card.Header className="displayb-header-top2">{polie}</Card.Header>
                         <Card.Body>
-                        <Card.Title className="nama-pasien">{namab}</Card.Title>
-                            <Card.Title className="no-antrian">{nomorb}</Card.Title>
+                        <Card.Title className="nama-pasien">{namae}</Card.Title>
+                            <Card.Title className="no-antrian">{nomore}</Card.Title>
                         </Card.Body>
-                        <Card.Footer className="displayb-nama-dokter2">{dokterb}</Card.Footer>
+                        <Card.Footer className="displayb-nama-dokter2">{doktere}</Card.Footer>
                     </Card>
                 </Col>
                 <Col>
                     <Card className="text-center card-nomor"> 
-                        <Card.Header className="displayb-header-top3">{polic}</Card.Header>
+                        <Card.Header className="displayb-header-top3">{polif}</Card.Header>
                         <Card.Body>
-                            <Card.Title className="nama-pasien">{namac}</Card.Title>
-                            <Card.Title className="no-antrian">{nomorc}</Card.Title>
+                            <Card.Title className="nama-pasien">{namaf}</Card.Title>
+                            <Card.Title className="no-antrian">{nomorf}</Card.Title>
                         </Card.Body>
-                        <Card.Footer className="displayb-nama-dokter3">{dokterc}</Card.Footer>
+                        <Card.Footer className="displayb-nama-dokter3">{dokterf}</Card.Footer>
                     </Card>
                 </Col>
                 

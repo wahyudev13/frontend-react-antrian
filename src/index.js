@@ -10,6 +10,8 @@ import Antrian from './component/panggilan/Antrian';
 import AntrianB from './component/panggilan/AntrianB';
 import AntrianC from './component/panggilan/AntrianC';
 import AntrianD from './component/panggilan/AntrianD';
+import AntrianE from './component/panggilan/AntrianE';
+import AntrianF from './component/panggilan/AntrianF';
 // import Footer from './component/Footer';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css';
@@ -23,10 +25,12 @@ root.render(
       <Routes>
         <Route path='/' element={<Display/>} />
         <Route path='displayb' element={<DisplayB/>} />
-        <Route path='panggilan' element={<Antrian/>} />
+        <Route path='panggilan-a' element={<Antrian/>} />
         <Route path='panggilan-b' element={<AntrianB/>} />
         <Route path='panggilan-c' element={<AntrianC/>} />
         <Route path='panggilan-d' element={<AntrianD/>} />
+        <Route path='panggilan-e' element={<AntrianE/>} />
+        <Route path='panggilan-f' element={<AntrianF/>} />
       </Routes>
     </BrowserRouter>
     {/* <Footer/> */}

@@ -4,8 +4,9 @@ import Card from 'react-bootstrap/Card';
 import Row from "react-bootstrap/Row";
 import Col from 'react-bootstrap/Col';
 import React from 'react';
+import Echo from 'laravel-echo';
+import Pusher from 'pusher-js';
 import {useState, useEffect} from "react";
-import Pusher from "pusher-js";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCalendarDays, faClockFour} from "@fortawesome/free-solid-svg-icons";
 import Nav from "react-bootstrap/Nav";
@@ -18,8 +19,9 @@ function Display() {
     const [jam, setJam] = useState('');
     
     //AntrianA
-    const [status, setStatus] = useState('');
-    // const [rawat, setRawat] = useState('');
+    const [id, setId] = useState(0);
+    const [status, setStatus] = useState(0);
+    const [rawat, setRawat] = useState('');
     const [nomor, setNomor] = useState('000');
     const [nama, setNama] = useState('-');
     const [poli, setPoli] = useState('Poliklinik A');
@@ -28,7 +30,8 @@ function Display() {
     const [play, setPlay] = useState('false');
 
     //AntrianB
-    const [statusb, setStatusb] = useState('');
+    const [idb, setIdb] = useState(0);
+    const [statusb, setStatusb] = useState(0);
     const [rawatb, setRawatb] = useState('');
     const [nomorb, setNomorb] = useState('000');
     const [namab, setNamab] = useState('-');
@@ -38,7 +41,8 @@ function Display() {
     const [playb, setPlayb] = useState('false');
 
     //AntrianC
-    const [statusc, setStatusc] = useState('');
+    const [idc, setIdc] = useState(0);
+    const [statusc, setStatusc] = useState(0);
     const [rawatc, setRawatc] = useState('');
     const [nomorc, setNomorc] = useState('000');
     const [namac, setNamac] = useState('-');
@@ -82,44 +86,50 @@ function Display() {
         setJam(jam+':'+menit+':'+detik)
   
     });
-
+    window.Pusher = Pusher;
+    const echo = new Echo({
+        broadcaster: 'pusher',
+        key: 'local',
+        wsHost : '127.0.0.1',
+        wsPort : 6001,
+        forceTLS: false,
+        disableStats: true,
+        encrypted: true,
+    });
     useEffect(() => {
-        const pusher = new Pusher('21a139d8f76c9979bae5', {
-            cluster : "ap1",
-            });
-    
-        // Subscribe to the channel we specified in our Laravel Event
-        const channel = pusher.subscribe('polia');
-        channel.bind('polia-display', data => {
+        echo.channel('polia').listen('.polia-display', (data) => {
+            setId(data.message.id)
             setStatus(data.message.status)
-            // setRawat(data.message.no_rawat)
+            setRawat(data.message.no_rawat)
             setNomor(data.message.no_reg)
             setNama(data.message.nm_pasien)
             setPoli(data.message.nm_poli)
             setDokter(data.message.nm_dokter)
             setText('panggilan, '+data.message.nm_pasien+'nomor antrian, '+data.message.no_reg+',ke, '+data.message.nm_poli)
         
-            if (data.message.status === '1') {
+            if (data.message.status === 1) {
                 setPlay('true');
             }else{
                 setPlay('false');
-                window.responsiveVoice.cancel();
+                console.log('stop antrian A');
             }
         });
+
         if (play !== 'false') {
-            window.responsiveVoice.speak(text,"Indonesian Male");
+            if (playb === 'true' || playc === 'true') {
+                setTimeout(() => {
+                    window.responsiveVoice.speak(text,"Indonesian Male")
+                }, 5000);
+            }else{
+                window.responsiveVoice.speak(text,"Indonesian Male")
+            }
         }
-    },[text, nama,nomor]);
+    },[play,text, nama,nomor,id]);
 
     //Antrian B
     useEffect(() => {
-        const pusher2 = new Pusher('21a139d8f76c9979bae5', {
-            cluster : "ap1",
-            });
-    
-        // Subscribe to the channel we specified in our Laravel Event
-        const channel2 = pusher2.subscribe('polib');
-        channel2.bind('polib-display', data => {
+        echo.channel('polib').listen('.polib-display', (data) => {
+            setIdb(data.message.id)
             setStatusb(data.message.status)
             setRawatb(data.message.no_rawat)
             setNomorb(data.message.no_reg)
@@ -128,48 +138,55 @@ function Display() {
             setDokterb(data.message.nm_dokter)
             setTextb('panggilan, '+data.message.nm_pasien+'nomor antrian, '+data.message.no_reg+',ke, '+data.message.nm_poli)
         
-            if (data.message.status === '1') {
+            if (data.message.status === 1) {
                 setPlayb('true');
             }else{
                 setPlayb('false');
-                window.responsiveVoice.cancel();
+                console.log('stop antrian B');
             }
         });
 
         if (playb !== 'false') {
-            window.responsiveVoice.speak(textb,"Indonesian Male");
+            if (play === 'true' || playc === 'true') {
+                setTimeout(() => {
+                    window.responsiveVoice.speak(textb,"Indonesian Male")
+                }, 5000);
+            }else{
+                window.responsiveVoice.speak(textb,"Indonesian Male")
+            }
         }
-    },[rawatb,playb,textb]);
+    },[rawatb,playb,textb,idb,namab,nomorb]);
 
     //Antrian C
     useEffect(() => {
-        const pusher3 = new Pusher('21a139d8f76c9979bae5', {
-            cluster : "ap1",
-            });
-    
-        // Subscribe to the channel we specified in our Laravel Event
-        const channel3 = pusher3.subscribe('polic');
-        channel3.bind('polic-display', data => {
-            setStatusc(data.message.status)
-            setRawatc(data.message.no_rawat)
-            setNomorc(data.message.no_reg)
-            setNamac(data.message.nm_pasien)
-            setPolic(data.message.nm_poli)
-            setDokterc(data.message.nm_dokter)
-            setTextc('panggilan, '+data.message.nm_pasien+'nomor antrian, '+data.message.no_reg+',ke, '+data.message.nm_poli)
-        
-            if (data.message.status === '1') {
-                setPlayc('true');
-            }else{
-                setPlayc('false');
-                window.responsiveVoice.cancel();
-            }
+        echo.channel('polic').listen('.polic-display', (data) => {
+                setIdc(data.message.id)
+                setStatusc(data.message.status)
+                setRawatc(data.message.no_rawat)
+                setNomorc(data.message.no_reg)
+                setNamac(data.message.nm_pasien)
+                setPolic(data.message.nm_poli)
+                setDokterc(data.message.nm_dokter)
+                setTextc('panggilan, '+data.message.nm_pasien+'nomor antrian, '+data.message.no_reg+',ke, '+data.message.nm_poli)
+            
+                if (data.message.status === 1) {
+                    setPlayc('true');
+                }else{
+                    setPlayc('false');
+                    console.log('stop antrian C');
+                }
         });
 
         if (playc !== 'false') {
-            window.responsiveVoice.speak(textc,"Indonesian Male");
+            if (playb === 'true' || play === 'true') {
+                setTimeout(() => {
+                    window.responsiveVoice.speak(textc,"Indonesian Male")
+                }, 5000);
+            }else{
+                window.responsiveVoice.speak(textc,"Indonesian Male")
+            }
         }
-    },[rawatc,playc,textc]);
+    },[rawatc,playc,textc,idc,namac,nomorc]);
 
     return(
         <div>
