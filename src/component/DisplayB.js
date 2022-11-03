@@ -16,7 +16,8 @@ var date = new Date();
 function DisplayB() {
     //Footer
     const [tanggal, setTanggal] = useState('');
-    const [jam, setJam] = useState('');
+    var time = new Date().toLocaleTimeString();
+    const [jam, setJam] = useState(time);
     
     //AntrianD
     const [idD, setIdD] = useState(0);
@@ -51,11 +52,12 @@ function DisplayB() {
     const [textf, setTextf] = useState('');
     const [playf, setPlayf] = useState('false');
 
-    useEffect(() => {
+    const waktu = () => {
         var tahun = date.getFullYear();
         var bulan = date.getMonth();
         var tanggal = date.getDate();
         var hari = date.getDay();
+        //Jam
         var jam = date.getHours();
         var menit = date.getMinutes();
         var detik = date.getSeconds();
@@ -82,9 +84,19 @@ function DisplayB() {
         case 10: bulan = "November"; break;
         case 11: bulan = "Desember"; break;
         }
-        setTanggal(hari+','+tanggal+' '+bulan+' '+tahun);
-        setJam(jam+':'+menit+':'+detik)
-  
+        setTanggal(hari+','+tanggal+' '+bulan+' '+tahun)
+    }
+
+    const updateTime = () => {
+       var time = new Date().toLocaleTimeString();
+       setJam(time);
+    }
+
+    useEffect(() => {
+        waktu()
+        setInterval(() => {
+            updateTime();
+        }, 1000);
     });
 
     window.Pusher = Pusher;
