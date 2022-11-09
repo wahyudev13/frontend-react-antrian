@@ -78,7 +78,7 @@ function AntrianD() {
     const setUpdate = async (tgl_registrasi,no_rkm_medis,kd_dokter,kd_poli, nm_pasien,nm_poli,nm_dokter, no_reg) => {
         setDisable([])
        
-            await axios.post(`${host}/api/antriand/update/`+tgl_registrasi+'/'+no_rkm_medis+'/'+kd_dokter+'/'+kd_poli+'/',{
+            await axios.post(`${host}/api/antriand/update/`+tgl_registrasi+'/'+no_rkm_medis+'/'+kd_dokter+'/'+kd_poli+'',{
                 status : 2,
                 nm_pasien : nm_pasien,
                 nm_dokter : nm_dokter,

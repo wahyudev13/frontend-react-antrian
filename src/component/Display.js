@@ -120,7 +120,7 @@ function Display() {
             setNama(data.message.nm_pasien)
             setPoli(data.message.nm_poli)
             setDokter(data.message.nm_dokter)
-            setText('panggilan, '+data.message.nm_pasien.toLowerCase()+' nomor antrian, '+data.message.no_reg+',ke, '+data.message.nm_poli)
+            setText('panggilan, '+data.message.nm_pasien.toLowerCase().slice(0, -2)+' nomor antrian, '+data.message.no_reg+',ke, '+data.message.nm_poli)
         
             if (data.message.status === 1) {
                 setPlay('true');
@@ -161,7 +161,7 @@ function Display() {
             setNamab(data.message.nm_pasien)
             setPolib(data.message.nm_poli)
             setDokterb(data.message.nm_dokter)
-            setTextb('panggilan, '+data.message.nm_pasien.toLowerCase()+'nomor antrian, '+data.message.no_reg+',ke, '+data.message.nm_poli)
+            setTextb('panggilan, '+data.message.nm_pasien.toLowerCase().slice(0, -2)+'nomor antrian, '+data.message.no_reg+',ke, '+data.message.nm_poli)
         
             if (data.message.status === 1) {
                 setPlayb('true');
@@ -202,7 +202,7 @@ function Display() {
                 setNamac(data.message.nm_pasien)
                 setPolic(data.message.nm_poli)
                 setDokterc(data.message.nm_dokter)
-                setTextc('panggilan, '+data.message.nm_pasien.toLowerCase()+'nomor antrian, '+data.message.no_reg+',ke, '+data.message.nm_poli)
+                setTextc('panggilan, '+data.message.nm_pasien.toLowerCase().slice(0, -2)+'nomor antrian, '+data.message.no_reg+',ke, '+data.message.nm_poli)
             
                 if (data.message.status === 1) {
                     setPlayc('true');
