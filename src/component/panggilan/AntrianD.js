@@ -22,20 +22,26 @@ function AntrianD() {
     const [kode, setKode] = useState('');
     const [count, setCount ] = useState(0);
     const [disable, setDisable] = useState([]);
+    const host = 'http://127.0.0.1:8000';
 
     const fectData = async () => {
-        try {
-            const response = await axios.get(`http://127.0.0.1:8000/api/cari/?cari=${kode}`);
-            const respoli = await axios.get('http://127.0.0.1:8000/api/getpoli');
-            //get response data
-            const data = await response.data.data;
-            const data2 = await respoli.data.data;
-            //assign response data to state "posts"
-            setAntrian(data);
-            setPoli(data2);
-        } catch (e) {
-            console.log(e.message);
-        }
+        await axios.get(`${host}/api/cari?cari=${kode}`)
+        .then(function (response) {
+            const pasien = response.data.data;
+            setAntrian(pasien);
+            //console.log(response.data.data);
+        }).catch(function (error) {
+            console.log(error.message);
+          });
+
+        await axios.get(`${host}/api/getpoli`)
+        .then(function (response) {
+            const poli = response.data.data;
+            setPoli(poli);
+            //console.log(response.data.data);
+        }).catch(function (error) {
+            console.log(error.message);
+          });
     }
     //useEffect hook
     useEffect(() => {
@@ -46,25 +52,24 @@ function AntrianD() {
         if (disable.length === 0) {
             setCount(count + 1)
             setDisable(kelas)
-            try {
-                await axios.post('http://127.0.0.1:8000/api/antrian/stored',{
-                    id : count,
-                    kd_dokter : kd_dokter,
-                    kd_poli : kd_poli,
-                    status : 1,
-                    no_rawat : no_rawat,
-                    no_reg : no_reg,
-                    no_rkm_medis : no_rkm_medis,
-                    nm_pasien : nm_pasien,
-                    nm_poli : nm_poli,
-                    nm_dokter : nm_dokter,
-                    tgl_registrasi : tgl_registrasi
-                });
-                console.log('success')
-            } catch (e) {
-                console.log(e.message);
-                
-            }
+            
+            await axios.post(`${host}/api/antrian/stored`,{
+                id : count,
+                kd_dokter : kd_dokter,
+                kd_poli : kd_poli,
+                status : 1,
+                no_rawat : no_rawat,
+                no_reg : no_reg,
+                no_rkm_medis : no_rkm_medis,
+                nm_pasien : nm_pasien,
+                nm_poli : nm_poli,
+                nm_dokter : nm_dokter,
+                tgl_registrasi : tgl_registrasi
+            }).then(function (res) {
+                console.log('success', res);
+            }).catch(function (error) {  
+                console.log(error.message);
+            });
         }else{
             alert('STOP ANTRIAN DAHULU');
         }
@@ -72,25 +77,20 @@ function AntrianD() {
 
     const setUpdate = async (tgl_registrasi,no_rkm_medis,kd_dokter,kd_poli, nm_pasien,nm_poli,nm_dokter, no_reg) => {
         setDisable([])
-        try {
-            await axios.post('http://127.0.0.1:8000/api/antriand/update/'+tgl_registrasi+'/'+no_rkm_medis+'/'+kd_dokter+'/'+kd_poli+'/',{
+       
+            await axios.post(`${host}/api/antriand/update/`+tgl_registrasi+'/'+no_rkm_medis+'/'+kd_dokter+'/'+kd_poli+'/',{
                 status : 2,
                 nm_pasien : nm_pasien,
                 nm_dokter : nm_dokter,
                 nm_poli : nm_poli,
                 no_reg : no_reg
+            }).then(function (res) {
+                console.log('success stop', res);
+            }).catch(function (error) {
+                console.log(error.message);
             });
-            console.log('success stop')
-            // alert('ANTRIAN BERHASIL DI STOP')
-        } catch (error) {
-            // alert('PASIEN BELUM DIPANGGIL')
-            console.log(error.message);
-        }
     }
 
-    
-
-    
     return(
         <Container fluid>
             <Row>

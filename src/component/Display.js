@@ -58,10 +58,10 @@ function Display() {
         var bulan = date.getMonth();
         var tanggal = date.getDate();
         var hari = date.getDay();
-        //Jam
-        var jam = date.getHours();
-        var menit = date.getMinutes();
-        var detik = date.getSeconds();
+        // //Jam
+        // var jam = date.getHours();
+        // var menit = date.getMinutes();
+        // var detik = date.getSeconds();
         switch(hari) {
         case 0: hari = "Minggu"; break;
         case 1: hari = "Senin"; break;
@@ -100,17 +100,18 @@ function Display() {
         }, 1000);
     });
 
-    window.Pusher = Pusher;
-    const echo = new Echo({
-        broadcaster: 'pusher',
-        key: 'local',
-        wsHost : '127.0.0.1',
-        wsPort : 6001,
-        forceTLS: false,
-        disableStats: true,
-        encrypted: true,
-    });
+    
     useEffect(() => {
+        window.Pusher = Pusher;
+        const echo = new Echo({
+            broadcaster: 'pusher',
+            key: 'local',
+            wsHost : '127.0.0.1',
+            wsPort : 6001,
+            forceTLS: false,
+            disableStats: true,
+            encrypted: true,
+        });
         echo.channel('polia').listen('.polia-display', (data) => {
             setId(data.message.id)
             setStatus(data.message.status)
@@ -119,7 +120,7 @@ function Display() {
             setNama(data.message.nm_pasien)
             setPoli(data.message.nm_poli)
             setDokter(data.message.nm_dokter)
-            setText('panggilan, '+data.message.nm_pasien+'nomor antrian, '+data.message.no_reg+',ke, '+data.message.nm_poli)
+            setText('panggilan, '+data.message.nm_pasien.toLowerCase()+' nomor antrian, '+data.message.no_reg+',ke, '+data.message.nm_poli)
         
             if (data.message.status === 1) {
                 setPlay('true');
@@ -142,6 +143,16 @@ function Display() {
 
     //Antrian B
     useEffect(() => {
+        window.Pusher = Pusher;
+        const echo = new Echo({
+            broadcaster: 'pusher',
+            key: 'local',
+            wsHost : '127.0.0.1',
+            wsPort : 6001,
+            forceTLS: false,
+            disableStats: true,
+            encrypted: true,
+        });
         echo.channel('polib').listen('.polib-display', (data) => {
             setIdb(data.message.id)
             setStatusb(data.message.status)
@@ -173,6 +184,16 @@ function Display() {
 
     //Antrian C
     useEffect(() => {
+        window.Pusher = Pusher;
+        const echo = new Echo({
+            broadcaster: 'pusher',
+            key: 'local',
+            wsHost : '127.0.0.1',
+            wsPort : 6001,
+            forceTLS: false,
+            disableStats: true,
+            encrypted: true,
+        });
         echo.channel('polic').listen('.polic-display', (data) => {
                 setIdc(data.message.id)
                 setStatusc(data.message.status)

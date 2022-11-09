@@ -99,19 +99,18 @@ function DisplayB() {
         }, 1000);
     });
 
-    window.Pusher = Pusher;
-    const echo = new Echo({
-        broadcaster: 'pusher',
-        key: 'local',
-        wsHost : '127.0.0.1',
-        wsPort : 6001,
-        forceTLS: false,
-        disableStats: true,
-        encrypted: true,
-    });
-
     //Antrian D
     useEffect(() => {
+        window.Pusher = Pusher;
+        const echo = new Echo({
+            broadcaster: 'pusher',
+            key: 'local',
+            wsHost : '127.0.0.1',
+            wsPort : 6001,
+            forceTLS: false,
+            disableStats: true,
+            encrypted: true,
+        });
         echo.channel('polid').listen('.polid-display', (data) => {
             setIdD(data.message.id)
             setStatusd(data.message.status)
@@ -144,6 +143,16 @@ function DisplayB() {
 
     //Antrian E
     useEffect(() => {
+        window.Pusher = Pusher;
+        const echo = new Echo({
+            broadcaster: 'pusher',
+            key: 'local',
+            wsHost : '127.0.0.1',
+            wsPort : 6001,
+            forceTLS: false,
+            disableStats: true,
+            encrypted: true,
+        });
         echo.channel('polie').listen('.polie-display', (data) => {
             setIdE(data.message.id)
             setStatuse(data.message.status)
@@ -175,6 +184,16 @@ function DisplayB() {
 
     //Antrian F
     useEffect(() => {
+        window.Pusher = Pusher;
+        const echo = new Echo({
+            broadcaster: 'pusher',
+            key: 'local',
+            wsHost : '127.0.0.1',
+            wsPort : 6001,
+            forceTLS: false,
+            disableStats: true,
+            encrypted: true,
+        });
         echo.channel('polif').listen('.polif-display', (data) => {
             setIdF(data.message.id)
             setStatusf(data.message.status)
