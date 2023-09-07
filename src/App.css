@@ -154,6 +154,16 @@
   background-color:#c42f3c!important;
   color: #fff!important;
 }
+
+/* Display Model 2 */
+.no-antrian-mod2{
+  font-size: 12rem!important;
+}
+.credit-footer-mod2{
+  color: #fff!important;
+  font-size: 20px!important;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

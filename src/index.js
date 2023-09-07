@@ -2,8 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import Display from './component/Display';
-import DisplayB from './component/DisplayB'
+import Display from './component/display/model-1/Display';
+import DisplayB from './component/display/model-1/DisplayB';
+import DisplayC from './component/display/model-2/DisplayC';
+import DisplayD from './component/display/model-2/DisplayD';
 import Antrian from './component/panggilan/Antrian';
 import AntrianB from './component/panggilan/AntrianB';
 import AntrianC from './component/panggilan/AntrianC';
@@ -22,6 +24,8 @@ root.render(
       <Routes>
         <Route path='display-a' element={<Display/>} />
         <Route path='display-b' element={<DisplayB/>} />
+        <Route path='display-c' element={<DisplayC/>} />
+        <Route path='display-d' element={<DisplayD/>} />
         <Route path='panggilan-a' element={<Antrian/>} />
         <Route path='panggilan-b' element={<AntrianB/>} />
         <Route path='panggilan-c' element={<AntrianC/>} />
