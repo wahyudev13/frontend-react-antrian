@@ -29,9 +29,9 @@ function Antrian() {
     const [kode, setKode] = useState([]);
     const [count, setCount ] = useState(0);
     const [disable, setDisable] = useState([]);
-    const host = 'http://127.0.0.1:8000';
-    
+    const host = process.env.REACT_APP_API;
 
+    
     const fectData = async () => {
         await axios.get(`${host}/api/cari?cari=${kode}`)
         .then(function (response) {
@@ -144,7 +144,7 @@ function Antrian() {
                             </tr>
                         </thead>
                         <tbody>
-                            {antrians.length !== 0 ? antrians.map((antrian, index) => (
+                            {antrians.length !== 0 ? antrians.map((antrian,index) => (
                                <tr key={index}>
                                     <td>{antrian.no_reg}</td>
                                     <td>{antrian.no_rawat}</td>

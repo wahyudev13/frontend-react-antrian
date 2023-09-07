@@ -111,8 +111,8 @@ function DisplayB() {
         const echo = new Echo({
             broadcaster: 'pusher',
             key: 'local',
-            wsHost: '127.0.0.1',
-            wsPort: 6001,
+            wsHost: process.env.REACT_APP_HOST_PUSHER,
+            wsPort: process.env.REACT_APP_PORT_PUSHER,
             forceTLS: false,
             disableStats: true,
             encrypted: true,
@@ -153,8 +153,8 @@ function DisplayB() {
         const echo = new Echo({
             broadcaster: 'pusher',
             key: 'local',
-            wsHost: '127.0.0.1',
-            wsPort: 6001,
+            wsHost: process.env.REACT_APP_HOST_PUSHER,
+            wsPort: process.env.REACT_APP_PORT_PUSHER,
             forceTLS: false,
             disableStats: true,
             encrypted: true,
@@ -194,8 +194,8 @@ function DisplayB() {
         const echo = new Echo({
             broadcaster: 'pusher',
             key: 'local',
-            wsHost: '127.0.0.1',
-            wsPort: 6001,
+            wsHost: process.env.REACT_APP_HOST_PUSHER,
+            wsPort: process.env.REACT_APP_PORT_PUSHER,
             forceTLS: false,
             disableStats: true,
             encrypted: true,

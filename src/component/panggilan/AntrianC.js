@@ -22,7 +22,7 @@ function Antrian() {
     const [kode, setKode] = useState('');
     const [count, setCount ] = useState(0);
     const [disable, setDisable] = useState([]);
-    const host = 'http://127.0.0.1:8000';
+    const host = process.env.REACT_APP_API;
 
     const fectData = async () => {
         await axios.get(`${host}/api/cari?cari=${kode}`)
