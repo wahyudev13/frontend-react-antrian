@@ -58,7 +58,8 @@
   font-size: 20px;
 }
 .no-antrian{
-  font-size: 12rem!important;
+  font-size: 7rem!important;
+  line-height: 0.8!important;
 }
 .nama-pasien{
   font-size: 2rem!important;
@@ -90,7 +91,8 @@
 }
 .credit-footer{
     color: #fff!important;
-    font-size: 17px!important;
+    font-size: 26px!important;
+    font-weight: 700;
 }
 .header-antrian-b{
   background-color: #e49503!important;

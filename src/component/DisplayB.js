@@ -1,14 +1,20 @@
-import Container  from "react-bootstrap/Container";
+import Vidio3 from "../vidio/vidio3.mp4";
+import Vidio2 from "../vidio/vidio2.mp4";
+import Vidio1 from "../vidio/vidio1.mp4";
+import Vidio4 from "../vidio/vidio4.mp4"
+import Container from "react-bootstrap/Container";
 import Navbar from 'react-bootstrap/Navbar';
 import Card from 'react-bootstrap/Card';
 import Row from "react-bootstrap/Row";
 import Col from 'react-bootstrap/Col';
+import Alert from 'react-bootstrap/Alert';
 import React from 'react';
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import Pusher from "pusher-js";
 import Echo from 'laravel-echo';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faCalendarDays, faClockFour} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCalendarDays, faClockFour } from "@fortawesome/free-solid-svg-icons";
+import { faInstagram, faFacebookF, faYoutube, faInstagramSquare, faSquareInstagram, faWeebly, faSquareXTwitter, faSquareFacebook, faSquareYoutube, faSquareGooglePlus } from "@fortawesome/free-brands-svg-icons";
 import Nav from "react-bootstrap/Nav";
 var date = new Date();
 
@@ -18,7 +24,7 @@ function DisplayB() {
     const [tanggal, setTanggal] = useState('');
     var time = new Date().toLocaleTimeString();
     const [jam, setJam] = useState(time);
-    
+
     //AntrianD
     const [idD, setIdD] = useState(0);
     const [statusd, setStatusd] = useState(0);
@@ -61,35 +67,35 @@ function DisplayB() {
         var jam = date.getHours();
         var menit = date.getMinutes();
         var detik = date.getSeconds();
-        switch(hari) {
-        case 0: hari = "Minggu"; break;
-        case 1: hari = "Senin"; break;
-        case 2: hari = "Selasa"; break;
-        case 3: hari = "Rabu"; break;
-        case 4: hari = "Kamis"; break;
-        case 5: hari = "Jum'at"; break;
-        case 6: hari = "Sabtu"; break;
+        switch (hari) {
+            case 0: hari = "Minggu"; break;
+            case 1: hari = "Senin"; break;
+            case 2: hari = "Selasa"; break;
+            case 3: hari = "Rabu"; break;
+            case 4: hari = "Kamis"; break;
+            case 5: hari = "Jum'at"; break;
+            case 6: hari = "Sabtu"; break;
         }
-        switch(bulan) {
-        case 0: bulan = "Januari"; break;
-        case 1: bulan = "Februari"; break;
-        case 2: bulan = "Maret"; break;
-        case 3: bulan = "April"; break;
-        case 4: bulan = "Mei"; break;
-        case 5: bulan = "Juni"; break;
-        case 6: bulan = "Juli"; break;
-        case 7: bulan = "Agustus"; break;
-        case 8: bulan = "September"; break;
-        case 9: bulan = "Oktober"; break;
-        case 10: bulan = "November"; break;
-        case 11: bulan = "Desember"; break;
+        switch (bulan) {
+            case 0: bulan = "Januari"; break;
+            case 1: bulan = "Februari"; break;
+            case 2: bulan = "Maret"; break;
+            case 3: bulan = "April"; break;
+            case 4: bulan = "Mei"; break;
+            case 5: bulan = "Juni"; break;
+            case 6: bulan = "Juli"; break;
+            case 7: bulan = "Agustus"; break;
+            case 8: bulan = "September"; break;
+            case 9: bulan = "Oktober"; break;
+            case 10: bulan = "November"; break;
+            case 11: bulan = "Desember"; break;
         }
-        setTanggal(hari+','+tanggal+' '+bulan+' '+tahun)
+        setTanggal(hari + ',' + tanggal + ' ' + bulan + ' ' + tahun)
     }
 
     const updateTime = () => {
-       var time = new Date().toLocaleTimeString();
-       setJam(time);
+        var time = new Date().toLocaleTimeString();
+        setJam(time);
     }
 
     useEffect(() => {
@@ -105,8 +111,8 @@ function DisplayB() {
         const echo = new Echo({
             broadcaster: 'pusher',
             key: 'local',
-            wsHost : '127.0.0.1',
-            wsPort : 6001,
+            wsHost: '127.0.0.1',
+            wsPort: 6001,
             forceTLS: false,
             disableStats: true,
             encrypted: true,
@@ -119,27 +125,27 @@ function DisplayB() {
             setNamad(data.message.nm_pasien)
             setPolid(data.message.nm_poli)
             setDokterd(data.message.nm_dokter)
-            setTextd('panggilan, '+data.message.nm_pasien.toLowerCase().slice(0, -2)+'nomor antrian, '+data.message.no_reg+',ke, '+data.message.nm_poli)
-        
+            setTextd('panggilan, ' + data.message.nm_pasien.toLowerCase().slice(0, -2) + 'nomor antrian, ' + data.message.no_reg + ',ke, ' + data.message.nm_poli)
+
             if (data.message.status === 1) {
                 setPlayd('true');
-            }else{
+            } else {
                 setPlayd('false');
                 console.log('stop antrian D');
             }
         });
 
-       
+
         if (playd !== 'false') {
             if (playe === 'true' || playf === 'true') {
                 setTimeout(() => {
-                    window.responsiveVoice.speak(textd,"Indonesian Male")
+                    window.responsiveVoice.speak(textd, "Indonesian Male")
                 }, 5000);
-            }else{
-                window.responsiveVoice.speak(textd,"Indonesian Male")
+            } else {
+                window.responsiveVoice.speak(textd, "Indonesian Male")
             }
         }
-    },[textd,playd, namad,nomord,idD]);
+    }, [rawatd, textd, playd, namad, nomord, idD]);
 
     //Antrian E
     useEffect(() => {
@@ -147,8 +153,8 @@ function DisplayB() {
         const echo = new Echo({
             broadcaster: 'pusher',
             key: 'local',
-            wsHost : '127.0.0.1',
-            wsPort : 6001,
+            wsHost: '127.0.0.1',
+            wsPort: 6001,
             forceTLS: false,
             disableStats: true,
             encrypted: true,
@@ -161,11 +167,11 @@ function DisplayB() {
             setNamae(data.message.nm_pasien)
             setPolie(data.message.nm_poli)
             setDoktere(data.message.nm_dokter)
-            setTexte('panggilan, '+data.message.nm_pasien.toLowerCase().slice(0, -2)+'nomor antrian, '+data.message.no_reg+',ke, '+data.message.nm_poli)
-        
+            setTexte('panggilan, ' + data.message.nm_pasien.toLowerCase().slice(0, -2) + 'nomor antrian, ' + data.message.no_reg + ',ke, ' + data.message.nm_poli)
+
             if (data.message.status === 1) {
                 setPlaye('true');
-            }else{
+            } else {
                 setPlaye('false');
                 console.log('stop antrian E');
             }
@@ -174,13 +180,13 @@ function DisplayB() {
         if (playe !== 'false') {
             if (playd === 'true' || playf === 'true') {
                 setTimeout(() => {
-                    window.responsiveVoice.speak(texte,"Indonesian Male")
+                    window.responsiveVoice.speak(texte, "Indonesian Male")
                 }, 5000);
-            }else{
-                window.responsiveVoice.speak(texte,"Indonesian Male")
+            } else {
+                window.responsiveVoice.speak(texte, "Indonesian Male")
             }
         }
-    },[rawate,playe,texte,nomore,idE]);
+    }, [rawate, playe, texte, nomore, idE]);
 
     //Antrian F
     useEffect(() => {
@@ -188,8 +194,8 @@ function DisplayB() {
         const echo = new Echo({
             broadcaster: 'pusher',
             key: 'local',
-            wsHost : '127.0.0.1',
-            wsPort : 6001,
+            wsHost: '127.0.0.1',
+            wsPort: 6001,
             forceTLS: false,
             disableStats: true,
             encrypted: true,
@@ -202,11 +208,11 @@ function DisplayB() {
             setNamaf(data.message.nm_pasien)
             setPolif(data.message.nm_poli)
             setDokterf(data.message.nm_dokter)
-            setTextf('panggilan, '+data.message.nm_pasien.toLowerCase().slice(0, -2)+'nomor antrian, '+data.message.no_reg+',ke, '+data.message.nm_poli)
-        
+            setTextf('panggilan, ' + data.message.nm_pasien.toLowerCase().slice(0, -2) + 'nomor antrian, ' + data.message.no_reg + ',ke, ' + data.message.nm_poli)
+
             if (data.message.status === 1) {
                 setPlayf('true');
-            }else{
+            } else {
                 setPlayf('false');
                 console.log('stop antrian F');
             }
@@ -215,95 +221,135 @@ function DisplayB() {
         if (playf !== 'false') {
             if (playd === 'true' || playe === 'true') {
                 setTimeout(() => {
-                    window.responsiveVoice.speak(textf,"Indonesian Male")
+                    window.responsiveVoice.speak(textf, "Indonesian Male")
                 }, 5000);
-            }else{
-                window.responsiveVoice.speak(textf,"Indonesian Male")
+            } else {
+                window.responsiveVoice.speak(textf, "Indonesian Male")
             }
         }
-    },[rawatf,playf,textf,nomorf,idF]);
+    }, [rawatf, playf, textf, nomorf, idF]);
 
-    return(
+    return (
         <div>
-        <Navbar sticky="top" className='navbar-app'>
-        <Container fluid>
-           <Nav>
-                <Navbar.Brand>
-                        <img
-                        alt=""
-                        src="/logonavbar.png"
-                        width="60"
-                        height="60"
-                        className="d-inline-block"
-                        />{' '}
-                    <strong className='title-app'>RS PKU Muhammadiyah Sekapuk</strong>
-                </Navbar.Brand>
-           </Nav>
-                
-            
-            <Nav>
-                <Navbar.Brand>
-                    <strong className='title-app'>ANTRIAN POLIKLINIK 2</strong>
-                </Navbar.Brand>
-            </Nav>
-            
-        </Container>
-        </Navbar>
-        <Container fluid>
-            {/* <Row>
-                <Col>
-                    <Alert variant="success" style={{ margin: '10px' }}>
-                        This is a  alert—check it out!
-                    </Alert>
-                </Col>
-            </Row> */}
-            <Row md={3} xs={1} lg={3} xl={3} xxl={3} className="g-4">
-                <Col>
-                    <Card className="text-center card-nomor"> 
-                        <Card.Header className="displayb-header-top">{polid}</Card.Header>
-                        <Card.Body>
-                            <Card.Title className="nama-pasien">{namad}</Card.Title>
-                            <Card.Title className="no-antrian">{nomord}</Card.Title>
-                        </Card.Body>
-                        <Card.Footer className="displayb-nama-dokter">{dokterd}</Card.Footer>
-                    </Card>
-                </Col>
-                <Col>
-                    <Card className="text-center card-nomor"> 
-                        <Card.Header className="displayb-header-top2">{polie}</Card.Header>
-                        <Card.Body>
-                        <Card.Title className="nama-pasien">{namae}</Card.Title>
-                            <Card.Title className="no-antrian">{nomore}</Card.Title>
-                        </Card.Body>
-                        <Card.Footer className="displayb-nama-dokter2">{doktere}</Card.Footer>
-                    </Card>
-                </Col>
-                <Col>
-                    <Card className="text-center card-nomor"> 
-                        <Card.Header className="displayb-header-top3">{polif}</Card.Header>
-                        <Card.Body>
-                            <Card.Title className="nama-pasien">{namaf}</Card.Title>
-                            <Card.Title className="no-antrian">{nomorf}</Card.Title>
-                        </Card.Body>
-                        <Card.Footer className="displayb-nama-dokter3">{dokterf}</Card.Footer>
-                    </Card>
-                </Col>
-                
-            </Row>
-        </Container>
-        <Navbar fixed="bottom" className='footer navbar-app'>
+            <Navbar bg="primary" sticky="top" className='navbar-app'>
+                <Container fluid>
+                    <Nav>
+                        <Navbar.Brand>
+                            <img
+                                alt=""
+                                src="/logonavbar.png"
+                                width="60"
+                                height="60"
+                                className="d-inline-block"
+                            />{' '}
+                            <strong className='title-app'>RS PKU Muhammadiyah Sekapuk</strong>
+                        </Navbar.Brand>
+                    </Nav>
+
+
+                    <Nav>
+                        <Navbar.Brand>
+                            <strong className='title-app'>ANTRIAN POLIKLINIK 2</strong>
+                            {/* <Navbar.Brand className="credit-footer">
+                                <FontAwesomeIcon icon={faCalendarDays} /> {tanggal}   <FontAwesomeIcon className="icojam" icon={faClockFour} /> {jam}
+                            </Navbar.Brand> */}
+                        </Navbar.Brand>
+                    </Nav>
+
+                </Container>
+            </Navbar>
             <Container fluid>
-                <Navbar.Brand className="credit-footer">
-                    <FontAwesomeIcon icon={faCalendarDays} /> {tanggal}   <FontAwesomeIcon className="icojam" icon={faClockFour} /> {jam}
-                </Navbar.Brand>
-                <Nav>
-                    <Navbar.Brand className="credit-footer">
-                        Created By IT RSMS
-                    </Navbar.Brand>
-                </Nav>
+                <Row className="g-4">
+                    <Col xs={12} md={4}>
+                        <Card className="text-center card-nomor">
+                            <Card.Header className="displayb-header-top">{polid} ({dokterd})</Card.Header>
+                            <Card.Body>
+                                <Card.Title className="nama-pasien">{namad}</Card.Title>
+                                <Card.Title className="no-antrian">{nomord}</Card.Title>
+                            </Card.Body>
+                            {/* <Card.Footer className="nama-dokter">{dokter}</Card.Footer> */}
+                        </Card>
+                        <Card className="text-center card-nomor">
+                            <Card.Header className="displayb-header-top2">{polie} ({doktere})</Card.Header>
+                            <Card.Body>
+                                <Card.Title className="nama-pasien">{namae}</Card.Title>
+                                <Card.Title className="no-antrian">{nomore}</Card.Title>
+                            </Card.Body>
+                            {/* <Card.Footer className="nama-dokter2">{dokterb}</Card.Footer> */}
+                        </Card>
+                        <Card className="text-center card-nomor">
+                            <Card.Header className="displayb-header-top3">{polif} ({dokterf})</Card.Header>
+                            <Card.Body>
+                                <Card.Title className="nama-pasien">{namaf}</Card.Title>
+                                <Card.Title className="no-antrian">{nomorf}</Card.Title>
+                            </Card.Body>
+                            {/* <Card.Footer className="nama-dokter3">{dokterc}</Card.Footer> */}
+                        </Card>
+
+                    </Col>
+
+                    <Col xs={12} md={8}>
+                        <Card className="center card-nomor">
+                            <video controls autoPlay loop muted width="100%" height="auto">
+                                <source src={Vidio2} type="video/mp4" />
+                                Sorry, your browser doesn't support videos.
+                            </video>
+                        </Card>
+                        {[
+                            'primary',
+                        ].map((variant) => (
+                            <Alert key={variant} variant={variant}>
+                                <Alert.Heading className="text-center">
+                                    <FontAwesomeIcon icon={faInstagramSquare} /> @rs.pkusekapuk
+                                    <FontAwesomeIcon className="icojam" icon={faSquareFacebook} />  <FontAwesomeIcon icon={faSquareYoutube} /> RS Pku Muhammadiyah Sekapuk
+                                    <FontAwesomeIcon className="icojam" icon={faSquareGooglePlus} /> www.rspkusekapuk.com
+                                </Alert.Heading>
+                            </Alert>
+                        ))}
+                    </Col>
+                </Row>
+                {/* <Row md={3} xs={1} lg={3} xl={3} xxl={3} className="g-4">
+                    <Col>
+                        <Card className="text-center card-nomor">
+                            <Card.Header className="displayb-header-top">{polid}</Card.Header>
+                            <Card.Body>
+                                <Card.Title className="nama-pasien">{namad}</Card.Title>
+                                <Card.Title className="no-antrian">{nomord}</Card.Title>
+                            </Card.Body>
+                            <Card.Footer className="displayb-nama-dokter">{dokterd}</Card.Footer>
+                        </Card>
+                    </Col>
+                    <Col>
+                        <Card className="text-center card-nomor">
+                            <Card.Header className="displayb-header-top2">{polie}</Card.Header>
+                            <Card.Body>
+                                <Card.Title className="nama-pasien">{namae}</Card.Title>
+                                <Card.Title className="no-antrian">{nomore}</Card.Title>
+                            </Card.Body>
+                            <Card.Footer className="displayb-nama-dokter2">{doktere}</Card.Footer>
+                        </Card>
+                    </Col>
+                    <Col>
+                        <Card className="text-center card-nomor">
+                            <Card.Header className="displayb-header-top3">{polif}</Card.Header>
+                            <Card.Body>
+                                <Card.Title className="nama-pasien">{namaf}</Card.Title>
+                                <Card.Title className="no-antrian">{nomorf}</Card.Title>
+                            </Card.Body>
+                            <Card.Footer className="displayb-nama-dokter3">{dokterf}</Card.Footer>
+                        </Card>
+                    </Col>
+                </Row> */}
             </Container>
-        </Navbar>
-    </div>
+            <Navbar bg="primary" fixed="bottom" className='footer navbar-app'>
+                <Container fluid>
+                    <marquee direction="left" className="credit-footer">Selamat Datang Di Rumah Sakit PKU Muhammadiyah Sekapuk</marquee>
+                    <Navbar.Brand className="credit-footer">
+                        <FontAwesomeIcon icon={faCalendarDays} /> {tanggal}   <FontAwesomeIcon className="icojam" icon={faClockFour} /> {jam}
+                    </Navbar.Brand>
+                </Container>
+            </Navbar>
+        </div>
     );
 }
 
