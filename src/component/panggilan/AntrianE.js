@@ -22,7 +22,7 @@ function AntrianE() {
     const [kode, setKode] = useState('');
     const [count, setCount ] = useState(0);
     const [disable, setDisable] = useState([]);
-     const host = process.env.REACT_APP_API;
+    const host = process.env.REACT_APP_API;
 
     const fectData = async () => {
         await axios.get(`${host}/api/cari?cari=${kode}`)

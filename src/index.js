@@ -1,9 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-//import App from './App';
 import reportWebVitals from './reportWebVitals';
-//import Navbartop from './component/Navbar';
 import Display from './component/Display';
 import DisplayB from './component/DisplayB'
 import Antrian from './component/panggilan/Antrian';
@@ -12,7 +10,6 @@ import AntrianC from './component/panggilan/AntrianC';
 import AntrianD from './component/panggilan/AntrianD';
 import AntrianE from './component/panggilan/AntrianE';
 import AntrianF from './component/panggilan/AntrianF';
-// import Footer from './component/Footer';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -23,8 +20,8 @@ root.render(
     {/* <Navbartop/> */}
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Display/>} />
-        <Route path='displayb' element={<DisplayB/>} />
+        <Route path='display-a' element={<Display/>} />
+        <Route path='display-b' element={<DisplayB/>} />
         <Route path='panggilan-a' element={<Antrian/>} />
         <Route path='panggilan-b' element={<AntrianB/>} />
         <Route path='panggilan-c' element={<AntrianC/>} />

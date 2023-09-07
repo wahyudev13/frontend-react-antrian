@@ -16,7 +16,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarDays, faClockFour, } from "@fortawesome/free-solid-svg-icons";
 import { faInstagram,faFacebookF,faYoutube, faInstagramSquare, faSquareInstagram, faWeebly, faSquareXTwitter, faSquareFacebook, faSquareYoutube, faSquareGooglePlus } from "@fortawesome/free-brands-svg-icons";
 import Nav from "react-bootstrap/Nav";
-import VideoJS from "./Video";
+
 var date = new Date();
 
 
