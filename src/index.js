@@ -6,12 +6,19 @@ import Display from './component/display/model-1/Display';
 import DisplayB from './component/display/model-1/DisplayB';
 import DisplayC from './component/display/model-2/DisplayC';
 import DisplayD from './component/display/model-2/DisplayD';
+import Displayloket from './component/display/loket/DisplayLoket';
+
+
 import Antrian from './component/panggilan/Antrian';
 import AntrianB from './component/panggilan/AntrianB';
 import AntrianC from './component/panggilan/AntrianC';
 import AntrianD from './component/panggilan/AntrianD';
 import AntrianE from './component/panggilan/AntrianE';
 import AntrianF from './component/panggilan/AntrianF';
+
+//Antrian Loket
+import PanggilanLoket from './component/panggilan/loket/panggilan-loket';
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -32,6 +39,8 @@ root.render(
         <Route path='panggilan-d' element={<AntrianD/>} />
         <Route path='panggilan-e' element={<AntrianE/>} />
         <Route path='panggilan-f' element={<AntrianF/>} />
+        <Route path='display-loket' element={<Displayloket/>} />
+        <Route path='panggilan-loket' element={<PanggilanLoket/>} />
       </Routes>
     </BrowserRouter>
     {/* <Footer/> */}

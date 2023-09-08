@@ -317,7 +317,7 @@ function Display() {
                 <Container fluid>
                     <marquee direction="left"  className="credit-footer">Selamat Datang Di Rumah Sakit PKU Muhammadiyah Sekapuk</marquee>
                     <Navbar.Brand className="credit-footer">
-                        <FontAwesomeIcon icon={faCalendarDays} /> {tanggal}   <FontAwesomeIcon className="icojam" icon={faClockFour} /> {jam}
+                        <FontAwesomeIcon className="icojam" icon={faCalendarDays} /> {tanggal}   <FontAwesomeIcon className="icojam" icon={faClockFour} /> {jam}
                     </Navbar.Brand>
                 </Container>
             </Navbar>
