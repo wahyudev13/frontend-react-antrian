@@ -1,10 +1,3 @@
-import Container from "react-bootstrap/Container";
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import Row from "react-bootstrap/Row";
-import Col from 'react-bootstrap/Col';
-import Table from "react-bootstrap/Table";
-import Form from 'react-bootstrap/Form';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faStop } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
@@ -94,51 +87,10 @@ function PanggilanLoket() {
     }
 
     return (
-        // <Container>
-        //     <Row>
-        //         <Col>
-        //             <Card style={{ margin: '30px' }}>
-        //                 <Card.Header className="header-antrian-a">
-        //                     <Row>
-        //                         <Col>
-        //                             Panggilan Loket Pendaftaran
-        //                         </Col>
-        //                     </Row>
-
-        //                 </Card.Header>
-        //                 <Card.Body>
-        //                     <Table striped bordered hover responsive size="sm">
-        //                         <thead>
-        //                             <tr>
-        //                                 <th>No Antrian</th>
-        //                                 <th>Aksi</th>
-        //                             </tr>
-        //                         </thead>
-        //                         <tbody>
-        //                             {antrians.length !== 0 ? antrians.map((antrian, index) => (
-        //                                 <tr key={index}>
-        //                                     <td>{antrian.noantrian}</td>
-        //                                     <td>
-        //                                         <div className="btn-group btn-group-sm" role="group" aria-label="Basic mixed styles example">
-        //                                             <button type="button" className="btn btn-success">Panggil</button>
-        //                                             <button type="button" className="btn btn-danger">Stop</button>
-        //                                             <button type="button" className="btn btn-warning" >Lewati</button>
-        //                                             <button type="button" className="btn btn-secondary" >Selesai</button>
-        //                                         </div>
-        //                                     </td>
-        //                                 </tr>
-        //                             )) : <tr><td colSpan={6}><center>TIDAK ADA ANTRIAN</center></td></tr>}
-        //                         </tbody>
-        //                     </Table>
-
-        //                 </Card.Body>
-        //             </Card>
-        //         </Col>
-        //     </Row>
-        // </Container>
+        
         <div className="container mt-5">
             <div className="card">
-                <div className="card-header">
+                <div className="card-header text-bg-primary text-center">
                     Antrian Pendaftaran Rawat Jalan
                 </div>
                 <div className="card-body">
@@ -183,6 +135,17 @@ function PanggilanLoket() {
                     </table>
                 </div>
             </div>
+
+            {/* <footer className="footer fixed-bottom mt-auto py-3 bg-body">
+                <div className="container-fluid">
+                    <div className="row">
+                        <div className="col-lg-12" style={{ textAlign: 'center'}}>
+                           <p style={{color: '#dadada', fontSize: '15px'}}>IT RS PKU Muhammadiyah Sekapuk</p>
+                        </div>
+                    </div>
+
+                </div>
+            </footer> */}
         </div>
     );
 }

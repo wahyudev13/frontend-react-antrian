@@ -1,5 +1,3 @@
-import Vidio3 from "../../../vidio/vidio3.mp4";
-import Vidio2 from "../../../vidio/vidio2.mp4";
 import Vidio1 from "../../../vidio/vidio1.mp4";
 import Vidio4 from "../../../vidio/vidio4.mp4";
 import Container from "react-bootstrap/Container";
@@ -291,7 +289,7 @@ function DisplayB() {
                     <Col xs={12} md={8}>
                         <Card className="center card-nomor">
                             <video controls autoPlay loop muted width="100%" height="auto">
-                                <source src={Vidio2} type="video/mp4" />
+                                <source src={Vidio1} type="video/mp4" />
                                 Sorry, your browser doesn't support videos.
                             </video>
                         </Card>
@@ -308,38 +306,6 @@ function DisplayB() {
                         ))}
                     </Col>
                 </Row>
-                {/* <Row md={3} xs={1} lg={3} xl={3} xxl={3} className="g-4">
-                    <Col>
-                        <Card className="text-center card-nomor">
-                            <Card.Header className="displayb-header-top">{polid}</Card.Header>
-                            <Card.Body>
-                                <Card.Title className="nama-pasien">{namad}</Card.Title>
-                                <Card.Title className="no-antrian">{nomord}</Card.Title>
-                            </Card.Body>
-                            <Card.Footer className="displayb-nama-dokter">{dokterd}</Card.Footer>
-                        </Card>
-                    </Col>
-                    <Col>
-                        <Card className="text-center card-nomor">
-                            <Card.Header className="displayb-header-top2">{polie}</Card.Header>
-                            <Card.Body>
-                                <Card.Title className="nama-pasien">{namae}</Card.Title>
-                                <Card.Title className="no-antrian">{nomore}</Card.Title>
-                            </Card.Body>
-                            <Card.Footer className="displayb-nama-dokter2">{doktere}</Card.Footer>
-                        </Card>
-                    </Col>
-                    <Col>
-                        <Card className="text-center card-nomor">
-                            <Card.Header className="displayb-header-top3">{polif}</Card.Header>
-                            <Card.Body>
-                                <Card.Title className="nama-pasien">{namaf}</Card.Title>
-                                <Card.Title className="no-antrian">{nomorf}</Card.Title>
-                            </Card.Body>
-                            <Card.Footer className="displayb-nama-dokter3">{dokterf}</Card.Footer>
-                        </Card>
-                    </Col>
-                </Row> */}
             </Container>
             <Navbar bg="primary" fixed="bottom" className='footer navbar-app'>
                 <Container fluid>
