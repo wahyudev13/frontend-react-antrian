@@ -1,6 +1,4 @@
 
-import Vidio1 from "../../../vidio/vidio1.mp4";
-import Vidio4 from "../../../vidio/vidio4.mp4";
 import React from 'react';
 import Echo from 'laravel-echo';
 import Pusher from 'pusher-js';
@@ -139,7 +137,7 @@ function DisplayLoket() {
                     <div className="col-lg-7 col-md-6">
                         <div className="card">
                             <video controls autoPlay loop muted width="100%" height="auto">
-                                <source src={Vidio1} type="video/mp4" />
+                                <source src={process.env.REACT_APP_VIDIO_LOKET} type="video/mp4" />
                                 Sorry, your browser doesn't support videos.
                             </video>
                         </div>
