@@ -1,5 +1,3 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay, faStop } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import React from 'react';
 import { useState, useEffect } from "react";
@@ -26,16 +24,16 @@ function PanggilanLoket() {
     }
     useEffect(() => {
         fectData()
-    }, []);
+    },[]);
 
-    //useEffect hook
+   
     useEffect(() => {
         fectData();
-    }, [idPanggil, kodeAntrian, idStop, idLewati, idSelesai]);
+    },[idPanggil, kodeAntrian, idStop, idLewati, idSelesai]);
 
     const panggilAntrian = async (id) => {
         try {
-            const req = await axios.post(`${host}/api/loket/panggil/${id}`);
+            await axios.post(`${host}/api/loket/panggil/${id}`);
             setidPanggil(true);
             setidPanggil(true);
             setidLewati(false);
@@ -48,7 +46,7 @@ function PanggilanLoket() {
     }
     const stopAntrian = async (id) => {
         try {
-            const req = await axios.post(`${host}/api/loket/stop/${id}`);
+            await axios.post(`${host}/api/loket/stop/${id}`);
             setidPanggil(false);
             setidLewati(false);
             setidStop(true);
@@ -61,7 +59,7 @@ function PanggilanLoket() {
 
     const lewatiAntrian = async (id) => {
         try {
-            const req = await axios.post(`${host}/api/loket/lewati/${id}`);
+            await axios.post(`${host}/api/loket/lewati/${id}`);
             setidPanggil(false);
             setidStop(false);
             setidLewati(true);
@@ -73,7 +71,7 @@ function PanggilanLoket() {
     }
     const selesaiAntrian = async (id) => {
         try {
-            const req = await axios.post(`${host}/api/loket/selesai/${id}`);
+           await axios.post(`${host}/api/loket/selesai/${id}`);
             setidPanggil(false);
             setidStop(false);
             setidLewati(false);
@@ -105,11 +103,8 @@ function PanggilanLoket() {
                         <tbody>
                             {antrians.length !== 0 ? antrians.map((antrian, index) => (
                                 <tr key={index}>
-
-                                    {/* <td>{antrian.no_urut}</td> */}
-
                                     {
-                                        antrian.status == 1 ?
+                                        antrian.status == "1" ?
                                             <td className='bg-success text-white'>{antrian.noantrian}</td> :
                                             antrian.status == 2 ?
                                                 <td className='bg-danger text-white'>{antrian.noantrian}</td> :

@@ -1,26 +1,18 @@
 
 import Vidio1 from "../../../vidio/vidio1.mp4";
 import Vidio4 from "../../../vidio/vidio4.mp4";
-import Container from "react-bootstrap/Container";
-import Navbar from 'react-bootstrap/Navbar';
-import Card from 'react-bootstrap/Card';
-import Row from "react-bootstrap/Row";
-import Col from 'react-bootstrap/Col';
-import Alert from 'react-bootstrap/Alert';
 import React from 'react';
 import Echo from 'laravel-echo';
 import Pusher from 'pusher-js';
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarDays, faClockFour, } from "@fortawesome/free-solid-svg-icons";
-import { faInstagram, faFacebookF, faYoutube, faInstagramSquare, faSquareInstagram, faWeebly, faSquareXTwitter, faSquareFacebook, faSquareYoutube, faSquareGooglePlus } from "@fortawesome/free-brands-svg-icons";
-import Nav from "react-bootstrap/Nav";
+import { faInstagramSquare,faSquareFacebook, faSquareYoutube, faSquareGooglePlus } from "@fortawesome/free-brands-svg-icons";
 
 var date = new Date();
 
 function DisplayLoket() {
     const [nourut, setNourut] = useState('0');
-    const [text, setText] = useState('');
     const [play, setPlay] = useState('false');
     const [idAntrian, setidAntrian] = useState('');
 
@@ -33,10 +25,6 @@ function DisplayLoket() {
         var bulan = date.getMonth();
         var tanggal = date.getDate();
         var hari = date.getDay();
-        // //Jam
-        // var jam = date.getHours();
-        // var menit = date.getMinutes();
-        // var detik = date.getSeconds();
         switch (hari) {
             case 0: hari = "Minggu"; break;
             case 1: hari = "Senin"; break;

@@ -1,5 +1,3 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay, faStop } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import React from 'react';
 import { useState, useEffect } from "react";
@@ -10,7 +8,7 @@ function PanggilanLoket() {
 
     const panggilAntrian = async () => {
         try {
-            const req = await axios.post(`${host}/api/loket/m2/panggil/${noAntrian}`);
+           await axios.post(`${host}/api/loket/m2/panggil/${noAntrian}`);
 
         } catch (error) {
             alert(error.response.data.data);

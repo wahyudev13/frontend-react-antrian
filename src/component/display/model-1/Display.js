@@ -12,7 +12,7 @@ import Pusher from 'pusher-js';
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarDays, faClockFour, } from "@fortawesome/free-solid-svg-icons";
-import { faInstagram,faFacebookF,faYoutube, faInstagramSquare, faSquareInstagram, faWeebly, faSquareXTwitter, faSquareFacebook, faSquareYoutube, faSquareGooglePlus } from "@fortawesome/free-brands-svg-icons";
+import { faInstagramSquare, faSquareFacebook, faSquareYoutube, faSquareGooglePlus } from "@fortawesome/free-brands-svg-icons";
 import Nav from "react-bootstrap/Nav";
 
 var date = new Date();
