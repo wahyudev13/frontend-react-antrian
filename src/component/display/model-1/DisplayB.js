@@ -227,33 +227,24 @@ function DisplayB() {
 
     return (
         <div>
-            <Navbar bg="primary" sticky="top" className='navbar-app'>
-                <Container fluid>
-                    <Nav>
-                        <Navbar.Brand>
-                            <img
-                                alt=""
-                                src="/logonavbar.png"
-                                width="60"
-                                height="60"
-                                className="d-inline-block"
-                            />{' '}
-                            <strong className='title-app'>RS PKU Muhammadiyah Sekapuk</strong>
-                        </Navbar.Brand>
-                    </Nav>
+            <nav className="navbar bg-primary navbar-fixed-top ">
+                <div className="container-fluid text-white">
+                    <a className="navbar-brand text-white" href="/">
+                        <img
+                            alt=""
+                            src="/logonavbar.png"
+                            width="60"
+                            height="60"
+                            className="d-inline-block"
+                        />{' '}
+                        <strong  style={{ fontSize: '25px' }}>RS PKU Muhammadiyah Sekapuk</strong>
+                    </a>
 
-
-                    <Nav>
-                        <Navbar.Brand>
-                            <strong className='title-app'>ANTRIAN POLIKLINIK 2</strong>
-                            {/* <Navbar.Brand className="credit-footer">
-                                <FontAwesomeIcon icon={faCalendarDays} /> {tanggal}   <FontAwesomeIcon className="icojam" icon={faClockFour} /> {jam}
-                            </Navbar.Brand> */}
-                        </Navbar.Brand>
-                    </Nav>
-
-                </Container>
-            </Navbar>
+                    <div className='d-flex'>
+                        <strong style={{ fontSize: '25px' }}>ANTRIAN POLIKLINIK 2</strong>
+                    </div>
+                </div>
+            </nav>
             <Container fluid>
                 <Row className="g-4">
                     <Col xs={12} md={4}>
@@ -286,7 +277,7 @@ function DisplayB() {
 
                     <Col xs={12} md={8}>
                         <Card className="center card-nomor">
-                            <video controls autoPlay loop muted width="100%" height="auto">
+                            <video autoPlay loop muted width="100%" height="auto">
                                 <source src={process.env.REACT_APP_VIDIO_DISB} type="video/mp4" />
                                 Sorry, your browser doesn't support videos.
                             </video>

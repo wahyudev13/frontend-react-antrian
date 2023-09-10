@@ -87,7 +87,7 @@ function DisplayLoket2() {
 
             <nav className="navbar bg-warning navbar-fixed-top">
                 <div className="container-fluid">
-                    <a className="navbar-brand" href="#">
+                    <a className="navbar-brand" href="/">
                         <img
                             alt=""
                             src="/logonavbar.png"

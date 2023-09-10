@@ -103,7 +103,7 @@ function DisplayLoket() {
 
             <nav className="navbar bg-warning navbar-fixed-top">
                 <div className="container-fluid">
-                    <a className="navbar-brand" href="#">
+                    <a className="navbar-brand" href="/">
                         <img
                             alt=""
                             src="/logonavbar.png"
@@ -136,7 +136,7 @@ function DisplayLoket() {
                     </div>
                     <div className="col-lg-7 col-md-6">
                         <div className="card">
-                            <video controls autoPlay loop muted width="100%" height="auto">
+                            <video autoPlay loop muted width="100%" height="auto">
                                 <source src={process.env.REACT_APP_VIDIO_LOKET} type="video/mp4" />
                                 Sorry, your browser doesn't support videos.
                             </video>
