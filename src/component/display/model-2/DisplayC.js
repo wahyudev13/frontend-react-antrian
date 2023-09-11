@@ -134,10 +134,20 @@ function DisplayC() {
         if (play !== 'false') {
             if (playb === 'true' || playc === 'true') {
                 setTimeout(() => {
-                    window.responsiveVoice.speak(text, "Indonesian Male")
+                    var msg = new SpeechSynthesisUtterance();
+                    msg.volume = 1;
+                    msg.lang = "id-ID";
+                    msg.text = text;
+                    window.speechSynthesis.speak(msg);
+                    //window.responsiveVoice.speak(text, "Indonesian Male")
                 }, 5000);
             } else {
-                window.responsiveVoice.speak(text, "Indonesian Male")
+                var msg = new SpeechSynthesisUtterance();
+                msg.volume = 1;
+                msg.lang = "id-ID";
+                msg.text = text;
+                window.speechSynthesis.speak(msg);
+                // window.responsiveVoice.speak(text, "Indonesian Male")
             }
         }
     }, [rawat, play, text, nama, nomor, id]);
@@ -175,10 +185,20 @@ function DisplayC() {
         if (playb !== 'false') {
             if (play === 'true' || playc === 'true') {
                 setTimeout(() => {
-                    window.responsiveVoice.speak(textb, "Indonesian Male")
+                    var msg = new SpeechSynthesisUtterance();
+                    msg.volume = 1;
+                    msg.lang = "id-ID";
+                    msg.text = textb;
+                    window.speechSynthesis.speak(msg);
+                    // window.responsiveVoice.speak(textb, "Indonesian Male")
                 }, 5000);
             } else {
-                window.responsiveVoice.speak(textb, "Indonesian Male")
+                var msg = new SpeechSynthesisUtterance();
+                msg.volume = 1;
+                msg.lang = "id-ID";
+                msg.text = textb;
+                window.speechSynthesis.speak(msg);
+                // window.responsiveVoice.speak(textb, "Indonesian Male")
             }
         }
     }, [rawatb, playb, textb, idb, namab, nomorb]);
@@ -216,17 +236,27 @@ function DisplayC() {
         if (playc !== 'false') {
             if (playb === 'true' || play === 'true') {
                 setTimeout(() => {
-                    window.responsiveVoice.speak(textc, "Indonesian Male")
+                    var msg = new SpeechSynthesisUtterance();
+                    msg.volume = 1;
+                    msg.lang = "id-ID";
+                    msg.text = textc;
+                    window.speechSynthesis.speak(msg);
+                    // window.responsiveVoice.speak(textc, "Indonesian Male")
                 }, 5000);
             } else {
-                window.responsiveVoice.speak(textc, "Indonesian Male")
+                var msg = new SpeechSynthesisUtterance();
+                msg.volume = 1;
+                msg.lang = "id-ID";
+                msg.text = textc;
+                window.speechSynthesis.speak(msg);
+                // window.responsiveVoice.speak(textc, "Indonesian Male")
             }
         }
     }, [rawatc, playc, textc, idc, namac, nomorc]);
 
     return (
         <div>
-           <nav className="navbar bg-success navbar-fixed-top ">
+            <nav className="navbar bg-success navbar-fixed-top ">
                 <div className="container-fluid text-white">
                     <a className="navbar-brand text-white" href="/">
                         <img
@@ -236,7 +266,7 @@ function DisplayC() {
                             height="60"
                             className="d-inline-block"
                         />{' '}
-                        <strong  style={{ fontSize: '25px' }}>RS PKU Muhammadiyah Sekapuk</strong>
+                        <strong style={{ fontSize: '25px' }}>RS PKU Muhammadiyah Sekapuk</strong>
                     </a>
 
                     <div className='d-flex'>
@@ -293,9 +323,9 @@ function DisplayC() {
                     </Navbar.Brand>
                     <Nav>
                         <Navbar.Brand className="credit-footer-mod2">
-                        <FontAwesomeIcon icon={faInstagramSquare} /> @rs.pkusekapuk
-                                <FontAwesomeIcon className="icojam" icon={faSquareFacebook} />  <FontAwesomeIcon icon={faSquareYoutube} /> RS Pku Muhammadiyah Sekapuk
-                                <FontAwesomeIcon className="icojam" icon={faSquareGooglePlus} /> www.rspkusekapuk.com
+                            <FontAwesomeIcon icon={faInstagramSquare} /> @rs.pkusekapuk
+                            <FontAwesomeIcon className="icojam" icon={faSquareFacebook} />  <FontAwesomeIcon icon={faSquareYoutube} /> RS Pku Muhammadiyah Sekapuk
+                            <FontAwesomeIcon className="icojam" icon={faSquareGooglePlus} /> www.rspkusekapuk.com
                         </Navbar.Brand>
                     </Nav>
 

@@ -10,7 +10,7 @@ var date = new Date();
 
 function DisplayLoket2() {
     const [nourut, setNourut] = useState('0');
- 
+
 
     var time = new Date().toLocaleTimeString();
     const [jam, setJam] = useState(time);
@@ -75,10 +75,15 @@ function DisplayLoket2() {
         });
         echo.channel('channel-panggil-loket-manual').listen('.panggil-antrian-loket-manual', (data) => {
             setNourut(data.message);
-            window.responsiveVoice.speak('PANGGILAN. antrian pendaftaran nomor ' + data.message, "Indonesian Male");
+            var msg = new SpeechSynthesisUtterance();
+            msg.volume = 1;
+            msg.lang = "id-ID";
+            msg.text = 'panggilan. antrian pendaftaran nomor '+data.message;
+            window.speechSynthesis.speak(msg);
+            // window.responsiveVoice.speak('PANGGILAN. antrian pendaftaran nomor ' + data.message, "Indonesian Male");
             console.log('Panggil Antrian ' + data.message);
         });
-    },[]);
+    }, []);
 
 
     return (
@@ -128,23 +133,23 @@ function DisplayLoket2() {
                     </div>
                 </div>
                 <footer className="footer fixed-bottom mt-auto py-3 bg-warning">
-                <div className="container-fluid">
-                    <div className="row">
-                        <div className="col-lg-6">
-                            <FontAwesomeIcon icon={faCalendarDays} /> {tanggal}     
-                            <FontAwesomeIcon className="icojam" icon={faClockFour} /> {jam}
+                    <div className="container-fluid">
+                        <div className="row">
+                            <div className="col-lg-6">
+                                <FontAwesomeIcon icon={faCalendarDays} /> {tanggal}
+                                <FontAwesomeIcon className="icojam" icon={faClockFour} /> {jam}
+                            </div>
+                            <div className="col-lg-6" style={{ textAlign: 'right' }}>
+                                <FontAwesomeIcon icon={faInstagramSquare} /> @rs.pkusekapuk
+                                <FontAwesomeIcon className="icojam" icon={faSquareFacebook} />  <FontAwesomeIcon icon={faSquareYoutube} /> RS Pku Muhammadiyah Sekapuk
+                                <FontAwesomeIcon className="icojam" icon={faSquareGooglePlus} /> www.rspkusekapuk.com
+                            </div>
                         </div>
-                        <div className="col-lg-6" style={{ textAlign: 'right'}}>
-                            <FontAwesomeIcon icon={faInstagramSquare} /> @rs.pkusekapuk
-                            <FontAwesomeIcon className="icojam" icon={faSquareFacebook} />  <FontAwesomeIcon icon={faSquareYoutube} /> RS Pku Muhammadiyah Sekapuk
-                            <FontAwesomeIcon className="icojam" icon={faSquareGooglePlus} /> www.rspkusekapuk.com
-                        </div>
-                    </div>
 
-                </div>
-            </footer>
+                    </div>
+                </footer>
             </div>
-            
+
         </>
     );
 }

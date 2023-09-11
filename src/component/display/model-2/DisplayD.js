@@ -9,7 +9,7 @@ import Pusher from "pusher-js";
 import Echo from 'laravel-echo';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarDays, faClockFour } from "@fortawesome/free-solid-svg-icons";
-import { faInstagramSquare,faSquareFacebook, faSquareYoutube, faSquareGooglePlus } from "@fortawesome/free-brands-svg-icons";
+import { faInstagramSquare, faSquareFacebook, faSquareYoutube, faSquareGooglePlus } from "@fortawesome/free-brands-svg-icons";
 import Nav from "react-bootstrap/Nav";
 var date = new Date();
 
@@ -134,13 +134,23 @@ function DisplayB() {
         if (playd !== 'false') {
             if (playe === 'true' || playf === 'true') {
                 setTimeout(() => {
-                    window.responsiveVoice.speak(textd, "Indonesian Male")
+                    var msg = new SpeechSynthesisUtterance();
+                    msg.volume = 1;
+                    msg.lang = "id-ID";
+                    msg.text = textd;
+                    window.speechSynthesis.speak(msg);
+                    // window.responsiveVoice.speak(textd, "Indonesian Male")
                 }, 5000);
             } else {
-                window.responsiveVoice.speak(textd, "Indonesian Male")
+                var msg = new SpeechSynthesisUtterance();
+                msg.volume = 1;
+                msg.lang = "id-ID";
+                msg.text = textd;
+                window.speechSynthesis.speak(msg);
+                // window.responsiveVoice.speak(textd, "Indonesian Male")
             }
         }
-    }, [rawatd,textd, playd, namad, nomord, idD]);
+    }, [rawatd, textd, playd, namad, nomord, idD]);
 
     //Antrian E
     useEffect(() => {
@@ -175,10 +185,20 @@ function DisplayB() {
         if (playe !== 'false') {
             if (playd === 'true' || playf === 'true') {
                 setTimeout(() => {
-                    window.responsiveVoice.speak(texte, "Indonesian Male")
+                    var msg = new SpeechSynthesisUtterance();
+                    msg.volume = 1;
+                    msg.lang = "id-ID";
+                    msg.text = texte;
+                    window.speechSynthesis.speak(msg);
+                    // window.responsiveVoice.speak(texte, "Indonesian Male")
                 }, 5000);
             } else {
-                window.responsiveVoice.speak(texte, "Indonesian Male")
+                var msg = new SpeechSynthesisUtterance();
+                msg.volume = 1;
+                msg.lang = "id-ID";
+                msg.text = texte;
+                window.speechSynthesis.speak(msg);
+                // window.responsiveVoice.speak(texte, "Indonesian Male")
             }
         }
     }, [rawate, playe, texte, nomore, idE]);
@@ -216,10 +236,20 @@ function DisplayB() {
         if (playf !== 'false') {
             if (playd === 'true' || playe === 'true') {
                 setTimeout(() => {
-                    window.responsiveVoice.speak(textf, "Indonesian Male")
+                    var msg = new SpeechSynthesisUtterance();
+                    msg.volume = 1;
+                    msg.lang = "id-ID";
+                    msg.text = textf;
+                    window.speechSynthesis.speak(msg);
+                    // window.responsiveVoice.speak(textf, "Indonesian Male")
                 }, 5000);
             } else {
-                window.responsiveVoice.speak(textf, "Indonesian Male")
+                var msg = new SpeechSynthesisUtterance();
+                msg.volume = 1;
+                msg.lang = "id-ID";
+                msg.text = textf;
+                window.speechSynthesis.speak(msg);
+                // window.responsiveVoice.speak(textf, "Indonesian Male")
             }
         }
     }, [rawatf, playf, textf, nomorf, idF]);
@@ -236,7 +266,7 @@ function DisplayB() {
                             height="60"
                             className="d-inline-block"
                         />{' '}
-                        <strong  style={{ fontSize: '25px' }}>RS PKU Muhammadiyah Sekapuk</strong>
+                        <strong style={{ fontSize: '25px' }}>RS PKU Muhammadiyah Sekapuk</strong>
                     </a>
 
                     <div className='d-flex'>

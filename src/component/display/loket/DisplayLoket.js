@@ -80,18 +80,25 @@ function DisplayLoket() {
 
         echo.channel('channel-stop-antrian-loket').listen('.stop-antrian-loket', (data) => {
             setPlay('false');
-            window.responsiveVoice.cancel();
+            window.speechSynthesis.cancel();
+            // window.responsiveVoice.cancel();
             console.log('Stop Antrian ' + data.message.noantrian);
         });
 
         echo.channel('channel-lewati-antrian-loket').listen('.lewati-antrian-loket', (data) => {
             setPlay('false');
-            window.responsiveVoice.cancel();
-            console.log('Lewati Antrian ' + data.message.no_urut);
+            window.speechSynthesis.cancel();
+            // window.responsiveVoice.cancel();
+            console.log('Lewati Antrian ' + data.message.noantrian);
         });
 
         if (play === 'true') {
-            window.responsiveVoice.speak('PANGGILAN. antrian pendaftaran nomor ' + nourut, "Indonesian Male");
+            var msg = new SpeechSynthesisUtterance();
+            msg.volume = 1;
+            msg.lang = "id-ID";
+            msg.text = 'panggilan. antrian pendaftaran nomor '+nourut;
+            window.speechSynthesis.speak(msg);
+           // window.responsiveVoice.speak('PANGGILAN. antrian pendaftaran nomor ' + nourut, "Indonesian Male");
         }
 
     }, [play, idAntrian]);

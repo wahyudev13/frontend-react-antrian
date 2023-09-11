@@ -138,10 +138,20 @@ function Display() {
         if (play !== 'false') {
             if (playb === 'true' || playc === 'true') {
                 setTimeout(() => {
-                    window.responsiveVoice.speak(text, "Indonesian Male")
+                    var msg = new SpeechSynthesisUtterance();
+                    msg.volume = 1;
+                    msg.lang = "id-ID";
+                    msg.text = text;
+                    window.speechSynthesis.speak(msg);
+                    //window.responsiveVoice.speak(text, "Indonesian Male")
                 }, 5000);
             } else {
-                window.responsiveVoice.speak(text, "Indonesian Male")
+                var msg = new SpeechSynthesisUtterance();
+                msg.volume = 1;
+                msg.lang = "id-ID";
+                msg.text = text;
+                window.speechSynthesis.speak(msg);
+                //window.responsiveVoice.speak(text, "Indonesian Male")
             }
         }
     }, [play, text, nama, nomor, id,rawat]);
@@ -179,10 +189,20 @@ function Display() {
         if (playb !== 'false') {
             if (play === 'true' || playc === 'true') {
                 setTimeout(() => {
-                    window.responsiveVoice.speak(textb, "Indonesian Male")
+                    var msg = new SpeechSynthesisUtterance();
+                    msg.volume = 1;
+                    msg.lang = "id-ID";
+                    msg.text = textb;
+                    window.speechSynthesis.speak(msg);
+                    // window.responsiveVoice.speak(textb, "Indonesian Male")
                 }, 5000);
             } else {
-                window.responsiveVoice.speak(textb, "Indonesian Male")
+                var msg = new SpeechSynthesisUtterance();
+                msg.volume = 1;
+                msg.lang = "id-ID";
+                msg.text = textb;
+                window.speechSynthesis.speak(msg);
+                //window.responsiveVoice.speak(textb, "Indonesian Male")
             }
         }
     }, [rawatb, playb, textb, idb, namab, nomorb]);
@@ -220,10 +240,20 @@ function Display() {
         if (playc !== 'false') {
             if (playb === 'true' || play === 'true') {
                 setTimeout(() => {
-                    window.responsiveVoice.speak(textc, "Indonesian Male")
+                    var msg = new SpeechSynthesisUtterance();
+                    msg.volume = 1;
+                    msg.lang = "id-ID";
+                    msg.text = textc;
+                    window.speechSynthesis.speak(msg);
+                    //window.responsiveVoice.speak(textc, "Indonesian Male")
                 }, 5000);
             } else {
-                window.responsiveVoice.speak(textc, "Indonesian Male")
+                var msg = new SpeechSynthesisUtterance();
+                msg.volume = 1;
+                msg.lang = "id-ID";
+                msg.text = textc;
+                window.speechSynthesis.speak(msg);
+                //window.responsiveVoice.speak(textc, "Indonesian Male")
             }
         }
     }, [rawatc, playc, textc, idc, namac, nomorc]);
