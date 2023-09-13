@@ -19,6 +19,10 @@ import DisplayloketM2 from './component/display/loket/DisplayLoket2';
 import PanggilanLoket from './component/panggilan/loket/panggilan-loket';
 import PanggilanLoketM2 from './component/panggilan/loket/panggilan-loket-m2';
 
+//Antrian Farmasi
+import PanggilanFarmasi from './component/panggilan/farmasi/panggilan-farmasi';
+import DisplayFarmasi from './component/display/farmasi/display-faramasi';
+
 //Home
 import Home from './component/home';
 
@@ -49,6 +53,11 @@ root.render(
         <Route path='panggilan-loket' element={<PanggilanLoket/>} />
         <Route path='display-loket-m2' element={<DisplayloketM2/>} />
         <Route path='panggilan-loket-m2' element={<PanggilanLoketM2/>} />
+
+        <Route path='panggilan-farmasi' element={<PanggilanFarmasi/>} />
+        <Route path='display-farmasi' element={<DisplayFarmasi/>} />
+
+
       </Routes>
     </BrowserRouter>
     {/* <Footer/> */}
