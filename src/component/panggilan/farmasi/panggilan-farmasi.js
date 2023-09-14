@@ -338,12 +338,12 @@ function PanggilanFarmasi() {
                         </div>
                         <div className="card-body">
                             <div className="table-scroll table-responsive">
-                                <table className="table table-sm table-wrapper">
+                                <table className="table table-wrapper">
                                     <thead className="table-warning">
                                         <tr>
                                             {/* <th>Nomor Antrian</th> */}
-                                            <th>Nomor Antrian</th>
-                                            <th>Aksi</th>
+                                            <th className="tb-head-sticky">Nomor Antrian</th>
+                                            <th className="tb-head-sticky">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -392,12 +392,12 @@ function PanggilanFarmasi() {
                         </div>
                         <div className="card-body">
                             <div className="table-scroll table-responsive">
-                                <table className="table table-sm table-wrapper">
+                                <table className="table table-wrapper">
                                     <thead className="table-warning">
                                         <tr>
                                             {/* <th>Nomor Antrian</th> */}
-                                            <th>Nomor Antrian</th>
-                                            <th>Aksi</th>
+                                            <th className="tb-head-sticky">Nomor Antrian</th>
+                                            <th className="tb-head-sticky">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>

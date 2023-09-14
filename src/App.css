@@ -177,3 +177,8 @@
   max-height: 400px;
   overflow: scroll;
 }
+.tb-head-sticky{
+  position: sticky;
+  top: 0px;
+  z-index: 1;
+}
