@@ -63,7 +63,7 @@ function PanggilanFarmasi() {
             .then(function (response) {
                 setCount(response.data.data);
                 setNomor(response.data.data);
-               
+
             }).catch(function (error) {
                 console.log(error.message);
             });
@@ -87,7 +87,7 @@ function PanggilanFarmasi() {
             .then(function (response) {
                 setCountb(response.data.data);
                 setNomorb(response.data.data);
-              
+
             }).catch(function (error) {
                 console.log(error.message);
             });
@@ -109,12 +109,12 @@ function PanggilanFarmasi() {
     useEffect(() => {
         fectData()
         fectDataB()
-       
+
 
         // setInterval(() => {
         //     waktu();
         // }, 1000);
-    }, [idPanggil,idStop,idLewati,idSelesai,kodeAntrian]);
+    }, [idPanggil, idStop, idLewati, idSelesai, kodeAntrian]);
 
     useEffect(() => {
         getNomor();
@@ -170,8 +170,10 @@ function PanggilanFarmasi() {
             setidLewatiA(false);
             setidStopA(false);
             setkodeAntrianA(id);
+            console.log('BERHASIL PANGGIL');
         } catch (error) {
             alert(error.response.data.data);
+            console.log('ERROR');
         }
 
     }
@@ -220,8 +222,8 @@ function PanggilanFarmasi() {
     //     printDiv('printAntrianFarmasiAulang')
     // }
 
-    
-    function printAntrianA(nomor, kategori){
+
+    function printAntrianA(nomor, kategori) {
         var PW = window.open('', '_blank', 'Print content');
         PW.document.write(
             `
@@ -230,13 +232,13 @@ function PanggilanFarmasi() {
                 <hr></hr>
                 <div className="row">
                     <div className="col">
-                        <h1 style="font-size:40px; text-align:center;margin:0px;">`+kategori+`-`+nomor+`</h1>
+                        <h1 style="font-size:40px; text-align:center;margin:0px;">`+ kategori + `-` + nomor + `</h1>
                     </div>
                 </div>
                 <div className="row">
                     <div className="col">
                         <hr></hr>
-                        <p style="font-size:12px" align="center">`+tanggal+`</p>
+                        <p style="font-size:12px" align="center">`+ tanggal + `</p>
                     </div>
                 </div>
             </div>
@@ -247,7 +249,7 @@ function PanggilanFarmasi() {
         PW.print();
     }
 
-    function printAntrianB(nomor, kategori){
+    function printAntrianB(nomor, kategori) {
         var PW = window.open('', '_blank', 'Print content');
         PW.document.write(
             `
@@ -256,13 +258,13 @@ function PanggilanFarmasi() {
                 <hr></hr>
                 <div className="row">
                     <div className="col">
-                        <h1 style="font-size:40px; text-align:center;margin:0px;">`+kategori+`-`+nomor+`</h1>
+                        <h1 style="font-size:40px; text-align:center;margin:0px;">`+ kategori + `-` + nomor + `</h1>
                     </div>
                 </div>
                 <div className="row">
                     <div className="col">
                         <hr></hr>
-                        <p style="font-size:12px" align="center">`+tanggal+`</p>
+                        <p style="font-size:12px" align="center">`+ tanggal + `</p>
                     </div>
                 </div>
             </div>
@@ -284,7 +286,7 @@ function PanggilanFarmasi() {
 
     return (
 
-        <div className="container mt-5">
+        <div className="container-fluid mt-3">
             {/* Print Page Non Racikan A */}
             <div id="printAntrianFarmasiA" style={{ display: 'none' }} className="cetak">
                 <div style={{ width: '200px', fontFamily: 'Tahoma', marginTop: '10px', marginRight: '5px', marginBottom: '100px', marginLeft: '15px', fontSize: '21px!important', border: '0px solid #000' }}>
@@ -323,74 +325,58 @@ function PanggilanFarmasi() {
                 </div>
             </div>
 
-             {/* Print Page Non Racikan A ULANG */}
-             <div id="printAntrianFarmasiAulang" style={{ display: 'none' }} className="cetak">
-                <div style={{ width: '200px', fontFamily: 'Tahoma', marginTop: '10px', marginRight: '5px', marginBottom: '100px', marginLeft: '15px', fontSize: '21px!important', border: '0px solid #000' }}>
-                    <p style={{ fontSize: '12px' }} align="center"><strong>NOMOR ANTRIAN FARMASI</strong> OBAT NON RACIKAN <br></br><br></br>RS PKU Muhammadiyah Sekapuk</p>
-                    <hr></hr>
-                    <div className="row">
-                        <div className="col text-center">
-                            <h1 style={{ fontSize: '40px', textAlign: 'center', margin: '0px' }}>A-{noreprint}</h1>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col">
-                            <hr></hr>
-                            <p style={{ fontSize: '12px' }} align="center">{tanggal}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <div className="row">
                 <div className="col-lg-6">
                     <div className="card">
                         <div className="d-grid gap-2">
                             <form onSubmit={storePostA}>
-                                <button className="btn btn-primary" style={{width: '100%'}} type="submit">TAMBAH ANTRIAN NON RACIKAN</button>
+                                <button className="btn btn-primary" style={{ width: '100%' }} type="submit">TAMBAH ANTRIAN NON RACIKAN</button>
                             </form>
                         </div>
                         <div className="card-header">
                             <strong>ANTRIAN OBAT NON RACIKAN</strong>
                         </div>
                         <div className="card-body">
-                            <table className="table table-sm table-wrapper">
-                                <thead className="table-warning">
-                                    <tr>
-                                        {/* <th>Nomor Antrian</th> */}
-                                        <th>Nomor Antrian</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {antrians.length !== 0 ? antrians.map((antrian, index) => (
-                                        <tr key={index}>
-                                            {
-                                                antrian.status == "1" ?
-                                                    <td className='bg-success text-white'><h3><strong>{antrian.no_urut}</strong></h3></td> :
-                                                    antrian.status == 2 ?
-                                                        <td className='bg-danger text-white'><h3><strong>{antrian.no_urut}</strong></h3></td> :
-                                                        antrian.status == 3 ?
-                                                            <td className='bg-warning text-white'><h3><strong>{antrian.no_urut}</strong></h3></td> :
-                                                            antrian.status == 4 ?
-                                                                <td className='bg-light'><h3><strong>{antrian.no_urut}</strong></h3></td>
-                                                                :
-                                                                <td><h3><strong>{antrian.no_urut}</strong></h3></td>
-                                            }
-                                            <td>
-                                                <div className="btn-group" role="group" aria-label="Basic mixed styles example">
-                                                    <button type="button" className="btn btn-success" onClick={() => panggilAntrianA(antrian.id)} >Panggil</button>
-                                                    <button type="button" className="btn btn-danger" onClick={() => stopAntrianA(antrian.id)}>Stop</button>
-                                                    <button type="button" className="btn btn-warning" onClick={() => lewatiAntrianA(antrian.id)} >Lewati</button>
-                                                    <button type="button" className="btn btn-dark" onClick={() => selesaiAntrianA(antrian.id)}>Selesai</button>
-                                                    <button type="button" className="btn btn-secondary" onClick={() => printAntrianA(antrian.no_urut,antrian.ketegori)}>Print</button>
-                                                </div>
-                                            </td>
+                            <div className="table-scroll table-responsive">
+                                <table className="table table-sm table-wrapper">
+                                    <thead className="table-warning">
+                                        <tr>
+                                            {/* <th>Nomor Antrian</th> */}
+                                            <th>Nomor Antrian</th>
+                                            <th>Aksi</th>
                                         </tr>
-                                    )) : <tr><td colSpan={2}><center>TIDAK ADA ANTRIAN FARMASI</center></td></tr>}
-                                </tbody>
+                                    </thead>
+                                    <tbody>
+                                        {antrians.length !== 0 ? antrians.map((antrian, index) => (
+                                            <tr key={index}>
+                                                {
+                                                    antrian.status == "1" ?
+                                                        <td className='bg-success text-white'><h3><strong>{antrian.no_urut}</strong></h3></td> :
+                                                        antrian.status == 2 ?
+                                                            <td className='bg-danger text-white'><h3><strong>{antrian.no_urut}</strong></h3></td> :
+                                                            antrian.status == 3 ?
+                                                                <td className='bg-warning text-white'><h3><strong>{antrian.no_urut}</strong></h3></td> :
+                                                                antrian.status == 4 ?
+                                                                    <td className='bg-light'><h3><strong>{antrian.no_urut}</strong></h3></td>
+                                                                    :
+                                                                    <td><h3><strong>{antrian.no_urut}</strong></h3></td>
+                                                }
+                                                <td>
+                                                    <div className="btn-group" role="group" aria-label="Basic mixed styles example">
+                                                        <button type="button" className="btn btn-success" onClick={() => panggilAntrianA(antrian.id)} >Panggil</button>
+                                                        <button type="button" className="btn btn-danger" onClick={() => stopAntrianA(antrian.id)}>Stop</button>
+                                                        <button type="button" className="btn btn-warning" onClick={() => lewatiAntrianA(antrian.id)} >Lewati</button>
+                                                        <button type="button" className="btn btn-dark" onClick={() => selesaiAntrianA(antrian.id)}>Selesai</button>
+                                                        <button type="button" className="btn btn-secondary" onClick={() => printAntrianA(antrian.no_urut, antrian.ketegori)}>Print</button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        )) : <tr><td colSpan={2}><center>TIDAK ADA ANTRIAN FARMASI</center></td></tr>}
+                                    </tbody>
 
-                            </table>
+                                </table>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -398,66 +384,68 @@ function PanggilanFarmasi() {
                     <div className="card">
                         <div className="d-grid gap-2">
                             <form onSubmit={storePostB}>
-                                <button className="btn btn-warning" style={{width: '100%'}} type="submit">TAMBAH ANTRIAN RACIKAN</button>
+                                <button className="btn btn-warning" style={{ width: '100%' }} type="submit">TAMBAH ANTRIAN RACIKAN</button>
                             </form>
                         </div>
                         <div className="card-header">
-                           <strong>ANTRIAN OBAT RACIKAN</strong> 
+                            <strong>ANTRIAN OBAT RACIKAN</strong>
                         </div>
                         <div className="card-body">
-                            <table className="table table-sm table-wrapper">
-                                <thead className="table-warning">
-                                    <tr>
-                                        {/* <th>Nomor Antrian</th> */}
-                                        <th>Nomor Antrian</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {antriansb.length !== 0 ? antriansb.map((antrianb, index) => (
-                                        <tr key={index}>
-                                            {
-                                                antrianb.status == "1" ?
-                                                    <td className='bg-success text-white'><h3><strong>{antrianb.no_urut}</strong></h3></td> :
-                                                    antrianb.status == 2 ?
-                                                        <td className='bg-danger text-white'><h3><strong>{antrianb.no_urut}</strong></h3></td> :
-                                                        antrianb.status == 3 ?
-                                                            <td className='bg-warning text-white'><h3><strong>{antrianb.no_urut}</strong></h3></td> :
-                                                            antrianb.status == 4 ?
-                                                                <td className='bg-light'><h3><strong>{antrianb.no_urut}</strong></h3></td>
-                                                                :
-                                                                <td><h3><strong>{antrianb.no_urut}</strong></h3></td>
-                                            }
-                                            <td>
-                                                <div className="btn-group" role="group" aria-label="Basic mixed styles example">
-                                                    <button type="button" className="btn btn-success" onClick={() => panggilAntrianA(antrianb.id)} >Panggil</button>
-                                                    <button type="button" className="btn btn-danger" onClick={() => stopAntrianA(antrianb.id)}>Stop</button>
-                                                    <button type="button" className="btn btn-warning" onClick={() => lewatiAntrianA(antrianb.id)} >Lewati</button>
-                                                    <button type="button" className="btn btn-dark" onClick={() => selesaiAntrianA(antrianb.id)}>Selesai</button>
-                                                    <button type="button" className="btn btn-secondary" onClick={() => printAntrianB(antrianb.no_urut,antrianb.ketegori)}>Print</button>
-                                                </div>
-                                            </td>
+                            <div className="table-scroll table-responsive">
+                                <table className="table table-sm table-wrapper">
+                                    <thead className="table-warning">
+                                        <tr>
+                                            {/* <th>Nomor Antrian</th> */}
+                                            <th>Nomor Antrian</th>
+                                            <th>Aksi</th>
                                         </tr>
-                                    )) : <tr><td colSpan={2}><center>TIDAK ADA ANTRIAN FARMASI</center></td></tr>}
-                                </tbody>
+                                    </thead>
+                                    <tbody>
+                                        {antriansb.length !== 0 ? antriansb.map((antrianb, index) => (
+                                            <tr key={index}>
+                                                {
+                                                    antrianb.status == "1" ?
+                                                        <td className='bg-success text-white'><h3><strong>{antrianb.no_urut}</strong></h3></td> :
+                                                        antrianb.status == 2 ?
+                                                            <td className='bg-danger text-white'><h3><strong>{antrianb.no_urut}</strong></h3></td> :
+                                                            antrianb.status == 3 ?
+                                                                <td className='bg-warning text-white'><h3><strong>{antrianb.no_urut}</strong></h3></td> :
+                                                                antrianb.status == 4 ?
+                                                                    <td className='bg-light'><h3><strong>{antrianb.no_urut}</strong></h3></td>
+                                                                    :
+                                                                    <td><h3><strong>{antrianb.no_urut}</strong></h3></td>
+                                                }
+                                                <td>
+                                                    <div className="btn-group" role="group" aria-label="Basic mixed styles example">
+                                                        <button type="button" className="btn btn-success" onClick={() => panggilAntrianA(antrianb.id)} >Panggil</button>
+                                                        <button type="button" className="btn btn-danger" onClick={() => stopAntrianA(antrianb.id)}>Stop</button>
+                                                        <button type="button" className="btn btn-warning" onClick={() => lewatiAntrianA(antrianb.id)} >Lewati</button>
+                                                        <button type="button" className="btn btn-dark" onClick={() => selesaiAntrianA(antrianb.id)}>Selesai</button>
+                                                        <button type="button" className="btn btn-secondary" onClick={() => printAntrianB(antrianb.no_urut, antrianb.ketegori)}>Print</button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        )) : <tr><td colSpan={2}><center>TIDAK ADA ANTRIAN FARMASI</center></td></tr>}
+                                    </tbody>
 
-                            </table>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
 
-            {/* <footer className="footer fixed-bottom mt-auto py-3 bg-body">
+            <footer className="footer fixed-bottom mt-auto py-3 bg-body">
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-lg-12" style={{ textAlign: 'center'}}>
-                           <p style={{color: '#dadada', fontSize: '15px'}}>IT RS PKU Muhammadiyah Sekapuk</p>
+                           <p style={{color: '#dadada', fontSize: '15px'}}>Antrian Farmasi &copy; IT RS PKU Muhammadiyah Sekapuk</p>
                         </div>
                     </div>
 
                 </div>
-            </footer> */}
+            </footer>
         </div>
     );
 }

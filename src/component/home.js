@@ -6,11 +6,9 @@ function Home() {
             <div className="container mt-5" >
                 <div className="row g-2">
                     <div className="col-lg-12">
-
-
                         <div className='row'>
                             <div className='col-lg-3'>
-                                <div className="card">
+                                <div className="card mb-3">
                                     <div className="card-header bg-primary text-white text-center">
                                         ANTRIAN LOKET
                                     </div>
@@ -22,8 +20,7 @@ function Home() {
 
                                     </div>
                                 </div>
-                            </div>
-                            <div className='col-lg-3'>
+
                                 <div className="card">
                                     <div className="card-header bg-success text-white text-center">
                                         ANTRIAN LOKET MODEL 2
@@ -32,6 +29,20 @@ function Home() {
                                         <div className="d-grid gap-2 col-6 mx-auto">
                                             <a className="btn btn-success" href='/display-loket-m2' type="button">DISPLAY</a>
                                             <a className="btn btn-success" href='/panggilan-loket-m2' type="button">PANGGILAN</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div className='col-lg-3'>
+                                <div className="card">
+                                    <div className="card-header bg-warning text-center">
+                                        ANTRIAN FARMASI
+                                    </div>
+                                    <div className="card-body text-center">
+                                        <div className="d-grid gap-2 col-6 mx-auto">
+                                            <a className="btn btn-warning" href='/display-farmasi' type="button">DISPLAY</a>
+                                            <a className="btn btn-warning" href='/panggilan-farmasi' type="button">PANGGILAN</a>
                                         </div>
 
                                     </div>
@@ -73,6 +84,27 @@ function Home() {
 
                     </div>
                 </div>
+                {/* <div className="row g-2">
+                    <div className="col-lg-12">
+                        <div className='row'>
+                            <div className='col-lg-3'>
+                                <div className="card">
+                                    <div className="card-header bg-primary text-white text-center">
+                                        ANTRIAN LOKET
+                                    </div>
+                                    <div className="card-body text-center">
+                                        <div className="d-grid gap-2 col-6 mx-auto">
+                                            <a className="btn btn-primary" href='/display-loket' type="button">DISPLAY</a>
+                                            <a className="btn btn-primary" href='/panggilan-loket' type="button">PANGGILAN</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div> */}
             </div>
         </>
     );
