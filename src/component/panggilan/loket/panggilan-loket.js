@@ -24,12 +24,12 @@ function PanggilanLoket() {
     }
     useEffect(() => {
         fectData()
-    },[]);
+    }, []);
 
-   
+
     useEffect(() => {
         fectData();
-    },[idPanggil, kodeAntrian, idStop, idLewati, idSelesai]);
+    }, [idPanggil, kodeAntrian, idStop, idLewati, idSelesai]);
 
     const panggilAntrian = async (id) => {
         try {
@@ -71,7 +71,7 @@ function PanggilanLoket() {
     }
     const selesaiAntrian = async (id) => {
         try {
-           await axios.post(`${host}/api/loket/selesai/${id}`);
+            await axios.post(`${host}/api/loket/selesai/${id}`);
             setidPanggil(false);
             setidStop(false);
             setidLewati(false);
@@ -85,62 +85,64 @@ function PanggilanLoket() {
     }
 
     return (
-        
+
         <div className="container mt-5">
             <div className="card">
                 <div className="card-header text-bg-primary text-center">
                     Antrian Pendaftaran Rawat Jalan
                 </div>
                 <div className="card-body">
-                    <table className="table table-sm table-wrapper">
-                        <thead className="table-warning">
-                            <tr>
-                                {/* <th>Nomor Antrian</th> */}
-                                <th>Nomor Antrian</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {antrians.length !== 0 ? antrians.map((antrian, index) => (
-                                <tr key={index}>
-                                    {
-                                        antrian.status == "1" ?
-                                            <td className='bg-success text-white'>{antrian.noantrian}</td> :
-                                            antrian.status == 2 ?
-                                                <td className='bg-danger text-white'>{antrian.noantrian}</td> :
-                                                antrian.status == 3 ?
-                                                    <td className='bg-warning text-white'>{antrian.noantrian}</td> :
-                                                    antrian.status == 4 ?
-                                                        <td className='bg-light'>{antrian.noantrian}</td>
-                                                        :
-                                                        <td>{antrian.noantrian}</td>
-                                    }
-                                    <td>
-                                        <div className="btn-group btn-group-sm" role="group" aria-label="Basic mixed styles example">
-                                            <button type="button" className="btn btn-success" onClick={() => panggilAntrian(antrian.kd)} >Panggil</button>
-                                            <button type="button" className="btn btn-danger" onClick={() => stopAntrian(antrian.kd)}>Stop</button>
-                                            <button type="button" className="btn btn-warning" onClick={() => lewatiAntrian(antrian.kd)} >Lewati</button>
-                                            <button type="button" className="btn btn-secondary" onClick={() => selesaiAntrian(antrian.kd)}>Selesai</button>
-                                        </div>
-                                    </td>
+                    <div className="table-scroll table-responsive">
+                        <table className="table table-sm table-wrapper">
+                            <thead className="table-warning">
+                                <tr>
+                                    {/* <th>Nomor Antrian</th> */}
+                                    <th>Nomor Antrian</th>
+                                    <th>Aksi</th>
                                 </tr>
-                            )) : <tr><td colSpan={2}><center>TIDAK ADA ANTRIAN PENDAFTARAN</center></td></tr>}
-                        </tbody>
+                            </thead>
+                            <tbody>
+                                {antrians.length !== 0 ? antrians.map((antrian, index) => (
+                                    <tr key={index}>
+                                        {
+                                            antrian.status == "1" ?
+                                                <td className='bg-success text-white'>{antrian.noantrian}</td> :
+                                                antrian.status == 2 ?
+                                                    <td className='bg-danger text-white'>{antrian.noantrian}</td> :
+                                                    antrian.status == 3 ?
+                                                        <td className='bg-warning text-white'>{antrian.noantrian}</td> :
+                                                        antrian.status == 4 ?
+                                                            <td className='bg-light'>{antrian.noantrian}</td>
+                                                            :
+                                                            <td>{antrian.noantrian}</td>
+                                        }
+                                        <td>
+                                            <div className="btn-group btn-group-sm" role="group" aria-label="Basic mixed styles example">
+                                                <button type="button" className="btn btn-success" onClick={() => panggilAntrian(antrian.kd)} >Panggil</button>
+                                                <button type="button" className="btn btn-danger" onClick={() => stopAntrian(antrian.kd)}>Stop</button>
+                                                <button type="button" className="btn btn-warning" onClick={() => lewatiAntrian(antrian.kd)} >Lewati</button>
+                                                <button type="button" className="btn btn-secondary" onClick={() => selesaiAntrian(antrian.kd)}>Selesai</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                )) : <tr><td colSpan={2}><center>TIDAK ADA ANTRIAN PENDAFTARAN</center></td></tr>}
+                            </tbody>
 
-                    </table>
+                        </table>
+                    </div>
                 </div>
             </div>
 
-            {/* <footer className="footer fixed-bottom mt-auto py-3 bg-body">
+            <footer className="footer fixed-bottom mt-auto py-3 bg-body">
                 <div className="container-fluid">
                     <div className="row">
-                        <div className="col-lg-12" style={{ textAlign: 'center'}}>
-                           <p style={{color: '#dadada', fontSize: '15px'}}>IT RS PKU Muhammadiyah Sekapuk</p>
+                        <div className="col-lg-12" style={{ textAlign: 'center' }}>
+                            <a href="/" style={{ color: '#dadada', fontSize: '15px', textDecoration: 'none' }}>Antrian Loket Pendaftaran &copy; IT RS PKU Muhammadiyah Sekapuk</a>
                         </div>
                     </div>
 
                 </div>
-            </footer> */}
+            </footer>
         </div>
     );
 }

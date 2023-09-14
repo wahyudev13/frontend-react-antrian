@@ -83,6 +83,10 @@ function DisplayLoket2() {
             // window.responsiveVoice.speak('PANGGILAN. antrian pendaftaran nomor ' + data.message, "Indonesian Male");
             console.log('Panggil Antrian ' + data.message);
         });
+        echo.channel('channel-stop-loket-manual').listen('.stop-antrian-loket-manual', (data) => {
+            window.speechSynthesis.cancel();
+            console.log('Stop Antrian ' + data.message);
+        });
     }, []);
 
 
