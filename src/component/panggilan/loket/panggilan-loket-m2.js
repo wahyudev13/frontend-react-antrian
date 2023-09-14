@@ -44,7 +44,7 @@ function PanggilanLoket() {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-lg-12" style={{ textAlign: 'center'}}>
-                           <p style={{color: '#dadada', fontSize: '15px'}}>IT RS PKU Muhammadiyah Sekapuk</p>
+                        <a href="/" style={{color: '#dadada', fontSize: '15px', textDecoration: 'none'}}>Antrian Loket Pendaftaran &copy; IT RS PKU Muhammadiyah Sekapuk</a>
                         </div>
                     </div>
 
