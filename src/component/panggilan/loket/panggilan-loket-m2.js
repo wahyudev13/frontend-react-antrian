@@ -42,7 +42,7 @@ function PanggilanLoket() {
                                     onChange={(e) => setnoAntrian(e.target.value)}
                                 />
                                 <button className="btn btn-success" type="button" id="panggil" onClick={() => panggilAntrian()}>Panggil</button>
-                                <button class="btn btn-danger" type="button" id="stop" onClick={() => stopAntrian()}>Stop</button>
+                                <button className="btn btn-danger" type="button" id="stop" onClick={() => stopAntrian()}>Stop</button>
                             </div>
                         </div>
                     </div>
