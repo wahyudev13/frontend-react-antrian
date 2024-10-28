@@ -18,6 +18,9 @@ import Displayloket from './component/display/loket/DisplayLoket';
 import DisplayloketM2 from './component/display/loket/DisplayLoket2';
 import PanggilanLoket from './component/panggilan/loket/panggilan-loket';
 import PanggilanLoketM2 from './component/panggilan/loket/panggilan-loket-m2';
+import DisplayLoket4 from './component/display/loket/DisplayLoket4';
+//SUARA LOKAL
+import DisplayLoket3 from './component/display/loket/DisplayLoket3';
 
 //Antrian Farmasi
 import PanggilanFarmasi from './component/panggilan/farmasi/panggilan-farmasi';
@@ -36,26 +39,29 @@ root.render(
     {/* <Navbartop/> */}
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Home/>} />
+        <Route path='/' element={<Home />} />
 
-        <Route path='display-a' element={<Display/>} />
-        <Route path='display-b' element={<DisplayB/>} />
-        <Route path='display-c' element={<DisplayC/>} />
-        <Route path='display-d' element={<DisplayD/>} />
-        <Route path='panggilan-a' element={<Antrian/>} />
-        <Route path='panggilan-b' element={<AntrianB/>} />
-        <Route path='panggilan-c' element={<AntrianC/>} />
-        <Route path='panggilan-d' element={<AntrianD/>} />
-        <Route path='panggilan-e' element={<AntrianE/>} />
-        <Route path='panggilan-f' element={<AntrianF/>} />
+        <Route path='display-a' element={<Display />} />
+        <Route path='display-b' element={<DisplayB />} />
+        <Route path='display-c' element={<DisplayC />} />
+        <Route path='display-d' element={<DisplayD />} />
+        <Route path='panggilan-a' element={<Antrian />} />
+        <Route path='panggilan-b' element={<AntrianB />} />
+        <Route path='panggilan-c' element={<AntrianC />} />
+        <Route path='panggilan-d' element={<AntrianD />} />
+        <Route path='panggilan-e' element={<AntrianE />} />
+        <Route path='panggilan-f' element={<AntrianF />} />
 
-        <Route path='display-loket' element={<Displayloket/>} />
-        <Route path='panggilan-loket' element={<PanggilanLoket/>} />
-        <Route path='display-loket-m2' element={<DisplayloketM2/>} />
-        <Route path='panggilan-loket-m2' element={<PanggilanLoketM2/>} />
+        <Route path='display-loket' element={<Displayloket />} />
+        <Route path='panggilan-loket' element={<PanggilanLoket />} />
+        <Route path='display-loket-m2' element={<DisplayloketM2 />} />
+        <Route path='panggilan-loket-m2' element={<PanggilanLoketM2 />} />
 
-        <Route path='panggilan-farmasi' element={<PanggilanFarmasi/>} />
-        <Route path='display-farmasi' element={<DisplayFarmasi/>} />
+        <Route path='display-loket-lokal' element={<DisplayLoket3 />} />
+        <Route path='display-loket-m4' element={<DisplayLoket4 />} />
+
+        <Route path='panggilan-farmasi' element={<PanggilanFarmasi />} />
+        <Route path='display-farmasi' element={<DisplayFarmasi />} />
 
 
       </Routes>

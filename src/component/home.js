@@ -21,7 +21,7 @@ function Home() {
                                     </div>
                                 </div>
 
-                                <div className="card">
+                                <div className="card mb-3">
                                     <div className="card-header bg-success text-white text-center">
                                         ANTRIAN LOKET MODEL 2
                                     </div>
@@ -29,6 +29,29 @@ function Home() {
                                         <div className="d-grid gap-2 col-6 mx-auto">
                                             <a className="btn btn-success" href='/display-loket-m2' type="button">DISPLAY</a>
                                             <a className="btn btn-success" href='/panggilan-loket-m2' type="button">PANGGILAN</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div className="card mb-3">
+                                    <div className="card-header bg-dark text-white text-center">
+                                        ANTRIAN LOKET LOKAL
+                                    </div>
+                                    <div className="card-body text-center">
+                                        <div className="d-grid gap-2 col-6 mx-auto">
+                                            <a className="btn btn-dark" href='/display-loket-lokal' type="button">DISPLAY</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div className="card">
+                                    <div className="card-header bg-info text-white text-center">
+                                        ANTRIAN LOKET RESPONSIVE VOICE
+                                    </div>
+                                    <div className="card-body text-center">
+                                        <div className="d-grid gap-2 col-6 mx-auto">
+                                            <a className="btn btn-info" href='/display-loket-m4' type="button">DISPLAY</a>
                                         </div>
 
                                     </div>
