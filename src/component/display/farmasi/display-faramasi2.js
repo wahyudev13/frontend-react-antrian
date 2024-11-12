@@ -82,32 +82,14 @@ function DisplayFarmasi() {
                 setNourut(data.message.no_urut);
                 setidAntrian(data.message.id);
                 setPlay('true');
-
-                if (process.env.REACT_APP_RESPON_VOICE === 'true') {
-                    window.responsiveVoice.speak('PANGGILAN. antrian farmasi ' + data.message.ketegori + '' + data.message.no_urut, "Indonesian Male");
-                } else {
-                    var msg = new SpeechSynthesisUtterance();
-                    msg.volume = 1;
-                    msg.lang = "id-ID";
-                    msg.text = 'panggilan. antrian farmasi ' + data.message.ketegori + '' + data.message.no_urut;
-                    window.speechSynthesis.speak(msg);
-                }
-
+                window.responsiveVoice.speak('PANGGILAN. antrian farmasi ' + data.message.ketegori + '' + data.message.no_urut, "Indonesian Male");
                 console.log('Panggil Antrian A ' + data.message.no_urut);
             } else if (data.message.ketegori === 'B') {
                 setKategori(data.message.ketegori);
                 setNourutB(data.message.no_urut);
                 setidAntrian(data.message.id);
                 setPlay('true');
-                if (process.env.REACT_APP_RESPON_VOICE === 'true') {
-                    window.responsiveVoice.speak('PANGGILAN. antrian farmasi ' + data.message.ketegori + '' + data.message.no_urut, "Indonesian Male");
-                } else {
-                    var msg2 = new SpeechSynthesisUtterance();
-                    msg2.volume = 1;
-                    msg2.lang = "id-ID";
-                    msg2.text = 'panggilan. antrian farmasi ' + data.message.ketegori + '' + data.message.no_urut;
-                    window.speechSynthesis.speak(msg2);
-                }
+                window.responsiveVoice.speak('PANGGILAN. antrian farmasi ' + data.message.ketegori + '' + data.message.no_urut, "Indonesian Male");
 
                 console.log('Panggil Antrian B ' + data.message.no_urut);
             }
@@ -115,23 +97,13 @@ function DisplayFarmasi() {
 
         echo.channel('channel-stop-farmasi-a').listen('.stop-antrian-farmasi-a', (data) => {
             setPlay('false');
-            if (process.env.REACT_APP_RESPON_VOICE === 'true') {
-                window.responsiveVoice.cancel();
-            } else {
-                window.speechSynthesis.cancel();
-            }
-            // window.responsiveVoice.cancel();
+            window.responsiveVoice.cancel();
             console.log('Stop Antrian ' + data.message.no_urut);
         });
 
         echo.channel('channel-lewati-farmasi-a').listen('.panggil-lewati-farmasi-a', (data) => {
             setPlay('false');
-            if (process.env.REACT_APP_RESPON_VOICE === 'true') {
-                window.responsiveVoice.cancel();
-            } else {
-                window.speechSynthesis.cancel();
-            }
-            // window.responsiveVoice.cancel();
+            window.responsiveVoice.cancel();
             console.log('Lewati Antrian ' + data.message.no_urut);
         });
 
@@ -161,7 +133,7 @@ function DisplayFarmasi() {
                     </a>
 
                     <div className='d-flex'>
-                        <strong style={{ fontSize: '25px', color: '#fff' }}>ANTRIAN APOTEK</strong>
+                        <strong style={{ fontSize: '25px', color: '#fff' }}>ANTRIAN APOTEK 2</strong>
                     </div>
                 </div>
             </nav>

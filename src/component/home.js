@@ -65,6 +65,7 @@ function Home() {
                                     <div className="card-body text-center">
                                         <div className="d-grid gap-2 col-6 mx-auto">
                                             <a className="btn btn-warning" href='/display-farmasi' type="button">DISPLAY</a>
+                                            <a className="btn btn-warning" href='/display-farmasi2' type="button">DISPLAY RESPONSIVE VOICE</a>
                                             <a className="btn btn-warning" href='/panggilan-farmasi' type="button">PANGGILAN</a>
                                         </div>
 

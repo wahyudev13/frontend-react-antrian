@@ -93,7 +93,7 @@ function DisplayLoket2() {
 
             var audioList = [
                 //new Audio("audio/bell.wav"),
-                new Audio("audio/loketpendaftaran.wav"),
+                new Audio("audio/loketpendaftaran2.wav"),
             ];
 
             // Ratusan
