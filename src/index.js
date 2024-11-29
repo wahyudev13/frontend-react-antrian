@@ -22,6 +22,11 @@ import DisplayLoket4 from './component/display/loket/DisplayLoket4';
 //SUARA LOKAL
 import DisplayLoket3 from './component/display/loket/DisplayLoket3';
 
+//LOKEL DOBEL
+import DisplayLoketDoble from './component/display/loket/DisplayLoketDoble';
+import PanggilanLoketDobel1 from './component/panggilan/loket/panggilan-loket-dobel-1';
+import PanggilanLoketDobel2 from './component/panggilan/loket/panggilan-loket-dobel-2';
+
 //Antrian Farmasi
 import PanggilanFarmasi from './component/panggilan/farmasi/panggilan-farmasi';
 import DisplayFarmasi from './component/display/farmasi/display-faramasi';
@@ -60,6 +65,10 @@ root.render(
 
         <Route path='display-loket-lokal' element={<DisplayLoket3 />} />
         <Route path='display-loket-m4' element={<DisplayLoket4 />} />
+
+        <Route path='display-loket-dobel' element={<DisplayLoketDoble />} />
+        <Route path='panggilan-loket-dobel-1' element={<PanggilanLoketDobel1 />} />
+        <Route path='panggilan-loket-dobel-2' element={<PanggilanLoketDobel2 />} />
 
         <Route path='panggilan-farmasi' element={<PanggilanFarmasi />} />
         <Route path='display-farmasi' element={<DisplayFarmasi />} />

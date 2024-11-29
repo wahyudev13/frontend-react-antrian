@@ -94,7 +94,7 @@ function DisplayLoket2() {
             window.responsiveVoice.speak('PANGGILAN. antrian pendaftaran nomor ' + data.message, "Indonesian Male");
         });
         echo.channel('channel-stop-loket-manual').listen('.stop-antrian-loket-manual', (data) => {
-            window.speechSynthesis.cancel();
+            window.responsiveVoice.cancel();//STOP ANTRIAN
             console.log('Stop Antrian ' + data.message);
         });
     }, []);
@@ -118,7 +118,7 @@ function DisplayLoket2() {
                     </a>
 
                     <div className='d-flex'>
-                        <strong style={{ fontSize: '25px', color: '#1c2474' }}>ANTRIAN LOKET PENDAFTARAN 3</strong>
+                        <strong style={{ fontSize: '25px', color: '#1c2474' }}>ANTRIAN LOKET PENDAFTARAN 4</strong>
                     </div>
                 </div>
             </nav>

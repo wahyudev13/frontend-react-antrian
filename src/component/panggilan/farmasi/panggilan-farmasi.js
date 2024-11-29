@@ -1,6 +1,7 @@
 import axios from "axios";
 import React from 'react';
 import { useState, useEffect } from "react";
+import { Helmet } from "react-helmet";
 const dateTime = new Date()
 function PanggilanFarmasi() {
     const host = process.env.REACT_APP_API;
@@ -287,6 +288,10 @@ function PanggilanFarmasi() {
     return (
 
         <div className="container-fluid mt-3">
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>PANGGILAN FARMASI</title>
+            </Helmet>
             {/* Print Page Non Racikan A */}
             <div id="printAntrianFarmasiA" style={{ display: 'none' }} className="cetak">
                 <div style={{ width: '200px', fontFamily: 'Tahoma', marginTop: '10px', marginRight: '5px', marginBottom: '100px', marginLeft: '15px', fontSize: '21px!important', border: '0px solid #000' }}>
@@ -439,8 +444,8 @@ function PanggilanFarmasi() {
             <footer className="footer fixed-bottom mt-auto py-3 bg-body">
                 <div className="container-fluid">
                     <div className="row">
-                        <div className="col-lg-12" style={{ textAlign: 'center'}}>
-                           <a href="/" style={{color: '#dadada', fontSize: '15px', textDecoration: 'none'}}>Antrian Farmasi &copy; IT RS PKU Muhammadiyah Sekapuk</a>
+                        <div className="col-lg-12" style={{ textAlign: 'center' }}>
+                            <a href="/" style={{ color: '#dadada', fontSize: '15px', textDecoration: 'none' }}>Antrian Farmasi &copy; IT RS PKU Muhammadiyah Sekapuk</a>
                         </div>
                     </div>
 

@@ -8,7 +8,7 @@ function Home() {
                     <div className="col-lg-12">
                         <div className='row'>
                             <div className='col-lg-3'>
-                                <div className="card mb-3">
+                                {/* <div className="card mb-3">
                                     <div className="card-header bg-primary text-white text-center">
                                         ANTRIAN LOKET
                                     </div>
@@ -16,6 +16,20 @@ function Home() {
                                         <div className="d-grid gap-2 col-6 mx-auto">
                                             <a className="btn btn-primary" href='/display-loket' type="button">DISPLAY</a>
                                             <a className="btn btn-primary" href='/panggilan-loket' type="button">PANGGILAN</a>
+                                        </div>
+
+                                    </div>
+                                </div> */}
+
+                                <div className="card mb-3">
+                                    <div className="card-header bg-primary text-white text-center">
+                                        ANTRIAN LOKET DOBEL
+                                    </div>
+                                    <div className="card-body text-center">
+                                        <div className="d-grid gap-2 col-6 mx-auto">
+                                            <a className="btn btn-primary" href='/display-loket-dobel' type="button">DISPLAY</a>
+                                            <a className="btn btn-primary" href='/panggilan-loket-dobel-1' type="button">PANGGILAN LOKET 1</a>
+                                            <a className="btn btn-primary" href='/panggilan-loket-dobel-2' type="button">PANGGILAN LOKET 2</a>
                                         </div>
 
                                     </div>
