@@ -3,12 +3,12 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Row from "react-bootstrap/Row";
 import Col from 'react-bootstrap/Col';
-import Table from "react-bootstrap/Table";
 import Form from 'react-bootstrap/Form';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay, faStop } from "@fortawesome/free-solid-svg-icons";
+import { faPlay, faSpinner, faStop } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import React from 'react';
+import Swal from 'sweetalert2';
 
 import { useState, useEffect } from "react";
 // import e from "cors";
@@ -102,6 +102,52 @@ function Antrian() {
         });
     }
 
+    const tesPanggilan = async () => {
+        try {
+            const response = await axios.post(`${host}/api/antrian/tes/1`, {
+                text: 'SELAMAT DATANG DI RUMAH SAKIT PKU MUHAMMADIYAH SEKAPUK'
+            });
+            console.log('TES PANGGILAN ANTRIAN 1', response);
+            Swal.fire({
+                title: 'Berhasil!',
+                text: 'Panggilan berhasil dilakukan.',
+                icon: 'success',
+                timer: 900,
+                showConfirmButton: false
+            });
+
+        } catch (error) {
+            console.error('Terjadi kesalahan:', error);
+            Swal.fire({
+                title: 'Gagal!',
+                text: 'Terjadi kesalahan: ' + error,
+                icon: 'error',
+                timer: 900,
+                showConfirmButton: false
+            });
+        }
+    };
+
+    const reload = async () => {
+        try {
+            fectData();
+            Swal.fire({
+                title: 'Berhasil!',
+                icon: 'success',
+                timer: 900,
+                showConfirmButton: false
+            });
+        } catch (error) {
+            console.error('Terjadi kesalahan:', error);
+            Swal.fire({
+                title: 'Gagal!',
+                text: 'Terjadi kesalahan: ' + error,
+                icon: 'error',
+                timer: 900,
+                showConfirmButton: false
+            });
+        }
+    };
 
     return (
         <Container fluid>
@@ -114,7 +160,6 @@ function Antrian() {
                                     Panggil Antrian Poliklinik A
                                 </Col>
                                 <Col xs={3}>
-
                                     <Form.Select aria-label="Floating label select example" onChange={(e) => setKode(e.target.value)}>
                                         <option value="">- Pilih Poliklinik -</option>
                                         {
@@ -132,36 +177,46 @@ function Antrian() {
 
                         </Card.Header>
                         <Card.Body>
-                            <Table striped bordered hover responsive size="sm">
-                                <thead>
-                                    <tr>
-                                        <th>No Reg</th>
-                                        <th>No Rawat</th>
-                                        <th>No Rekam Medis</th>
-                                        <th>Nama Pasien</th>
-                                        <th>Poliklinik</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {antrians.length !== 0 ? antrians.map((antrian, index) => (
-                                        <tr key={index}>
-                                            <td>{antrian.no_reg}</td>
-                                            <td>{antrian.no_rawat}</td>
-                                            <td>{antrian.no_rkm_medis}</td>
-                                            <td>{antrian.nm_pasien}</td>
-                                            <td>{antrian.nm_poli}</td>
-                                            <td>
-                                                <Button disabled={disable === 'play-' + antrian.no_rawat ? true : false} onClick={() => setStore(antrian.no_reg, antrian.kd_dokter, antrian.kd_poli, antrian.no_rawat, antrian.no_rkm_medis, antrian.nm_pasien, antrian.nm_poli, antrian.nm_dokter, antrian.tgl_registrasi, 'play-' + antrian.no_rawat)} variant="primary" size="sm"><FontAwesomeIcon icon={faPlay} /> </Button>{' '}
-                                                <Button disabled={disable === 'play-' + antrian.no_rawat ? false : true} onClick={() => setUpdate(antrian.tgl_registrasi, antrian.no_rkm_medis, antrian.kd_dokter, antrian.kd_poli, antrian.nm_pasien, antrian.nm_dokter, antrian.nm_poli, antrian.no_reg)} variant="danger" size="sm"><FontAwesomeIcon icon={faStop} /> </Button>{' '}
-                                            </td>
+                            <div className="table-scroll table-responsive">
+                                <table className="table table-bordered">
+                                    <thead>
+                                        <tr >
+                                            <th>No Reg</th>
+                                            <th>No Rawat</th>
+                                            <th>No Rekam Medis</th>
+                                            <th>Nama Pasien</th>
+                                            <th>Poliklinik</th>
+                                            <th>Penjamin</th>
+                                            <th>Aksi</th>
                                         </tr>
-                                    )) : <tr><td colSpan={6}><center>TIDAK ADA PASIEN TERDAFTAR</center></td></tr>}
-                                </tbody>
-                            </Table>
-
+                                    </thead>
+                                    <tbody>
+                                        {antrians.length !== 0 ? antrians.map((antrian, index) => (
+                                            <tr className={antrian.stts === 'Sudah' ? 'table-danger' : ''} key={index}>
+                                                <td>{antrian.no_reg}</td>
+                                                <td>{antrian.no_rawat}</td>
+                                                <td>{antrian.no_rkm_medis}</td>
+                                                <td>{antrian.nm_pasien}</td>
+                                                <td>{antrian.nm_poli}</td>
+                                                <td>{antrian.png_jawab}</td>
+                                                <td>
+                                                    <Button disabled={disable === 'play-' + antrian.no_rawat ? true : false} onClick={() => setStore(antrian.no_reg, antrian.kd_dokter, antrian.kd_poli, antrian.no_rawat, antrian.no_rkm_medis, antrian.nm_pasien, antrian.nm_poli, antrian.nm_dokter, antrian.tgl_registrasi, 'play-' + antrian.no_rawat)} variant="primary" size="sm"><FontAwesomeIcon icon={faPlay} /> </Button>{' '}
+                                                    <Button disabled={disable === 'play-' + antrian.no_rawat ? false : true} onClick={() => setUpdate(antrian.tgl_registrasi, antrian.no_rkm_medis, antrian.kd_dokter, antrian.kd_poli, antrian.nm_pasien, antrian.nm_dokter, antrian.nm_poli, antrian.no_reg)} variant="danger" size="sm"><FontAwesomeIcon icon={faStop} /> </Button>{' '}
+                                                </td>
+                                            </tr>
+                                        )) : <tr><td colSpan={7}><center>TIDAK ADA PASIEN TERDAFTAR</center></td></tr>}
+                                    </tbody>
+                                </table>
+                            </div>
                         </Card.Body>
                     </Card>
+                </Col>
+            </Row>
+
+            <Row>
+                <Col style={{ textAlign: '-webkit-center' }}>
+                    <Button onClick={() => tesPanggilan()} variant="danger" size="sm"><FontAwesomeIcon icon={faPlay} /> TES ANTRIAN BOS</Button>{' '}
+                    <Button onClick={() => reload()} variant="success" size="sm"><FontAwesomeIcon icon={faSpinner} /> RELOAD PASIEN</Button>{' '}
                 </Col>
             </Row>
         </Container>

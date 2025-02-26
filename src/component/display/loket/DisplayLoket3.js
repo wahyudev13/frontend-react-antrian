@@ -150,6 +150,29 @@ function DisplayLoket2() {
     }, []);
 
 
+    //SUARA TES
+    useEffect(() => {
+        window.Pusher = Pusher;
+        const echo = new Echo({
+            broadcaster: 'pusher',
+            key: 'local',
+            wsHost: process.env.REACT_APP_HOST_PUSHER,
+            wsPort: process.env.REACT_APP_PORT_PUSHER,
+            forceTLS: false,
+            disableStats: true,
+            encrypted: true,
+        });
+        echo.channel('tes-loket').listen('.tes-antrian-loket', (data) => {
+            var msg = new SpeechSynthesisUtterance();
+            msg.volume = 1;
+            msg.lang = "id-ID";
+            msg.text = data.message.text;
+            window.speechSynthesis.speak(msg);
+            console.log(data.message.text);
+        });
+    }, []);
+
+
     return (
 
         <>

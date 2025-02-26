@@ -11,7 +11,7 @@ import Echo from 'laravel-echo';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarDays, faClockFour } from "@fortawesome/free-solid-svg-icons";
 import { faInstagramSquare, faSquareFacebook, faSquareYoutube, faSquareGooglePlus } from "@fortawesome/free-brands-svg-icons";
-import Nav from "react-bootstrap/Nav";
+// import Nav from "react-bootstrap/Nav";
 var date = new Date();
 
 
@@ -141,7 +141,7 @@ function DisplayB() {
                     msg.text = textd;
                     window.speechSynthesis.speak(msg);
                     //window.responsiveVoice.speak(textd, "Indonesian Male")
-                }, 5000);
+                }, 1000);
             } else {
                 var msg = new SpeechSynthesisUtterance();
                 msg.volume = 1;
@@ -192,7 +192,7 @@ function DisplayB() {
                     msg.text = texte;
                     window.speechSynthesis.speak(msg);
                     //window.responsiveVoice.speak(texte, "Indonesian Male")
-                }, 5000);
+                }, 1000);
             } else {
                 var msg = new SpeechSynthesisUtterance();
                 msg.volume = 1;
@@ -243,7 +243,7 @@ function DisplayB() {
                     msg.text = textf;
                     window.speechSynthesis.speak(msg);
                     //window.responsiveVoice.speak(textf, "Indonesian Male")
-                }, 5000);
+                }, 1000);
             } else {
                 var msg = new SpeechSynthesisUtterance();
                 msg.volume = 1;
@@ -254,6 +254,27 @@ function DisplayB() {
             }
         }
     }, [rawatf, playf, textf, nomorf, idF]);
+
+    useEffect(() => {
+        window.Pusher = Pusher;
+        const echo = new Echo({
+            broadcaster: 'pusher',
+            key: 'local',
+            wsHost: process.env.REACT_APP_HOST_PUSHER,
+            wsPort: process.env.REACT_APP_PORT_PUSHER,
+            forceTLS: false,
+            disableStats: true,
+            encrypted: true,
+        });
+        echo.channel('tes1').listen('.tes-antrian-1', (data) => {
+            var msg = new SpeechSynthesisUtterance();
+            msg.volume = 1;
+            msg.lang = "id-ID";
+            msg.text = data.message.text;
+            window.speechSynthesis.speak(msg);
+            console.log(data.message.text);
+        });
+    }, []);
 
     return (
         <div>

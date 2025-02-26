@@ -31,6 +31,12 @@ import PanggilanLoketDobel2 from './component/panggilan/loket/panggilan-loket-do
 import PanggilanFarmasi from './component/panggilan/farmasi/panggilan-farmasi';
 import DisplayFarmasi from './component/display/farmasi/display-faramasi';
 import DisplayFarmasi2 from './component/display/farmasi/display-faramasi2';
+import DisplayFarmasi3 from './component/display/farmasi/display-faramasi-3';
+
+
+//TES ANTRIAN LOKET
+import PanggilanLoketTes from './component/panggilan/loket/panggilan-loket-tes';
+
 
 //Home
 import Home from './component/home';
@@ -73,6 +79,10 @@ root.render(
         <Route path='panggilan-farmasi' element={<PanggilanFarmasi />} />
         <Route path='display-farmasi' element={<DisplayFarmasi />} />
         <Route path='display-farmasi2' element={<DisplayFarmasi2 />} />
+        <Route path='display-farmasi3' element={<DisplayFarmasi3 />} />
+
+
+        <Route path='panggilan-loket-tes' element={<PanggilanLoketTes />} />
 
 
       </Routes>

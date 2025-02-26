@@ -57,9 +57,6 @@ function Display() {
     const [textc, setTextc] = useState('');
     const [playc, setPlayc] = useState('false');
 
-    //tes
-    // const [playtes, setPlaytes] = useState('false');
-
 
     const waktu = () => {
         var tahun = date.getFullYear();
@@ -264,23 +261,42 @@ function Display() {
 
     useEffect(() => {
         window.Pusher = Pusher;
-        const echo = new Echo({
-            broadcaster: 'pusher',
-            key: 'local',
-            wsHost: process.env.REACT_APP_HOST_PUSHER,
-            wsPort: process.env.REACT_APP_PORT_PUSHER,
-            forceTLS: false,
-            disableStats: true,
-            encrypted: true,
-        });
-        echo.channel('tes1').listen('.tes-antrian-1', (data) => {
-            var msg = new SpeechSynthesisUtterance();
-            msg.volume = 1;
-            msg.lang = "id-ID";
-            msg.text = data.message.text;
-            window.speechSynthesis.speak(msg);
-            console.log(data.message.text);
-        });
+
+        // Inisialisasi Echo hanya sekali
+        if (!echoRef.current) {
+            echoRef.current = new Echo({
+                broadcaster: "pusher",
+                key: "local",
+                wsHost: process.env.REACT_APP_HOST_PUSHER,
+                wsPort: process.env.REACT_APP_PORT_PUSHER,
+                forceTLS: false,
+                disableStats: true,
+                encrypted: true,
+            });
+        }
+
+        // Mendengarkan channel
+        const echo = echoRef.current;
+        const channel = echo.channel("tes1");
+
+        const eventHandler = (data) => {
+            if (data?.message?.text) {
+                const msg = new SpeechSynthesisUtterance();
+                msg.volume = 1;
+                msg.lang = "id-ID";
+                msg.text = data.message.text;
+                window.speechSynthesis.speak(msg);
+                console.log("Received message:", data.message.text);
+            }
+        };
+
+        channel.listen(".tes-antrian-1", eventHandler);
+
+        // Cleanup saat unmount
+        return () => {
+            channel.stopListening(".tes-antrian-1");
+            console.log("Listener removed");
+        };
     }, []);
 
     return (

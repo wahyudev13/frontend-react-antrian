@@ -1,0 +1,57 @@
+.marquee {
+    overflow: hidden;
+    white-space: nowrap;
+    box-sizing: border-box;
+
+    animation: MoveUpDown 10s linear infinite;
+    /* width: 100%; */
+    /* Sesuaikan lebar */
+}
+
+/* ::-webkit-scrollbar {
+    display: none;
+} */
+
+
+
+@keyframes MoveUpDown {
+
+    0% {
+        transform: translateY(0);
+    }
+
+
+    50% {
+        transform: translateY(-100px);
+    }
+
+    /* 100% {
+        transform: translateY(-3500px);
+    } */
+
+    /* 
+    30%,
+    40% {
+        transform: translateY(-200px);
+    }
+
+    45%,
+    55% {
+        transform: translateY(-300px);
+    }
+
+    60%,
+    70% {
+        transform: translateY(-400px);
+    }
+
+    75%,
+    85% {
+        transform: translateY(-500px);
+    }
+
+    90%,
+    100% {
+        transform: translateY(-600px);
+    } */
+}

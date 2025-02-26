@@ -3,7 +3,18 @@ import React from 'react';
 function Home() {
     return (
         <>
-            <div className="container mt-5" >
+            <nav className="navbar bg-success navbar-fixed-top">
+                <div className="container-fluid">
+                    <div className='d-flex' style={{ color: '#fff' }}>
+                        ANTRIAN
+                    </div>
+                    <div className='d-flex' style={{ color: '#fff' }}>
+                        Update 26 Februari 2025
+                    </div>
+                </div>
+            </nav>
+
+            <div className="container mt-1" >
                 <div className="row g-2">
                     <div className="col-lg-12">
                         <div className='row'>
@@ -59,13 +70,24 @@ function Home() {
 
                                     </div>
                                 </div>
-                                <div className="card">
+                                <div className="card mb-3">
                                     <div className="card-header bg-info text-white text-center">
                                         ANTRIAN LOKET RESPONSIVE VOICE
                                     </div>
                                     <div className="card-body text-center">
                                         <div className="d-grid gap-2 col-6 mx-auto">
                                             <a className="btn btn-info" href='/display-loket-m4' type="button">DISPLAY</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div className="card">
+                                    <div className="card-header bg-danger text-white text-center">
+                                        TESTING SUARA LOKET
+                                    </div>
+                                    <div className="card-body text-center">
+                                        <div className="d-grid gap-2 col-6 mx-auto">
+                                            <a className="btn btn-danger" href='/panggilan-loket-tes' type="button">PANGGILAN</a>
                                         </div>
 
                                     </div>
@@ -79,7 +101,8 @@ function Home() {
                                     <div className="card-body text-center">
                                         <div className="d-grid gap-2 col-6 mx-auto">
                                             <a className="btn btn-warning" href='/display-farmasi' type="button">DISPLAY</a>
-                                            <a className="btn btn-warning" href='/display-farmasi2' type="button">DISPLAY RESPONSIVE VOICE</a>
+                                            <a className="btn btn-warning" href='/display-farmasi2' type="button">DISPLAY 2 RESPONSIVE VOICE</a>
+                                            <a className="btn btn-warning" href='/display-farmasi3' type="button">DISPLAY 3</a>
                                             <a className="btn btn-warning" href='/panggilan-farmasi' type="button">PANGGILAN</a>
                                         </div>
 
@@ -122,27 +145,6 @@ function Home() {
 
                     </div>
                 </div>
-                {/* <div className="row g-2">
-                    <div className="col-lg-12">
-                        <div className='row'>
-                            <div className='col-lg-3'>
-                                <div className="card">
-                                    <div className="card-header bg-primary text-white text-center">
-                                        ANTRIAN LOKET
-                                    </div>
-                                    <div className="card-body text-center">
-                                        <div className="d-grid gap-2 col-6 mx-auto">
-                                            <a className="btn btn-primary" href='/display-loket' type="button">DISPLAY</a>
-                                            <a className="btn btn-primary" href='/panggilan-loket' type="button">PANGGILAN</a>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div> */}
             </div>
         </>
     );

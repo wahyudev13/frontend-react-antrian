@@ -5,7 +5,7 @@ import Pusher from 'pusher-js';
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarDays, faClockFour, } from "@fortawesome/free-solid-svg-icons";
-import { faInstagramSquare,faSquareFacebook, faSquareYoutube, faSquareGooglePlus } from "@fortawesome/free-brands-svg-icons";
+import { faInstagramSquare, faSquareFacebook, faSquareYoutube, faSquareGooglePlus } from "@fortawesome/free-brands-svg-icons";
 
 var date = new Date();
 
@@ -96,12 +96,34 @@ function DisplayLoket() {
             var msg = new SpeechSynthesisUtterance();
             msg.volume = 1;
             msg.lang = "id-ID";
-            msg.text = 'panggilan. antrian pendaftaran nomor '+nourut;
+            msg.text = 'panggilan. antrian pendaftaran nomor ' + nourut;
             window.speechSynthesis.speak(msg);
-           // window.responsiveVoice.speak('PANGGILAN. antrian pendaftaran nomor ' + nourut, "Indonesian Male");
+            // window.responsiveVoice.speak('PANGGILAN. antrian pendaftaran nomor ' + nourut, "Indonesian Male");
         }
 
     }, [play, idAntrian]);
+
+    //SUARA TES
+    useEffect(() => {
+        window.Pusher = Pusher;
+        const echo = new Echo({
+            broadcaster: 'pusher',
+            key: 'local',
+            wsHost: process.env.REACT_APP_HOST_PUSHER,
+            wsPort: process.env.REACT_APP_PORT_PUSHER,
+            forceTLS: false,
+            disableStats: true,
+            encrypted: true,
+        });
+        echo.channel('tes-loket').listen('.tes-antrian-loket', (data) => {
+            var msg = new SpeechSynthesisUtterance();
+            msg.volume = 1;
+            msg.lang = "id-ID";
+            msg.text = data.message.text;
+            window.speechSynthesis.speak(msg);
+            console.log(data.message.text);
+        });
+    }, []);
 
 
     return (
@@ -155,10 +177,10 @@ function DisplayLoket() {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-lg-6">
-                            <FontAwesomeIcon icon={faCalendarDays} /> {tanggal}     
+                            <FontAwesomeIcon icon={faCalendarDays} /> {tanggal}
                             <FontAwesomeIcon className="icojam" icon={faClockFour} /> {jam}
                         </div>
-                        <div className="col-lg-6" style={{ textAlign: 'right'}}>
+                        <div className="col-lg-6" style={{ textAlign: 'right' }}>
                             <FontAwesomeIcon icon={faInstagramSquare} /> @rs.pkusekapuk
                             <FontAwesomeIcon className="icojam" icon={faSquareFacebook} />  <FontAwesomeIcon icon={faSquareYoutube} /> RS Pku Muhammadiyah Sekapuk
                             <FontAwesomeIcon className="icojam" icon={faSquareGooglePlus} /> www.rspkusekapuk.com

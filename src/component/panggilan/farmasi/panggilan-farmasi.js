@@ -10,7 +10,9 @@ function PanggilanFarmasi() {
     const [idStop, setidStopA] = useState(false);
     const [idLewati, setidLewatiA] = useState(false);
     const [idSelesai, setidSelesaiA] = useState(false);
+    const [idProses, setidProses] = useState(false);
     const [kodeAntrian, setkodeAntrianA] = useState('');
+    const [kategori, setKatagori] = useState('');
     const [tanggal, setTanggal] = useState('');
     const [count, setCount] = useState('')
     const [nomor, setNomor] = useState('')
@@ -108,14 +110,9 @@ function PanggilanFarmasi() {
 
 
     useEffect(() => {
-        fectData()
-        fectDataB()
-
-
-        // setInterval(() => {
-        //     waktu();
-        // }, 1000);
-    }, [idPanggil, idStop, idLewati, idSelesai, kodeAntrian]);
+        fectData();
+        fectDataB();
+    }, [idPanggil, idStop, idLewati, idSelesai, kodeAntrian, idProses, kategori]);
 
     useEffect(() => {
         getNomor();
@@ -217,6 +214,40 @@ function PanggilanFarmasi() {
         }
 
     }
+
+    const prosesA = async (id) => {
+        try {
+            await axios.post(`${host}/api/farmasi/nomor/antrian/proses/${id}`);
+            setidPanggilA(false);
+            setidStopA(false);
+            setidLewatiA(false);
+            setidSelesaiA(false);
+            setidProses(true);
+            setkodeAntrianA(id);
+            setKatagori('A');
+        } catch (error) {
+            alert(error.response.data.data);
+        }
+
+    }
+
+    const prosesB = async (id) => {
+        try {
+            await axios.post(`${host}/api/farmasi/nomor/antrian/proses/${id}`);
+            setidPanggilA(false);
+            setidStopA(false);
+            setidLewatiA(false);
+            setidSelesaiA(false);
+            setidProses(true);
+            setkodeAntrianA(id);
+            setKatagori('B');
+        } catch (error) {
+            alert(error.response.data.data);
+        }
+
+    }
+
+
 
     // const printAntrianA = async (nomor) => {
     //     setNoreprint(nomor)
@@ -355,19 +386,22 @@ function PanggilanFarmasi() {
                                         {antrians.length !== 0 ? antrians.map((antrian, index) => (
                                             <tr key={index}>
                                                 {
-                                                    antrian.status == "1" ?
+                                                    antrian.status === 1 ?
                                                         <td className='bg-success text-white'><h3><strong>{antrian.no_urut}</strong></h3></td> :
-                                                        antrian.status == 2 ?
+                                                        antrian.status === 2 ?
                                                             <td className='bg-danger text-white'><h3><strong>{antrian.no_urut}</strong></h3></td> :
-                                                            antrian.status == 3 ?
+                                                            antrian.status === 3 ?
                                                                 <td className='bg-warning text-white'><h3><strong>{antrian.no_urut}</strong></h3></td> :
-                                                                antrian.status == 4 ?
-                                                                    <td className='bg-light'><h3><strong>{antrian.no_urut}</strong></h3></td>
-                                                                    :
-                                                                    <td><h3><strong>{antrian.no_urut}</strong></h3></td>
+                                                                antrian.status === 4 ?
+                                                                    <td className='bg-light'><h3><strong>{antrian.no_urut}</strong></h3></td> :
+                                                                    antrian.status === 5 ?
+                                                                        <td className='bg-primary' style={{ color: 'white' }}><h3><strong>{antrian.no_urut}</strong></h3></td>
+                                                                        :
+                                                                        <td><h3><strong>{antrian.no_urut}</strong></h3></td>
                                                 }
                                                 <td>
                                                     <div className="btn-group" role="group" aria-label="Basic mixed styles example">
+                                                        <button type="button" className="btn btn-primary" onClick={() => prosesA(antrian.id)}>Proses</button>
                                                         <button type="button" className="btn btn-success" onClick={() => panggilAntrianA(antrian.id)} >Panggil</button>
                                                         <button type="button" className="btn btn-danger" onClick={() => stopAntrianA(antrian.id)}>Stop</button>
                                                         <button type="button" className="btn btn-warning" onClick={() => lewatiAntrianA(antrian.id)} >Lewati</button>
@@ -409,19 +443,22 @@ function PanggilanFarmasi() {
                                         {antriansb.length !== 0 ? antriansb.map((antrianb, index) => (
                                             <tr key={index}>
                                                 {
-                                                    antrianb.status == "1" ?
+                                                    antrianb.status === 1 ?
                                                         <td className='bg-success text-white'><h3><strong>{antrianb.no_urut}</strong></h3></td> :
-                                                        antrianb.status == 2 ?
+                                                        antrianb.status === 2 ?
                                                             <td className='bg-danger text-white'><h3><strong>{antrianb.no_urut}</strong></h3></td> :
-                                                            antrianb.status == 3 ?
+                                                            antrianb.status === 3 ?
                                                                 <td className='bg-warning text-white'><h3><strong>{antrianb.no_urut}</strong></h3></td> :
-                                                                antrianb.status == 4 ?
-                                                                    <td className='bg-light'><h3><strong>{antrianb.no_urut}</strong></h3></td>
-                                                                    :
-                                                                    <td><h3><strong>{antrianb.no_urut}</strong></h3></td>
+                                                                antrianb.status === 4 ?
+                                                                    <td className='bg-light'><h3><strong>{antrianb.no_urut}</strong></h3></td> :
+                                                                    antrianb.status === 5 ?
+                                                                        <td className='bg-primary' style={{ color: 'white' }}><h3><strong>{antrianb.no_urut}</strong></h3></td>
+                                                                        :
+                                                                        <td><h3><strong>{antrianb.no_urut}</strong></h3></td>
                                                 }
                                                 <td>
                                                     <div className="btn-group" role="group" aria-label="Basic mixed styles example">
+                                                        <button type="button" className="btn btn-primary" onClick={() => prosesB(antrianb.id)}>Proses</button>
                                                         <button type="button" className="btn btn-success" onClick={() => panggilAntrianA(antrianb.id)} >Panggil</button>
                                                         <button type="button" className="btn btn-danger" onClick={() => stopAntrianA(antrianb.id)}>Stop</button>
                                                         <button type="button" className="btn btn-warning" onClick={() => lewatiAntrianA(antrianb.id)} >Lewati</button>
@@ -445,7 +482,7 @@ function PanggilanFarmasi() {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-lg-12" style={{ textAlign: 'center' }}>
-                            <a href="/" style={{ color: '#dadada', fontSize: '15px', textDecoration: 'none' }}>Antrian Farmasi &copy; IT RS PKU Muhammadiyah Sekapuk</a>
+                            <a href="/" style={{ color: '#000', fontSize: '15px', textDecoration: 'none' }}>Antrian Farmasi &copy; IT RS PKU Muhammadiyah Sekapuk</a>
                         </div>
                     </div>
 
