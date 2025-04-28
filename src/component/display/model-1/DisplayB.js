@@ -266,7 +266,7 @@ function DisplayB() {
             disableStats: true,
             encrypted: true,
         });
-        echo.channel('tes1').listen('.tes-antrian-1', (data) => {
+        echo.channel('tes2').listen('.tes-antrian-2', (data) => {
             var msg = new SpeechSynthesisUtterance();
             msg.volume = 1;
             msg.lang = "id-ID";

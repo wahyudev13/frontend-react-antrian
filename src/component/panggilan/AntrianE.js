@@ -20,7 +20,7 @@ function AntrianE() {
     const [count, setCount] = useState(0);
     const [disable, setDisable] = useState([]);
     const host = process.env.REACT_APP_API;
-
+    const [selectedPoli, setSelectedPoli] = useState({ kd_poli: '', nm_poli: '' });
     const fectData = async () => {
         await axios.get(`${host}/api/cari?cari=${kode}`)
             .then(function (response) {
@@ -87,10 +87,10 @@ function AntrianE() {
             console.log(error.message);
         });
     }
-    const tesPanggilan = async () => {
+    const tesPanggilan = async (nm_poli) => {
         try {
-            const response = await axios.post(`${host}/api/antrian/tes/1`, {
-                text: 'SELAMAT DATANG DI RUMAH SAKIT PKU MUHAMMADIYAH SEKAPUK'
+            const response = await axios.post(`${host}/api/antrian/tes/2`, {
+                text: `SELAMAT DATANG DI ${nm_poli || 'RS PKU Muhammadiyah Sekapuk'}`
             });
             console.log('TES PANGGILAN ANTRIAN 1', response);
             Swal.fire({
@@ -112,6 +112,7 @@ function AntrianE() {
             });
         }
     };
+
 
     const reload = async () => {
         try {
@@ -145,7 +146,19 @@ function AntrianE() {
                                     Panggil Antrian Poliklinik E
                                 </Col>
                                 <Col xs={3}>
-                                    <Form.Select aria-label="Floating label select example" onChange={(e) => setKode(e.target.value)}>
+                                    <Form.Select aria-label="Floating label select example" onChange={(e) => {
+                                        const selectedKode = e.target.value;
+                                        setKode(selectedKode);
+                                        if (selectedKode === '') {
+                                            // Kalau kosong, reset selectedPoli
+                                            setSelectedPoli({ kd_poli: '', nm_poli: '' });
+                                        } else {
+                                            const poliSelected = polis.find(poli => poli.kd_poli === selectedKode);
+                                            if (poliSelected) {
+                                                setSelectedPoli(poliSelected);
+                                            }
+                                        }
+                                    }}>
                                         <option value="">- Pilih Poliklinik -</option>
                                         {
                                             polis.map((poli, index) => (
@@ -200,10 +213,15 @@ function AntrianE() {
 
             <Row>
                 <Col style={{ textAlign: '-webkit-center' }}>
-                    <Button onClick={() => tesPanggilan()} variant="danger" size="sm"><FontAwesomeIcon icon={faPlay} /> TES ANTRIAN BOS</Button>{' '}
+                    <Button onClick={() => tesPanggilan(selectedPoli.nm_poli)} variant="danger" size="sm"><FontAwesomeIcon icon={faPlay} /> TES ANTRIAN BOS</Button>{' '}
                     <Button onClick={() => reload()} variant="success" size="sm"><FontAwesomeIcon icon={faSpinner} /> RELOAD PASIEN</Button>{' '}
                 </Col>
             </Row>
+            {selectedPoli.nm_poli && (
+                <center style={{ marginTop: '20px' }}>
+                    <h1>{selectedPoli.nm_poli}</h1>
+                </center>
+            )}
         </Container>
     );
 }
