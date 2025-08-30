@@ -27,157 +27,202 @@
 .App-link {
   color: #61dafb;
 }
-.header-top{
-  background-color:#0a458f!important;
-  color: #fff!important;
+
+.header-top {
+  background-color: #0a458f !important;
+  color: #fff !important;
   font-size: 20px;
 }
-.header-top2{
-  background-color: #e49503!important;
-  color: #fff!important;
+
+.header-top2 {
+  background-color: #e49503 !important;
+  color: #fff !important;
   font-size: 20px;
 }
-.header-top3{
-  background-color: #e40303!important;
-  color: #fff!important;
+
+.header-top3 {
+  background-color: #e40303 !important;
+  color: #fff !important;
   font-size: 20px;
 }
-.nama-dokter{
-  background-color:#0a458f!important;
-  color: #fff!important;
+
+.nama-dokter {
+  background-color: #0a458f !important;
+  color: #fff !important;
   font-size: 20px;
 }
-.nama-dokter2{
-  background-color: #e49503!important;
-  color: #fff!important;
+
+.nama-dokter2 {
+  background-color: #e49503 !important;
+  color: #fff !important;
   font-size: 20px;
 }
-.nama-dokter3{
-  background-color: #e40303!important;
-  color: #fff!important;
+
+.nama-dokter3 {
+  background-color: #e40303 !important;
+  color: #fff !important;
   font-size: 20px;
 }
-.no-antrian{
-  font-size: 7rem!important;
-  line-height: 0.8!important;
+
+.no-antrian {
+  font-size: 7rem !important;
+  line-height: 0.8 !important;
 }
-.nama-pasien{
-  font-size: 2rem!important;
+
+.nama-pasien {
+  font-size: 2rem !important;
 }
-.title-app{
+
+.title-app {
   color: #fff;
   font-size: 25px;
 }
-.navbar-app{
-  background-color: #198754!important;
+
+.navbar-app {
+  background-color: #198754 !important;
 }
-.container-nav{
-  display: block!important;
+
+.container-nav {
+  display: block !important;
   text-align: center;
   height: 70px;
 }
-.container-footer{
-  display: block!important;
+
+.container-footer {
+  display: block !important;
   text-align: center;
 }
-.footer{
-  bottom:0;
-  width:100%;
-  height:60px;
+
+.footer {
+  bottom: 0;
+  width: 100%;
+  height: 60px;
 }
-.card-nomor{
+
+.card-nomor {
   margin-top: 30px;
   margin-bottom: 30px;
 }
-.credit-footer{
-    color: #fff!important;
-    font-size: 26px!important;
-    font-weight: 700;
+
+.credit-footer {
+  color: #fff !important;
+  font-size: 26px !important;
+  font-weight: 700;
 }
-.header-antrian-b{
-  background-color: #e49503!important;
-  color: #fff!important;
+
+.scrolling-text {
+  white-space: nowrap;
+  overflow: hidden;
+  animation: scroll-left 20s linear infinite;
 }
-.header-antrian-a{
-  background-color:#0a458f!important;
-  color: #fff!important;
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(100%);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
 }
-.header-antrian-c{
-  background-color:#e40303!important;
-  color: #fff!important;
+
+.header-antrian-b {
+  background-color: #e49503 !important;
+  color: #fff !important;
 }
-.icojam{
+
+.header-antrian-a {
+  background-color: #0a458f !important;
+  color: #fff !important;
+}
+
+.header-antrian-c {
+  background-color: #e40303 !important;
+  color: #fff !important;
+}
+
+.icojam {
   margin-left: 20px;
 }
 
 /* Display B */
-.displayb-header-top{
-  background-color:#7ba704!important;
-  color: #fff!important;
-  font-size: 20px;
-}
-.displayb-nama-dokter{
-  background-color:#7ba704!important;
-  color: #fff!important;
+.displayb-header-top {
+  background-color: #7ba704 !important;
+  color: #fff !important;
   font-size: 20px;
 }
 
-.displayb-header-top2{
-  background-color:#a74d04!important;
-  color: #fff!important;
+.displayb-nama-dokter {
+  background-color: #7ba704 !important;
+  color: #fff !important;
   font-size: 20px;
 }
-.displayb-nama-dokter2{
-  background-color:#a74d04!important;
-  color: #fff!important;
+
+.displayb-header-top2 {
+  background-color: #a74d04 !important;
+  color: #fff !important;
   font-size: 20px;
 }
-.displayb-header-top3{
-  background-color:#c42f3c!important;
-  color: #fff!important;
+
+.displayb-nama-dokter2 {
+  background-color: #a74d04 !important;
+  color: #fff !important;
   font-size: 20px;
 }
-.displayb-nama-dokter3{
-  background-color:#c42f3c!important;
-  color: #fff!important;
+
+.displayb-header-top3 {
+  background-color: #c42f3c !important;
+  color: #fff !important;
   font-size: 20px;
 }
-.header-antrian-d{
-  background-color:#7ba704!important;
-  color: #fff!important;
+
+.displayb-nama-dokter3 {
+  background-color: #c42f3c !important;
+  color: #fff !important;
+  font-size: 20px;
 }
-.header-antrian-e{
-  background-color:#a74d04!important;
-  color: #fff!important;
+
+.header-antrian-d {
+  background-color: #7ba704 !important;
+  color: #fff !important;
 }
-.header-antrian-f{
-  background-color:#c42f3c!important;
-  color: #fff!important;
+
+.header-antrian-e {
+  background-color: #a74d04 !important;
+  color: #fff !important;
+}
+
+.header-antrian-f {
+  background-color: #c42f3c !important;
+  color: #fff !important;
 }
 
 /* Display Model 2 */
-.no-antrian-mod2{
-  font-size: 12rem!important;
+.no-antrian-mod2 {
+  font-size: 12rem !important;
 }
-.credit-footer-mod2{
-  color: #fff!important;
-  font-size: 20px!important;
+
+.credit-footer-mod2 {
+  color: #fff !important;
+  font-size: 20px !important;
 }
 
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
 }
 
-.table-scroll{
+.table-scroll {
   max-height: 400px;
   overflow: scroll;
 }
-.tb-head-sticky{
+
+.tb-head-sticky {
   position: sticky;
   top: 0px;
   z-index: 1;

@@ -9,7 +9,7 @@ function Home() {
                         ANTRIAN
                     </div>
                     <div className='d-flex' style={{ color: '#fff' }}>
-                        Update 26 Februari 2025
+                        Update Agustus 2025
                     </div>
                 </div>
             </nav>

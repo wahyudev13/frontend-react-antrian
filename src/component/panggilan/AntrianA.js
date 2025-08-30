@@ -29,7 +29,7 @@ function Antrian() {
             setCount(count + 1)
             setDisable(kelas)
             try {
-                const result = await storeData("stored", {
+                const result = await storeData("store", {
                     id: count,
                     kd_dokter: kd_dokter,
                     kd_poli: kd_poli,
@@ -52,7 +52,7 @@ function Antrian() {
     const setUpdate = async (tgl_registrasi, no_rkm_medis, kd_dokter, kd_poli, nm_pasien, nm_poli, nm_dokter, no_reg) => {
         setDisable([]);
         try {
-            const result = await updateData("updated", tgl_registrasi, no_rkm_medis, kd_dokter, kd_poli, {
+            const result = await updateData("update", tgl_registrasi, no_rkm_medis, kd_dokter, kd_poli, {
                 status: 2,
                 nm_pasien: nm_pasien,
                 nm_dokter: nm_dokter,
@@ -67,10 +67,10 @@ function Antrian() {
 
     const tesPanggilan = async (nm_poli) => {
         try {
-            const result = await tesStore("2", nm_poli);
-            console.log("✅ TES PANGGILAN ANTRIAN 2", result);
+            const result = await tesStore("1", nm_poli);
+            console.log("✅ TES PANGGILAN ANTRIAN 1", result);
         } catch (error) {
-            console.error("❌ Gagal TES PANGGILAN ANTRIAN 2", error.message);
+            console.error("❌ Gagal TES PANGGILAN ANTRIAN 1", error.message);
         }
     };
 
@@ -108,8 +108,8 @@ function Antrian() {
             setUpdate={setUpdate}
             tesPanggilan={tesPanggilan}
             reload={reload}
-            title="Panggil Antrian Poliklinik D"
-            headerClass="header-antrian-d"
+            title="Panggil Antrian Poliklinik A"
+            headerClass="header-antrian-a"
         />
     );
 }

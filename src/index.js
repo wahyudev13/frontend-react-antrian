@@ -6,7 +6,7 @@ import Display from './component/display/model-1/Display';
 import DisplayB from './component/display/model-1/DisplayB';
 import DisplayC from './component/display/model-2/DisplayC';
 import DisplayD from './component/display/model-2/DisplayD';
-import Antrian from './component/panggilan/Antrian';
+import AntrianA from './component/panggilan/AntrianA';
 import AntrianB from './component/panggilan/AntrianB';
 import AntrianC from './component/panggilan/AntrianC';
 import AntrianD from './component/panggilan/AntrianD';
@@ -57,7 +57,7 @@ root.render(
         <Route path='display-b' element={<DisplayB />} />
         <Route path='display-c' element={<DisplayC />} />
         <Route path='display-d' element={<DisplayD />} />
-        <Route path='panggilan-a' element={<Antrian />} />
+        <Route path='panggilan-a' element={<AntrianA />} />
         <Route path='panggilan-b' element={<AntrianB />} />
         <Route path='panggilan-c' element={<AntrianC />} />
         <Route path='panggilan-d' element={<AntrianD />} />

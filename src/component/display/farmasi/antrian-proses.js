@@ -5,6 +5,13 @@ import Pusher from 'pusher-js';
 import { useState, useEffect } from "react";
 function AntrianProses() {
     const host = process.env.REACT_APP_API;
+
+    // API Headers
+    const headers = {
+        "Accept": "application/json",
+        "X-API-KEY": process.env.REACT_APP_API_KEY || "",
+    };
+
     const [proses, setProses] = useState([]);
 
     useEffect(() => {
@@ -15,7 +22,7 @@ function AntrianProses() {
     }, []);
 
     const getProses = async (id) => {
-        await axios.get(`${host}/api/farmasi/nomor/antrian/proses/get`)
+        await axios.get(`${host}/api/farmasi/nomor/antrian/proses/get`, { headers })
             .then(function (response) {
                 setProses(response.data.data);
                 console.log(response.data.data);

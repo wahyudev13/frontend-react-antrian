@@ -2,11 +2,12 @@ import React from 'react';
 import Echo from 'laravel-echo';
 import Pusher from 'pusher-js';
 import { useState, useEffect } from "react";
+import useVideoPlaylist from '../../../hooks/useVideoPlaylist';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarDays, faClockFour, } from "@fortawesome/free-solid-svg-icons";
 import { faInstagramSquare, faSquareFacebook, faSquareYoutube, faSquareGooglePlus } from "@fortawesome/free-brands-svg-icons";
 
-var date = new Date();
+const dateTime = new Date()
 let isAudioPlaying = false;
 function playNextAudio(audioList) {
     if (audioList.length > 0) {
@@ -24,46 +25,32 @@ function playNextAudio(audioList) {
 }
 
 function DisplayLoket2() {
+    const host = process.env.REACT_APP_API || 'http://127.0.0.1:8000';
     const [nourut, setNourut] = useState('0');
-
 
     var time = new Date().toLocaleTimeString();
     const [jam, setJam] = useState(time);
     const [tanggal, setTanggal] = useState('');
 
     const waktu = () => {
-        var tahun = date.getFullYear();
-        var bulan = date.getMonth();
-        var tanggal = date.getDate();
-        var hari = date.getDay();
+        var tahun = dateTime.getFullYear();
+        var bulan = dateTime.getMonth();
+        var tanggal = dateTime.getDate();
+        var hari = dateTime.getDay();
         // //Jam
         // var jam = date.getHours();
         // var menit = date.getMinutes();
         // var detik = date.getSeconds();
-        switch (hari) {
-            case 0: hari = "Minggu"; break;
-            case 1: hari = "Senin"; break;
-            case 2: hari = "Selasa"; break;
-            case 3: hari = "Rabu"; break;
-            case 4: hari = "Kamis"; break;
-            case 5: hari = "Jum'at"; break;
-            case 6: hari = "Sabtu"; break;
-        }
-        switch (bulan) {
-            case 0: bulan = "Januari"; break;
-            case 1: bulan = "Februari"; break;
-            case 2: bulan = "Maret"; break;
-            case 3: bulan = "April"; break;
-            case 4: bulan = "Mei"; break;
-            case 5: bulan = "Juni"; break;
-            case 6: bulan = "Juli"; break;
-            case 7: bulan = "Agustus"; break;
-            case 8: bulan = "September"; break;
-            case 9: bulan = "Oktober"; break;
-            case 10: bulan = "November"; break;
-            case 11: bulan = "Desember"; break;
-        }
-        setTanggal(hari + ',' + tanggal + ' ' + bulan + ' ' + tahun)
+        const namaHari = [
+            "Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jum'at", "Sabtu"
+        ];
+
+        const namaBulan = [
+            "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+            "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+        ];
+        setTanggal(`${namaHari[hari]}, ${tanggal} ${namaBulan[bulan]} ${tahun}`);
+
     }
 
     const updateTime = () => {
@@ -172,11 +159,13 @@ function DisplayLoket2() {
         });
     }, []);
 
+    //VIDIO - reusable hook so other pages can reuse
+    const { videoList, currentIndex, next, loading } = useVideoPlaylist({ host, path: '/api/video-display-settings/loket' });
+    const currentVideo = currentIndex;
+    const handleVideoEnd = () => next();
 
     return (
-
         <>
-
             <nav className="navbar bg-warning navbar-fixed-top">
                 <div className="container-fluid">
                     <a className="navbar-brand" href="/">
@@ -212,10 +201,24 @@ function DisplayLoket2() {
                     </div>
                     <div className="col-lg-7 col-md-6">
                         <div className="card">
-                            <video autoPlay loop muted width="100%" height="auto">
-                                <source src={process.env.REACT_APP_VIDIO_LOKET} type="video/mp4" />
-                                Sorry, your browser doesn't support videos.
-                            </video>
+                            {videoList.length > 0 ? (
+                                <video
+                                    key={videoList[currentVideo]} // penting biar refresh tiap ganti video
+                                    autoPlay
+                                    muted
+                                    width="100%"
+                                    height="auto"
+                                    onEnded={handleVideoEnd}
+                                    onError={(e) => {
+                                        console.error("Video failed to load", videoList[currentVideo], e);
+                                    }}
+                                >
+                                    <source src={videoList[currentVideo]} type="video/mp4" />
+                                    Sorry, your browser doesn't support videos.
+                                </video>
+                            ) : (
+                                <p className="text-center">{loading ? 'Loading video...' : 'Tidak ada video'}</p>
+                            )}
                         </div>
                     </div>
                 </div>

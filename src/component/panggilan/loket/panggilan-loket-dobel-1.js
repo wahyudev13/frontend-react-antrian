@@ -1,6 +1,6 @@
 import axios from "axios";
 import React from 'react';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import Form from 'react-bootstrap/Form';
 import { Helmet } from "react-helmet";
 function PanggilanLoket1() {
@@ -8,40 +8,45 @@ function PanggilanLoket1() {
     const [noAntrian, setnoAntrian] = useState(1);
     const [polis, setPoli] = useState([]);
     const [namaPoli, setNamaPoli] = useState('');
+    const [loadingPoli, setLoadingPoli] = useState(false);
+    const [isCalling, setIsCalling] = useState(false);
 
+    // API headers (memoized)
+    const headers = useMemo(() => ({
+        "Accept": "application/json",
+        "X-API-KEY": process.env.REACT_APP_API_KEY || "",
+    }), []);
+
+    const fectData = useCallback(async () => {
+        setLoadingPoli(true);
+        try {
+            const response = await axios.get(`${host}/api/getpoli`, { headers });
+            setPoli(response.data.data || []);
+        } catch (error) {
+            console.log(error.message);
+        } finally {
+            setLoadingPoli(false);
+        }
+    }, [host, headers]);
 
     useEffect(() => {
-        const fectData = async () => {
-            await axios.get(`${host}/api/getpoli`)
-                .then(function (response) {
-                    const poli = response.data.data;
-                    setPoli(poli);
-                    //console.log(response.data.data);
-                }).catch(function (error) {
-                    console.log(error.message);
-                });
-        }
-        fectData()
-    }, []);
+        fectData();
+    }, [fectData]);
 
-    const panggilAntrian = async () => {
-        if (namaPoli !== '') {
-            try {
-                await axios.post(`${host}/api/loket/dobel-1/panggil`, {
-                    nomor: noAntrian,
-                    namapoli: namaPoli
-                }).then(function (res) {
-                    console.log('success', res);
-                }).catch(function (error) {
-                    console.log(error.message);
-                });
-            } catch (error) {
-                alert(error.response.data.data);
-            }
-        } else {
-            alert('PILIH POLIKLINIK DULU YA KAK :)');
+    const panggilAntrian = useCallback(async () => {
+        try {
+            setIsCalling(true);
+            await axios.post(`${host}/api/loket/dobel-1/panggil`, {
+                nomor: noAntrian,
+                namapoli: namaPoli
+            }, { headers });
+            console.log('success panggil');
+        } catch (error) {
+            alert(error?.response?.data?.data || 'Terjadi kesalahan');
+        } finally {
+            setIsCalling(false);
         }
-    }
+    }, [host, headers, noAntrian, namaPoli]);
     // const stopAntrian = async () => {
     //     try {
     //         await axios.post(`${host}/api/loket/m2/stop/${noAntrian}`);
@@ -67,15 +72,11 @@ function PanggilanLoket1() {
                             Antrian Pendaftaran Loket 1
                         </div>
                         <div className="card-header text-center text-bg-primary">
-                            <Form.Select aria-label="Floating label select example" onChange={(e) => setNamaPoli(e.target.value)}>
-                                <option value="">- PILIH POLIKLINIK DULU KAK -</option>
-                                {
-                                    polis.map((poli, index) => (
-                                        <>
-                                            <option key={index} value={poli.nm_poli}>{poli.nm_poli}</option>
-                                        </>
-                                    ))
-                                }
+                            <Form.Select aria-label="Floating label select example" onChange={(e) => setNamaPoli(e.target.value)} disabled={loadingPoli} value={namaPoli}>
+                                <option value="">{loadingPoli ? 'Memuat daftar poli...' : '- PILIH POLIKLINIK DULU KAK -'}</option>
+                                {polis.map((poli, index) => (
+                                    <option key={index} value={poli.nm_poli}>{poli.nm_poli}</option>
+                                ))}
                             </Form.Select>
                         </div>
                         <div className="card-body">
@@ -86,7 +87,9 @@ function PanggilanLoket1() {
                                     value={noAntrian}
                                     onChange={(e) => setnoAntrian(e.target.value)}
                                 />
-                                <button className="btn btn-success" type="button" id="panggil" onClick={() => panggilAntrian()}>Panggil</button>
+                                <button className="btn btn-success" type="button" id="panggil" onClick={panggilAntrian} disabled={isCalling}>
+                                    {isCalling ? 'Memanggil...' : 'Panggil'}
+                                </button>
                                 {/* <button className="btn btn-danger" type="button" id="stop" onClick={() => stopAntrian()}>Stop</button> */}
                             </div>
                         </div>

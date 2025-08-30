@@ -1,29 +1,50 @@
 import axios from "axios";
 import React from 'react';
-import { useState, useEffect } from "react";
-import { Helmet } from "react-helmet";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
+
 const dateTime = new Date()
+
 function PanggilanFarmasi() {
     const host = process.env.REACT_APP_API;
+
+    // API Headers (memoized)
+    const headers = useMemo(() => ({
+        "Accept": "application/json",
+        "X-API-KEY": process.env.REACT_APP_API_KEY || "",
+    }), []);
+
+    // Debug: Log environment variables
+    console.log('Environment Variables Check:', {
+        REACT_APP_API: host,
+        REACT_APP_API_KEY: process.env.REACT_APP_API_KEY ? '***' + process.env.REACT_APP_API_KEY.slice(-4) : 'NOT SET',
+        NODE_ENV: process.env.NODE_ENV
+    });
+
+    // Validate API Key
+    if (!process.env.REACT_APP_API_KEY) {
+        console.error('❌ REACT_APP_API_KEY is not set! This will cause 401 errors.');
+        console.error('💡 Solution: Create a .env file with REACT_APP_API_KEY=your_actual_api_key');
+    } else {
+        console.log('✅ API Key is set');
+    }
+
     const [antrians, setAntrian] = useState([]);
-    const [idPanggil, setidPanggilA] = useState(false);
-    const [idStop, setidStopA] = useState(false);
-    const [idLewati, setidLewatiA] = useState(false);
-    const [idSelesai, setidSelesaiA] = useState(false);
-    const [idProses, setidProses] = useState(false);
-    const [kodeAntrian, setkodeAntrianA] = useState('');
-    const [kategori, setKatagori] = useState('');
+    // Removed unused state: idPanggil, idStop, idLewati, idSelesai, idProses, kodeAntrian, kategori
     const [tanggal, setTanggal] = useState('');
-    const [count, setCount] = useState('')
-    const [nomor, setNomor] = useState('')
+    const [count, setCount] = useState('');
+    const [nomor, setNomor] = useState('');
 
     const [antriansb, setAntrianb] = useState([]);
-    const [countb, setCountb] = useState('')
-    const [nomorb, setNomorb] = useState('')
+    const [countb, setCountb] = useState('');
+    const [nomorb, setNomorb] = useState('');
 
-    const [noreprint, setNoreprint] = useState('')
+    // Loading states
+    const [loadingA, setLoadingA] = useState(false);
+    const [loadingB, setLoadingB] = useState(false);
 
-
+    // Track initial load to only show spinner on first fetch
+    const hasLoadedA = useRef(false);
+    const hasLoadedB = useRef(false);
 
     const waktu = () => {
         var tahun = dateTime.getFullYear();
@@ -34,113 +55,115 @@ function PanggilanFarmasi() {
         // var jam = date.getHours();
         // var menit = date.getMinutes();
         // var detik = date.getSeconds();
-        switch (hari) {
-            case 0: hari = "Minggu"; break;
-            case 1: hari = "Senin"; break;
-            case 2: hari = "Selasa"; break;
-            case 3: hari = "Rabu"; break;
-            case 4: hari = "Kamis"; break;
-            case 5: hari = "Jum'at"; break;
-            case 6: hari = "Sabtu"; break;
-        }
-        switch (bulan) {
-            case 0: bulan = "Januari"; break;
-            case 1: bulan = "Februari"; break;
-            case 2: bulan = "Maret"; break;
-            case 3: bulan = "April"; break;
-            case 4: bulan = "Mei"; break;
-            case 5: bulan = "Juni"; break;
-            case 6: bulan = "Juli"; break;
-            case 7: bulan = "Agustus"; break;
-            case 8: bulan = "September"; break;
-            case 9: bulan = "Oktober"; break;
-            case 10: bulan = "November"; break;
-            case 11: bulan = "Desember"; break;
-        }
-        setTanggal(hari + ',' + tanggal + ' ' + bulan + ' ' + tahun)
+        const namaHari = [
+            "Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jum'at", "Sabtu"
+        ];
+
+        const namaBulan = [
+            "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+            "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+        ];
+        setTanggal(`${namaHari[hari]}, ${tanggal} ${namaBulan[bulan]} ${tahun}`);
+
     }
 
     //GET NOMOR ANTRIAN A
-    const getNomor = async () => {
-        await axios.get(`${host}/api/farmasi/nomor/nomor-a/get`)
-            .then(function (response) {
-                setCount(response.data.data);
-                setNomor(response.data.data);
-
-            }).catch(function (error) {
-                console.log(error.message);
-            });
-
-    }
+    const getNomor = useCallback(async () => {
+        try {
+            const response = await axios.get(`${host}/api/farmasi/nomor/nomor-a/get`, { headers });
+            setCount(response.data.data);
+            setNomor(response.data.data);
+        } catch (error) {
+            console.error('Error getting nomor A:', error);
+            if (error.response?.status === 401) {
+                console.error('401 Unauthorized: Check your API Key');
+            }
+        }
+    }, [host, headers]);
 
     //GET ANTRIAN A
-    const fectData = async () => {
-        await axios.get(`${host}/api/farmasi/nomor/antrian-a/get`)
-            .then(function (response) {
-                setAntrian(response.data.data);
-            }).catch(function (error) {
-                console.log(error.message);
-            });
-
-    }
+    const fectData = useCallback(async () => {
+        if (!hasLoadedA.current) {
+            setLoadingA(true);
+        }
+        try {
+            const response = await axios.get(`${host}/api/farmasi/nomor/antrian-a/get`, { headers });
+            setAntrian(response.data.data);
+        } catch (error) {
+            console.error('Error fetching antrian A:', error);
+            if (error.response?.status === 401) {
+                console.error('401 Unauthorized: Check your API Key');
+            }
+        } finally {
+            setLoadingA(false);
+            hasLoadedA.current = true;
+        }
+    }, [host, headers]);
 
     //GET NOMOR ANTRIAN B
-    const getNomorB = async () => {
-        await axios.get(`${host}/api/farmasi/nomor/nomor-b/get`)
-            .then(function (response) {
-                setCountb(response.data.data);
-                setNomorb(response.data.data);
-
-            }).catch(function (error) {
-                console.log(error.message);
-            });
-
-    }
+    const getNomorB = useCallback(async () => {
+        try {
+            const response = await axios.get(`${host}/api/farmasi/nomor/nomor-b/get`, { headers });
+            setCountb(response.data.data);
+            setNomorb(response.data.data);
+        } catch (error) {
+            console.error('Error getting nomor B:', error);
+            if (error.response?.status === 401) {
+                console.error('401 Unauthorized: Check your API Key');
+            }
+        }
+    }, [host, headers]);
 
     //GET ANTRIAN B
-    const fectDataB = async () => {
-        await axios.get(`${host}/api/farmasi/nomor/antrian-b/get`)
-            .then(function (response) {
-                setAntrianb(response.data.data);
-            }).catch(function (error) {
-                console.log(error.message);
-            });
-
-    }
-
+    const fectDataB = useCallback(async () => {
+        if (!hasLoadedB.current) {
+            setLoadingB(true);
+        }
+        try {
+            const response = await axios.get(`${host}/api/farmasi/nomor/antrian-b/get`, { headers });
+            setAntrianb(response.data.data);
+        } catch (error) {
+            console.error('Error fetching antrian B:', error);
+            if (error.response?.status === 401) {
+                console.error('401 Unauthorized: Check your API Key');
+            }
+        } finally {
+            setLoadingB(false);
+            hasLoadedB.current = true;
+        }
+    }, [host, headers]);
 
     useEffect(() => {
         fectData();
         fectDataB();
-    }, [idPanggil, idStop, idLewati, idSelesai, kodeAntrian, idProses, kategori]);
+    }, [fectData, fectDataB]);
 
     useEffect(() => {
         getNomor();
         getNomorB();
-        waktu()
-    }, []);
-
-    // useEffect(() => {
-    //     fectData()
-    //     fectDataB()
-    // }, [idPanggil,idStop,idLewati,idSelesai,kodeAntrian]);
-
+        waktu();
+        // Set page title
+        document.title = "PANGGILAN FARMASI";
+    }, [getNomor, getNomorB]);
 
     //TAMBAH NOMOR ANTRIAN A
     const storePostA = async (e) => {
         e.preventDefault();
         const formData = new FormData();
         formData.append('nourut', nomor);
-        await axios.post(`${host}/api/farmasi/nomor/antrian-a/tambah`, formData)
-            .then(() => {
-                fectData();
-                printDiv('printAntrianFarmasiA');
-                getNomor();
-            })
-            .catch((error) => {
-                alert(error.response.data.data);
-            })
-
+        try {
+            await axios.post(`${host}/api/farmasi/nomor/antrian-a/tambah`, formData, { headers });
+            fectData();
+            printDiv('printAntrianFarmasiA');
+            getNomor();
+        } catch (error) {
+            console.error('Error storing post A:', error);
+            if (error.response?.status === 401) {
+                alert('Error 401: API Key tidak valid. Silakan periksa konfigurasi.');
+            } else {
+                alert(error.response?.data?.data || 'Terjadi kesalahan');
+            }
+        }
     };
 
     //TAMBAH NOMOR ANTRIAN B
@@ -148,112 +171,102 @@ function PanggilanFarmasi() {
         e.preventDefault();
         const formData = new FormData();
         formData.append('nourut', nomorb);
-        await axios.post(`${host}/api/farmasi/nomor/antrian-b/tambah`, formData)
-            .then(() => {
-                fectDataB();
-                printDiv('printAntrianFarmasiB');
-                getNomorB();
-            })
-            .catch((error) => {
-                alert(error.response.data.data);
-            })
-
+        try {
+            await axios.post(`${host}/api/farmasi/nomor/antrian-b/tambah`, formData, { headers });
+            fectDataB();
+            printDiv('printAntrianFarmasiB');
+            getNomorB();
+        } catch (error) {
+            console.error('Error storing post B:', error);
+            if (error.response?.status === 401) {
+                alert('Error 401: API Key tidak valid. Silakan periksa konfigurasi.');
+            } else {
+                alert(error.response?.data?.data || 'Terjadi kesalahan');
+            }
+        }
     };
 
     const panggilAntrianA = async (id) => {
         try {
-            await axios.post(`${host}/api/farmasi/nomor/antrian-a/panggil/${id}`);
-            setidPanggilA(true);
-            setidPanggilA(true);
-            setidLewatiA(false);
-            setidStopA(false);
-            setkodeAntrianA(id);
+            await axios.post(`${host}/api/farmasi/nomor/antrian/panggil/${id}`, {}, { headers });
+            // update state flags removed; directly refresh lists
             console.log('BERHASIL PANGGIL');
+            // Refresh lists without triggering table spinners
+            fectData();
+            fectDataB();
         } catch (error) {
-            alert(error.response.data.data);
-            console.log('ERROR');
+            console.error('Error panggil antrian A:', error);
+            if (error.response?.status === 401) {
+                alert('Error 401: API Key tidak valid. Silakan periksa konfigurasi.');
+            } else {
+                alert(error.response?.data?.data || 'Terjadi kesalahan');
+            }
         }
-
     }
+
     const stopAntrianA = async (id) => {
         try {
-            await axios.post(`${host}/api/farmasi/nomor/antrian-a/stop/${id}`);
-            setidPanggilA(false);
-            setidLewatiA(false);
-            setidStopA(true);
-            setkodeAntrianA(id);
-        } catch (error) {
-            alert(error.response.data.data);
-        }
+            await axios.post(`${host}/api/farmasi/nomor/antrian/stop/${id}`, {}, { headers });
 
+            fectData();
+            fectDataB();
+        } catch (error) {
+            console.error('Error stop antrian A:', error);
+            if (error.response?.status === 401) {
+                alert('Error 401: API Key tidak valid. Silakan periksa konfigurasi.');
+            } else {
+                alert(error.response?.data?.data || 'Terjadi kesalahan');
+            }
+        }
     }
 
     const lewatiAntrianA = async (id) => {
         try {
-            await axios.post(`${host}/api/farmasi/nomor/antrian-a/lewati/${id}`);
-            setidPanggilA(false);
-            setidStopA(false);
-            setidLewatiA(true);
-            setkodeAntrianA(id);
-        } catch (error) {
-            alert(error.response.data.data);
-        }
+            await axios.post(`${host}/api/farmasi/nomor/antrian/lewati/${id}`, {}, { headers });
 
+            fectData();
+            fectDataB();
+        } catch (error) {
+            console.error('Error lewati antrian A:', error);
+            if (error.response?.status === 401) {
+                alert('Error 401: API Key tidak valid. Silakan periksa konfigurasi.');
+            } else {
+                alert(error.response?.data?.data || 'Terjadi kesalahan');
+            }
+        }
     }
+
     const selesaiAntrianA = async (id) => {
         try {
-            await axios.post(`${host}/api/farmasi/nomor/antrian-a/selesai/${id}`);
-            setidPanggilA(false);
-            setidStopA(false);
-            setidLewatiA(false);
-            setidSelesaiA(true);
+            await axios.post(`${host}/api/farmasi/nomor/antrian/selesai/${id}`, {}, { headers });
 
-            setkodeAntrianA(id);
+            fectData();
+            fectDataB();
         } catch (error) {
-            alert(error.response.data.data);
+            console.error('Error selesai antrian A:', error);
+            if (error.response?.status === 401) {
+                alert('Error 401: API Key tidak valid. Silakan periksa konfigurasi.');
+            } else {
+                alert(error.response?.data?.data || 'Terjadi kesalahan');
+            }
         }
-
     }
 
-    const prosesA = async (id) => {
+    const proses = async (id) => {
         try {
-            await axios.post(`${host}/api/farmasi/nomor/antrian/proses/${id}`);
-            setidPanggilA(false);
-            setidStopA(false);
-            setidLewatiA(false);
-            setidSelesaiA(false);
-            setidProses(true);
-            setkodeAntrianA(id);
-            setKatagori('A');
+            await axios.post(`${host}/api/farmasi/nomor/antrian/proses/${id}`, {}, { headers });
+
+            fectData();
+            fectDataB();
         } catch (error) {
-            alert(error.response.data.data);
+            console.error('Error proses A:', error);
+            if (error.response?.status === 401) {
+                alert('Error 401: API Key tidak valid. Silakan periksa konfigurasi.');
+            } else {
+                alert(error.response?.data?.data || 'Terjadi kesalahan');
+            }
         }
-
     }
-
-    const prosesB = async (id) => {
-        try {
-            await axios.post(`${host}/api/farmasi/nomor/antrian/proses/${id}`);
-            setidPanggilA(false);
-            setidStopA(false);
-            setidLewatiA(false);
-            setidSelesaiA(false);
-            setidProses(true);
-            setkodeAntrianA(id);
-            setKatagori('B');
-        } catch (error) {
-            alert(error.response.data.data);
-        }
-
-    }
-
-
-
-    // const printAntrianA = async (nomor) => {
-    //     setNoreprint(nomor)
-    //     printDiv('printAntrianFarmasiAulang')
-    // }
-
 
     function printAntrianA(nomor, kategori) {
         var PW = window.open('', '_blank', 'Print content');
@@ -313,16 +326,10 @@ function PanggilanFarmasi() {
         PW.document.close();
         PW.focus();
         PW.print();
-        // PW.close();
     }
 
     return (
-
         <div className="container-fluid mt-3">
-            <Helmet>
-                <meta charSet="utf-8" />
-                <title>PANGGILAN FARMASI</title>
-            </Helmet>
             {/* Print Page Non Racikan A */}
             <div id="printAntrianFarmasiA" style={{ display: 'none' }} className="cetak">
                 <div style={{ width: '200px', fontFamily: 'Tahoma', marginTop: '10px', marginRight: '5px', marginBottom: '100px', marginLeft: '15px', fontSize: '21px!important', border: '0px solid #000' }}>
@@ -377,13 +384,23 @@ function PanggilanFarmasi() {
                                 <table className="table table-wrapper">
                                     <thead className="table-warning">
                                         <tr>
-                                            {/* <th>Nomor Antrian</th> */}
                                             <th className="tb-head-sticky">Nomor Antrian</th>
                                             <th className="tb-head-sticky">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {antrians.length !== 0 ? antrians.map((antrian, index) => (
+                                        {loadingA ? (
+                                            <tr>
+                                                <td colSpan={2} className="text-center">
+                                                    <div className="d-flex justify-content-center align-items-center py-4">
+                                                        <div className="spinner-border text-primary me-2" role="status">
+                                                            <span className="visually-hidden">Loading...</span>
+                                                        </div>
+                                                        <span>Loading data...</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        ) : antrians.length !== 0 ? antrians.map((antrian, index) => (
                                             <tr key={index}>
                                                 {
                                                     antrian.status === 1 ?
@@ -401,7 +418,7 @@ function PanggilanFarmasi() {
                                                 }
                                                 <td>
                                                     <div className="btn-group" role="group" aria-label="Basic mixed styles example">
-                                                        <button type="button" className="btn btn-primary" onClick={() => prosesA(antrian.id)}>Proses</button>
+                                                        <button type="button" className="btn btn-primary" onClick={() => proses(antrian.id)}>Proses</button>
                                                         <button type="button" className="btn btn-success" onClick={() => panggilAntrianA(antrian.id)} >Panggil</button>
                                                         <button type="button" className="btn btn-danger" onClick={() => stopAntrianA(antrian.id)}>Stop</button>
                                                         <button type="button" className="btn btn-warning" onClick={() => lewatiAntrianA(antrian.id)} >Lewati</button>
@@ -412,10 +429,8 @@ function PanggilanFarmasi() {
                                             </tr>
                                         )) : <tr><td colSpan={2}><center>TIDAK ADA ANTRIAN FARMASI</center></td></tr>}
                                     </tbody>
-
                                 </table>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -434,13 +449,23 @@ function PanggilanFarmasi() {
                                 <table className="table table-wrapper">
                                     <thead className="table-warning">
                                         <tr>
-                                            {/* <th>Nomor Antrian</th> */}
                                             <th className="tb-head-sticky">Nomor Antrian</th>
                                             <th className="tb-head-sticky">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {antriansb.length !== 0 ? antriansb.map((antrianb, index) => (
+                                        {loadingB ? (
+                                            <tr>
+                                                <td colSpan={2} className="text-center">
+                                                    <div className="d-flex justify-content-center align-items-center py-4">
+                                                        <div className="spinner-border text-warning me-2" role="status">
+                                                            <span className="visually-hidden">Loading...</span>
+                                                        </div>
+                                                        <span>Loading data...</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        ) : antriansb.length !== 0 ? antriansb.map((antrianb, index) => (
                                             <tr key={index}>
                                                 {
                                                     antrianb.status === 1 ?
@@ -458,7 +483,7 @@ function PanggilanFarmasi() {
                                                 }
                                                 <td>
                                                     <div className="btn-group" role="group" aria-label="Basic mixed styles example">
-                                                        <button type="button" className="btn btn-primary" onClick={() => prosesB(antrianb.id)}>Proses</button>
+                                                        <button type="button" className="btn btn-primary" onClick={() => proses(antrianb.id)}>Proses</button>
                                                         <button type="button" className="btn btn-success" onClick={() => panggilAntrianA(antrianb.id)} >Panggil</button>
                                                         <button type="button" className="btn btn-danger" onClick={() => stopAntrianA(antrianb.id)}>Stop</button>
                                                         <button type="button" className="btn btn-warning" onClick={() => lewatiAntrianA(antrianb.id)} >Lewati</button>
@@ -469,14 +494,12 @@ function PanggilanFarmasi() {
                                             </tr>
                                         )) : <tr><td colSpan={2}><center>TIDAK ADA ANTRIAN FARMASI</center></td></tr>}
                                     </tbody>
-
                                 </table>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
 
             <footer className="footer fixed-bottom mt-auto py-3 bg-body">
                 <div className="container-fluid">
@@ -485,7 +508,6 @@ function PanggilanFarmasi() {
                             <a href="/" style={{ color: '#000', fontSize: '15px', textDecoration: 'none' }}>Antrian Farmasi &copy; IT RS PKU Muhammadiyah Sekapuk</a>
                         </div>
                     </div>
-
                 </div>
             </footer>
         </div>

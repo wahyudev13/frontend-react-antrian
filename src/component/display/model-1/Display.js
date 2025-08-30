@@ -7,21 +7,22 @@ import Alert from 'react-bootstrap/Alert';
 import React from 'react';
 import Echo from 'laravel-echo';
 import Pusher from 'pusher-js';
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarDays, faClockFour, } from "@fortawesome/free-solid-svg-icons";
 import { faInstagramSquare, faSquareFacebook, faSquareYoutube, faSquareGooglePlus } from "@fortawesome/free-brands-svg-icons";
-import Nav from "react-bootstrap/Nav";
 
 var date = new Date();
 
 
 function Display() {
-    const echoRef = useRef(null);
+    const host = process.env.REACT_APP_API || 'http://127.0.0.1:8000';
+
     //Footer
     const [tanggal, setTanggal] = useState('');
     var time = new Date().toLocaleTimeString();
     const [jam, setJam] = useState(time);
+    // const [videoUrl, setVideoUrl] = useState('');
 
     //AntrianA
     const [dokter, setDokter] = useState('Dokter A');
@@ -107,6 +108,74 @@ function Display() {
             updateTime();
         }, 1000);
     });
+
+    const [videoList, setVideoList] = useState([]);
+    const [currentVideo, setCurrentVideo] = useState(0);
+
+    useEffect(() => {
+        const fetchVideoList = async () => {
+            try {
+                const response = await fetch(`${host}/api/video-display-settings/poli-1`, {
+                    headers: {
+                        "Accept": "application/json",
+                        "X-API-KEY": process.env.REACT_APP_API_KEY || "",
+                    },
+                    cache: "no-store",
+                });
+
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+                const data = await response.json();
+                console.log("Video settings API response (poli-1):", data);
+
+                // kumpulkan semua kemungkinan video dari data.data
+                let urls = [];
+                if (Array.isArray(data?.data)) {
+                    urls = data.data
+                        .map((item) => item?.video?.url || item?.video?.src || item?.video?.path)
+                        .filter(Boolean); // buang yang null/undefined
+                }
+
+                // fallback kalau API kasih field tunggal
+                if (urls.length === 0) {
+                    const singleUrl =
+                        data?.video_url ||
+                        data?.url ||
+                        data?.src ||
+                        data?.data?.video_url ||
+                        data?.data?.url ||
+                        data?.data?.src;
+
+                    if (singleUrl) urls = [singleUrl];
+                }
+
+                // ubah ke absolute URL
+                const base = (host || "").replace(/\/$/, "");
+                const absoluteUrls = urls.map((rawUrl) =>
+                    /^https?:\/\//i.test(rawUrl)
+                        ? rawUrl
+                        : `${base}${String(rawUrl).startsWith("/") ? "" : "/"}${rawUrl}`
+                );
+
+                if (absoluteUrls.length > 0) {
+                    setVideoList(absoluteUrls);
+                } else {
+                    console.warn("Video URLs not found in API response");
+                }
+            } catch (error) {
+                console.error("Failed to fetch video list for Display A", error);
+            }
+        };
+
+        fetchVideoList();
+    }, [host]);
+
+    // Fungsi untuk next video
+    const handleVideoEnd = () => {
+        setCurrentVideo((prev) => (prev + 1) % videoList.length);
+    };
+
+
 
 
     useEffect(() => {
@@ -336,11 +405,27 @@ function Display() {
 
                     <Col xs={12} md={8}>
                         <Card className="center card-nomor">
-                            <video autoPlay loop muted width="100%" height="auto">
-                                <source src={process.env.REACT_APP_VIDIO_DISA} type="video/mp4" />
-                                Sorry, your browser doesn't support videos.
-                            </video>
+                            {videoList.length > 0 ? (
+                                <video
+                                    key={videoList[currentVideo]} // penting biar refresh tiap ganti video
+                                    autoPlay
+                                    muted
+                                    width="100%"
+                                    height="auto"
+                                    onEnded={handleVideoEnd}
+                                    onError={(e) => {
+                                        console.error("Video failed to load", videoList[currentVideo], e);
+                                    }}
+                                >
+                                    <source src={videoList[currentVideo]} type="video/mp4" />
+                                    Sorry, your browser doesn't support videos.
+                                </video>
+                            ) : (
+                                <p className="text-center">Loading video...</p>
+                            )}
                         </Card>
+
+
 
                         {[
                             'primary',
@@ -358,7 +443,7 @@ function Display() {
             </Container>
             <Navbar bg="primary" fixed="bottom" className='footer navbar-app'>
                 <Container fluid>
-                    <marquee direction="left" className="credit-footer">Selamat Datang Di Rumah Sakit PKU Muhammadiyah Sekapuk</marquee>
+                    <div className="credit-footer scrolling-text">Selamat Datang Di Rumah Sakit PKU Muhammadiyah Sekapuk</div>
                     <Navbar.Brand className="credit-footer">
                         <FontAwesomeIcon className="icojam" icon={faCalendarDays} /> {tanggal}   <FontAwesomeIcon className="icojam" icon={faClockFour} /> {jam}
                     </Navbar.Brand>

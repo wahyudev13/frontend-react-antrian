@@ -9,19 +9,30 @@ import Marquee from "react-fast-marquee";
 import AntrianProses from './antrian-proses';
 function DisplayFarmasi3() {
     const host = process.env.REACT_APP_API;
+
+    // API Headers
+    const headers = {
+        "Accept": "application/json",
+        "X-API-KEY": process.env.REACT_APP_API_KEY || "",
+    };
+
     const [proses, setProses] = useState([]);
     const [nourut, setNourut] = useState('0');
     const [nourutB, setNourutB] = useState('0');
 
     useEffect(() => {
-        setInterval(() => {
+        const interval = setInterval(() => {
             getProses();
         }, 60000);
+
         getProses();
+
+        return () => clearInterval(interval); // hapus interval lama saat effect re-run/unmount
     }, [nourut, nourutB]);
 
+
     const getProses = async (id) => {
-        await axios.get(`${host}/api/farmasi/nomor/antrian/proses/get`)
+        await axios.get(`${host}/api/farmasi/nomor/antrian/proses/get`, { headers })
             .then(function (response) {
                 setProses(response.data.data);
                 //console.log(response.data.data);

@@ -18,34 +18,26 @@ function DisplayLoketDoble() {
     const [nourut2, setNourut2] = useState('0');
     const [namapoli, setNamapoli] = useState('-');
     const [namapoli2, setNamapoli2] = useState('-');
-    const [texts, setText] = useState([]);
+    const [texts, setText] = useState();
     // const [resvoice, setResvoice] = useState('');
 
     const getText = async () => {
-        await axios.get(`${host}/api/loket/text_marquee`)
-            .then(function (response) {
-                const text = response.data.data;
-                text.map((data) => (
-                    setText(data.value)
-                ))
-                //console.log(response.data.data);
-            }).catch(function (error) {
-                console.log(error.message);
-            });
+        await axios.get(`${host}/api/loket/text_marquee`, {
+            headers: {
+                "Accept": "application/json",
+                "X-API-KEY": process.env.REACT_APP_API_KEY || "",
+            },
+            cache: "no-store",
+        }).then(function (response) {
+            const text = response.data.data;
+            if (text && text.length > 0) {
+                setText(text[0].value); // Set the first text value
+            }
+            //console.log(response.data.data);
+        }).catch(function (error) {
+            console.log(error.message);
+        });
     }
-
-    // const getVoice = async () => {
-    //     await axios.get(`${host}/api/loket/responsive-voice`)
-    //         .then(function (response) {
-    //             const voice = response.data.data;
-    //             voice.map((data) => (
-    //                 setResvoice(data.value)
-    //             ))
-    //             // console.log(voice);
-    //         }).catch(function (error) {
-    //             console.log(error.message);
-    //         });
-    // }
 
     const getAll = async () => {
         getText();
@@ -78,7 +70,11 @@ function DisplayLoketDoble() {
             msg.rate = '0.9';
             msg.pitch = 1;
             msg.lang = "id-ID";
-            msg.text = 'antrian pendaftaran ' + data.message.namapoli + ' nomor ' + data.message.nomor + 'ke loket 1';
+            if (data.message.namapoli == null) {
+                msg.text = 'antrian pendaftaran nomor ' + data.message.nomor + 'ke loket 1';
+            } else {
+                msg.text = 'antrian pendaftaran ' + data.message.namapoli + ' nomor ' + data.message.nomor + 'ke loket 1';
+            }
             window.speechSynthesis.speak(msg);
 
 
@@ -98,7 +94,12 @@ function DisplayLoketDoble() {
             msg2.rate = '0.9';
             msg2.pitch = 1;
             msg2.lang = "id-ID";
-            msg2.text = 'antrian pendaftaran ' + data.message.namapoli + ' nomor ' + data.message.nomor + 'ke loket 2';
+            if (data.message.namapoli == null) {
+                msg2.text = 'antrian pendaftaran nomor ' + data.message.nomor + 'ke loket 2';
+            } else {
+                msg2.text = 'antrian pendaftaran ' + data.message.namapoli + ' nomor ' + data.message.nomor + 'ke loket 2';
+            }
+
             window.speechSynthesis.speak(msg2);
 
         });
