@@ -172,7 +172,11 @@ function Display() {
 
     // Fungsi untuk next video
     const handleVideoEnd = () => {
-        setCurrentVideo((prev) => (prev + 1) % videoList.length);
+        // Hanya handle video switching jika ada multiple video
+        if (videoList.length > 1) {
+            setCurrentVideo((prev) => (prev + 1) % videoList.length);
+        }
+        // Jika hanya 1 video, biarkan loop attribute yang handle
     };
 
 
@@ -410,6 +414,7 @@ function Display() {
                                     key={videoList[currentVideo]} // penting biar refresh tiap ganti video
                                     autoPlay
                                     muted
+                                    loop={videoList.length === 1} // loop jika hanya 1 video
                                     width="100%"
                                     height="auto"
                                     onEnded={handleVideoEnd}
@@ -443,7 +448,7 @@ function Display() {
             </Container>
             <Navbar bg="primary" fixed="bottom" className='footer navbar-app'>
                 <Container fluid>
-                    <div className="credit-footer scrolling-text">Selamat Datang Di Rumah Sakit PKU Muhammadiyah Sekapuk</div>
+                    <marquee direction="left" className="credit-footer">Selamat Datang Di Rumah Sakit PKU Muhammadiyah Sekapuk</marquee>
                     <Navbar.Brand className="credit-footer">
                         <FontAwesomeIcon className="icojam" icon={faCalendarDays} /> {tanggal}   <FontAwesomeIcon className="icojam" icon={faClockFour} /> {jam}
                     </Navbar.Brand>

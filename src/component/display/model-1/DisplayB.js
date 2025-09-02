@@ -165,8 +165,13 @@ function DisplayB() {
 
     // Fungsi untuk next video
     const handleVideoEnd = () => {
-        setCurrentVideo((prev) => (prev + 1) % videoList.length);
+        // Hanya handle video switching jika ada multiple video
+        if (videoList.length > 1) {
+            setCurrentVideo((prev) => (prev + 1) % videoList.length);
+        }
+        // Jika hanya 1 video, biarkan loop attribute yang handle
     };
+
 
     //Antrian D
     useEffect(() => {
@@ -400,6 +405,7 @@ function DisplayB() {
                                     key={videoList[currentVideo]} // penting biar refresh tiap ganti video
                                     autoPlay
                                     muted
+                                    loop={videoList.length === 1} // loop jika hanya 1 video
                                     width="100%"
                                     height="auto"
                                     onEnded={handleVideoEnd}

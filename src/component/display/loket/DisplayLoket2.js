@@ -147,6 +147,7 @@ function DisplayLoket2() {
                                     key={videoList[currentVideo]} // penting biar refresh tiap ganti video
                                     autoPlay
                                     muted
+                                    loop={videoList.length === 1} // loop jika hanya 1 video
                                     width="100%"
                                     height="auto"
                                     onEnded={handleVideoEnd}
