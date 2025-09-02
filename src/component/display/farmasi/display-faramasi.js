@@ -82,16 +82,11 @@ function DisplayFarmasi() {
                 setNourut(data.message.no_urut);
                 setidAntrian(data.message.id);
                 setPlay('true');
-
-                if (process.env.REACT_APP_RESPON_VOICE === 'true') {
-                    window.responsiveVoice.speak('PANGGILAN. antrian farmasi ' + data.message.ketegori + '' + data.message.no_urut, "Indonesian Male");
-                } else {
-                    var msg = new SpeechSynthesisUtterance();
-                    msg.volume = 1;
-                    msg.lang = "id-ID";
-                    msg.text = 'panggilan. antrian farmasi ' + data.message.ketegori + '' + data.message.no_urut;
-                    window.speechSynthesis.speak(msg);
-                }
+                var msg = new SpeechSynthesisUtterance();
+                msg.volume = 1;
+                msg.lang = "id-ID";
+                msg.text = 'panggilan. antrian farmasi ' + data.message.ketegori + '' + data.message.no_urut;
+                window.speechSynthesis.speak(msg);
 
                 console.log('Panggil Antrian A ' + data.message.no_urut);
             } else if (data.message.ketegori === 'B') {
@@ -99,15 +94,11 @@ function DisplayFarmasi() {
                 setNourutB(data.message.no_urut);
                 setidAntrian(data.message.id);
                 setPlay('true');
-                if (process.env.REACT_APP_RESPON_VOICE === 'true') {
-                    window.responsiveVoice.speak('PANGGILAN. antrian farmasi ' + data.message.ketegori + '' + data.message.no_urut, "Indonesian Male");
-                } else {
-                    var msg2 = new SpeechSynthesisUtterance();
-                    msg2.volume = 1;
-                    msg2.lang = "id-ID";
-                    msg2.text = 'panggilan. antrian farmasi ' + data.message.ketegori + '' + data.message.no_urut;
-                    window.speechSynthesis.speak(msg2);
-                }
+                var msg2 = new SpeechSynthesisUtterance();
+                msg2.volume = 1;
+                msg2.lang = "id-ID";
+                msg2.text = 'panggilan. antrian farmasi ' + data.message.ketegori + '' + data.message.no_urut;
+                window.speechSynthesis.speak(msg2);
 
                 console.log('Panggil Antrian B ' + data.message.no_urut);
             }
@@ -120,7 +111,6 @@ function DisplayFarmasi() {
             } else {
                 window.speechSynthesis.cancel();
             }
-            // window.responsiveVoice.cancel();
             console.log('Stop Antrian ' + data.message.no_urut);
         });
 
@@ -131,22 +121,13 @@ function DisplayFarmasi() {
             } else {
                 window.speechSynthesis.cancel();
             }
-            // window.responsiveVoice.cancel();
             console.log('Lewati Antrian ' + data.message.no_urut);
         });
-
-        // if (play === 'true') {
-
-        //    // window.responsiveVoice.speak('PANGGILAN. antrian pendaftaran nomor ' + nourut, "Indonesian Male");
-        // }
-
     }, []);
 
 
     return (
-
         <>
-
             <nav className="navbar bg-success navbar-fixed-top">
                 <div className="container-fluid">
                     <a className="navbar-brand" href="/">
@@ -209,4 +190,3 @@ function DisplayFarmasi() {
 }
 
 export default DisplayFarmasi;
-
